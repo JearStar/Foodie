@@ -1,1 +1,1 @@
-var ThisProjectAnnoysMe = true;
+const ThisProjectAnnoysMe = true;
