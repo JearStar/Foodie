@@ -17,7 +17,7 @@ guide.
    npm run build
    ```
 
-    locally within the `/frontend` folder. This will generate a `/build` directory located at `/frontend/build`.
+    locally within the `/frontend` directory. This will generate a `/build` directory located at `/frontend/build`.
 3. Upload this newly generated `build` directory to `/frontend` in the project on the ugrad server. The `build` directory is not committed to GitHub, nor are you able to run any `npm` commands on the ugrad server
    so this must be done locally.
 5. Make sure the `.env` file on the ugrad server has the correct credentials for the database. i.e. change
@@ -37,7 +37,7 @@ guide.
    Connection pool started
    ```
    Take note of the `PORT NUMBER` as we will need it in the next step.
-7. Now we need to build an SSH tunnel. In the root folder of the project on your device, if you are on Mac, run:
+7. Now we need to build an SSH tunnel. In the root directory of the project on your device, if you are on Mac, run:
    ```
    sh ./scripts/mac/server-tunnel.sh
    ```
