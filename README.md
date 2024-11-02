@@ -8,8 +8,9 @@ please follow these steps:
 
 1. Have the repository on your ugrad server. This can be achieved either through using git and pulling the files directly
 from the server, or uploading the project directory manually through something like Cyberduck. If you would like to set 
-it up to directly pull from the git repository, you can follow [this](https://medium.com/@kyledeguzmanx/quick-step-by-step-guide-to-generating-an-ssh-key-in-github-d3c6f7e185bb)
+it up to directly pull from the git repository, you can follow <a href="https://medium.com/@kyledeguzmanx/quick-step-by-step-guide-to-generating-an-ssh-key-in-github-d3c6f7e185bb" target="_blank">this</a>
 guide.
+
 
 2. Run 
    ```
