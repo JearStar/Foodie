@@ -54,4 +54,4 @@ guide.
    ```
    http://localhost:<PORT NUMBER>
    ```
-8. When finished, remember to close your connection with `Ctrl + c` on the ugrad server to close the connection pool.
+8. When you are done using the application, remember to close your connection with `Ctrl + c` on the ugrad server to close the connection pool.
