@@ -8,7 +8,8 @@
     "name": "Zoe Yuan"
   },
   "scripts": {
-    "prettier": "prettier --write ."
+    "prettier": "prettier --write .",
+    "sync": "sh ./scripts/mac/sync-build-and-env.sh"
   },
   "license": "ISC",
   "dependencies": {
