@@ -9,7 +9,8 @@
   },
   "scripts": {
     "prettier": "prettier --write .",
-    "sync": "sh ./scripts/mac/sync-build-and-env.sh"
+    "sync": "sh ./scripts/mac/sync-build-and-env.sh",
+    "tunnel": "sh ./scripts/mac/server-tunnel.sh"
   },
   "license": "ISC",
   "dependencies": {
