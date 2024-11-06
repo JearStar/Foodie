@@ -5,7 +5,7 @@ BUILD_DIR="frontend/build"  # The build folder path in your React project
 ENV_FILE=".env"
 REMOTE_USER="CWL"  # SSH username
 REMOTE_HOST="remote.students.cs.ubc.ca"  # SSH server address
-REMOTE_PATH="/home/j/<CWL>/<REPLACE_WITH_PROJECT_DIRECTORY>"  # Target path on the SSH server
+REMOTE_PATH="/home/<FIRST_LETTER_OF_YOUR_CWL>/<CWL>/<REPLACE_WITH_PROJECT_DIRECTORY>"  # Target path on the SSH server
 
 # Check if build directory exists
 if [ ! -d "$BUILD_DIR" ]; then
