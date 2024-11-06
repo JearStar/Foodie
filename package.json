@@ -7,9 +7,16 @@
   "author": {
     "name": "Zoe Yuan"
   },
+  "scripts": {
+    "prettier": "prettier --write ."
+  },
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.3",
-    "oracledb": "^5.2.0"
+    "oracledb": "^5.2.0",
+    "uuid": "^11.0.2"
+  },
+  "devDependencies": {
+    "prettier": "^3.3.3"
   }
 }
