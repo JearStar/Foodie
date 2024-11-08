@@ -1,76 +1,84 @@
 class LimitedTimeDish {
-    constructor(dishName, foodLocationName, address, postalCode, country, startDate, endDate) {
-        this._dishName = dishName;
-        this._foodLocationName = foodLocationName;
-        this._address = address;
-        this._city = city;
-        this._postalCode = postalCode;
-        this._country = country;
-        this._startDate = startDate;
-        this._endDate = endDate;
-    }
+  constructor(
+    dishName,
+    foodLocationName,
+    address,
+    postalCode,
+    country,
+    startDate,
+    endDate
+  ) {
+    this._dishName = dishName;
+    this._foodLocationName = foodLocationName;
+    this._address = address;
+    this._city = city;
+    this._postalCode = postalCode;
+    this._country = country;
+    this._startDate = startDate;
+    this._endDate = endDate;
+  }
 
-    get getDishName() {
-        return this._dishName;
-    }
+  get getDishName() {
+    return this._dishName;
+  }
 
-    set setDishName(value) {
-        this._dishName = value;
-    }
+  set setDishName(value) {
+    this._dishName = value;
+  }
 
-    get getFoodLocationName() {
-        return this._foodLocationName;
-    }
+  get getFoodLocationName() {
+    return this._foodLocationName;
+  }
 
-    set setFoodLocationName(value) {
-        this._foodLocationName = value;
-    }
+  set setFoodLocationName(value) {
+    this._foodLocationName = value;
+  }
 
-    get getAddress() {
-        return this._address;
-    }
+  get getAddress() {
+    return this._address;
+  }
 
-    set setAddress(value) {
-        this._address = value;
-    }
+  set setAddress(value) {
+    this._address = value;
+  }
 
-    get getCity() {
-        return this._city;
-    }
+  get getCity() {
+    return this._city;
+  }
 
-    set setCity(value) {
-        this._city = value;
-    }
+  set setCity(value) {
+    this._city = value;
+  }
 
-    get getPostalCode() {
-        return this._postalCode;
-    }
+  get getPostalCode() {
+    return this._postalCode;
+  }
 
-    set setPostalCode(value) {
-        this._postalCode = value;
-    }
+  set setPostalCode(value) {
+    this._postalCode = value;
+  }
 
-    get getCountry() {
-        return this._country;
-    }
+  get getCountry() {
+    return this._country;
+  }
 
-    set setCountry(value) {
-        this._country = value;
-    }
+  set setCountry(value) {
+    this._country = value;
+  }
 
-    get getStartDate() {
-        return this._startDate;
-    }
+  get getStartDate() {
+    return this._startDate;
+  }
 
-    set setStartDate(value) {
-        this._startDate = value;
-    }
+  set setStartDate(value) {
+    this._startDate = value;
+  }
 
-    get getEndDate() {
-        return this._endDate;
-    }
+  get getEndDate() {
+    return this._endDate;
+  }
 
-    set setEndDate(value) {
-        this._endDate = value;
-    }
+  set setEndDate(value) {
+    this._endDate = value;
+  }
 }

@@ -1,76 +1,84 @@
 class FoodLocationSummary {
-    constructor(summaryID, averageRating, description, foodLocationName, address, postalCode, country) {
-        this._summaryID = summaryID;
-        this._averageRating = averageRating;
-        this._description = description;
-        this._foodLocationName = foodLocationName;
-        this._address = address;
-        this._city = city;
-        this._postalCode = postalCode;
-        this._country = country;
-    }
+  constructor(
+    summaryID,
+    averageRating,
+    description,
+    foodLocationName,
+    address,
+    postalCode,
+    country
+  ) {
+    this._summaryID = summaryID;
+    this._averageRating = averageRating;
+    this._description = description;
+    this._foodLocationName = foodLocationName;
+    this._address = address;
+    this._city = city;
+    this._postalCode = postalCode;
+    this._country = country;
+  }
 
-    get getSummaryID() {
-        return this._summaryID;
-    }
+  get getSummaryID() {
+    return this._summaryID;
+  }
 
-    set setSummaryID(value) {
-        this._summaryID = value;
-    }
+  set setSummaryID(value) {
+    this._summaryID = value;
+  }
 
-    get getAverageRating() {
-        return this._averageRating;
-    }
+  get getAverageRating() {
+    return this._averageRating;
+  }
 
-    set setAverageRating(value) {
-        this._averageRating = value;
-    }
+  set setAverageRating(value) {
+    this._averageRating = value;
+  }
 
-    get getDescription() {
-        return this._description;
-    }
+  get getDescription() {
+    return this._description;
+  }
 
-    set setDescription(value) {
-        this._description = value;
-    }
+  set setDescription(value) {
+    this._description = value;
+  }
 
-    get getFoodLocationName() {
-        return this._foodLocationName;
-    }
+  get getFoodLocationName() {
+    return this._foodLocationName;
+  }
 
-    set setFoodLocationName(value) {
-        this._foodLocationName = value;
-    }
+  set setFoodLocationName(value) {
+    this._foodLocationName = value;
+  }
 
-    get getAddress() {
-        return this._address;
-    }
+  get getAddress() {
+    return this._address;
+  }
 
-    set setAddress(value) {
-        this._address = value;
-    }
+  set setAddress(value) {
+    this._address = value;
+  }
 
-    get getCity() {
-        return this._city;
-    }
+  get getCity() {
+    return this._city;
+  }
 
-    set setCity(value) {
-        this._city = value;
-    }
+  set setCity(value) {
+    this._city = value;
+  }
 
-    get getPostalCode() {
-        return this._postalCode;
-    }
+  get getPostalCode() {
+    return this._postalCode;
+  }
 
-    set setPostalCode(value) {
-        this._postalCode = value;
-    }
+  set setPostalCode(value) {
+    this._postalCode = value;
+  }
 
-    get getCountry() {
-        return this._country;
-    }
+  get getCountry() {
+    return this._country;
+  }
 
-    set setCountry(value) {
-        this._country = value;
-    }
+  set setCountry(value) {
+    this._country = value;
+  }
 }
