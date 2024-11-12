@@ -42,7 +42,7 @@ process.once('SIGTERM', closePoolAndExit).once('SIGINT', closePoolAndExit);
 
 // ----------------------------------------------------------
 // Wrapper to manage OracleDB actions, simplifying connection handling.
-export async function withOracleDB(action) {
+async function withOracleDB(action) {
   let connection;
   try {
     connection = await oracledb.getConnection(); // Gets a connection from the default pool
@@ -145,4 +145,5 @@ module.exports = {
   insertDemotable,
   updateNameDemotable,
   countDemotable,
+  withOracleDB
 };
