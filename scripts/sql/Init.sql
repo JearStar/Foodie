@@ -128,3 +128,5 @@ CREATE TABLE Dish (
     FOREIGN KEY (FoodLocationName, Address, Country, PostalCode) REFERENCES FoodLocation ON DELETE CASCADE,
     PRIMARY KEY (DishName, FoodLocationName, Address, Country, PostalCode)
 );
+
+COMMIT;
