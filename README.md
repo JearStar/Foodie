@@ -146,3 +146,12 @@ Click on Test connection to check the connection.
 
 Now, when you run `node server.js`, all the errors involving Oracle DB should be gone, and your application can now access
 the database directly.
+
+## SQL Scripts
+Before you can run the SQL scripts on your own ugrad Oracle DB, you must change the schema names in the scripts:
+
+In `scripts/sql/Init.sql` and `scripts/sql/DropTables.sql` replace <CWL> in the first line with your CWL
+
+```
+ALTER SESSION SET CURRENT_SCHEMA = ORA_<CWL>;
+```
