@@ -141,7 +141,6 @@ Port: <PORT_NUMBER>
 SID: stu
 User: ora_<CWL>
 Password: a<STUDENT_NUMBER>
-
 ```
 Click on Test connection to check the connection.
 
