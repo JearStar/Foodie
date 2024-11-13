@@ -1,4 +1,5 @@
 const oracledb = require('oracledb');
+const fs = require('fs');
 const loadEnvFile = require('./utils/envUtil');
 
 const envVariables = loadEnvFile('./.env');
@@ -61,6 +62,30 @@ async function withOracleDB(action) {
   }
 }
 
+async function executeSqlFile(connection, filePath) {
+  const sql = await fs.promises.readFile(filePath, 'utf8');
+  const statements = sql
+    .split(';')
+    .map((s) => s.trim())
+    .filter((s) => s.length > 0);
+
+  for (let statement of statements) {
+    await connection.execute(statement);
+  }
+}
+
+async function executePlSqlFile(connection, filePath) {
+  const plsql = await fs.promises.readFile(filePath, 'utf8');
+  const blocks = plsql
+    .split('/')
+    .map((s) => s.trim())
+    .filter((s) => s.length > 0);
+
+  for (let block of blocks) {
+    await connection.execute(block);
+  }
+}
+
 // ----------------------------------------------------------
 // Core functions for database operations
 // Modify these functions, especially the SQL queries, based on your project's requirements and design.
@@ -78,6 +103,22 @@ async function fetchDemotableFromDb() {
     return result.rows;
   }).catch(() => {
     return [];
+  });
+}
+
+async function runInitScriptSQL() {
+  return await withOracleDB(async (connection) => {
+    try {
+      await connection.execute(
+        `ALTER SESSION SET CURRENT_SCHEMA = ` + envVariables.ORACLE_USER
+      );
+      await executePlSqlFile(connection, './scripts/sql/DropTables.sql');
+      console.log('finished drop');
+      await executeSqlFile(connection, './scripts/sql/Init.sql');
+      console.log('finished creation');
+    } catch (err) {
+      console.log('failed to execute sql script ' + err.message);
+    }
   });
 }
 
@@ -145,5 +186,6 @@ module.exports = {
   insertDemotable,
   updateNameDemotable,
   countDemotable,
-  withOracleDB
+  runInitScriptSQL,
+  withOracleDB,
 };

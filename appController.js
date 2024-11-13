@@ -6,6 +6,16 @@ const router = express.Router();
 // ----------------------------------------------------------
 // API endpoints
 // Modify or extend these routes based on your project's needs.
+
+router.post('/run-init-script-sql', async (req, res) => {
+  const initiateResult = await appService.runInitScriptSQL();
+  if (initiateResult) {
+    res.json({ success: true });
+  } else {
+    res.status(500).json({ success: false });
+  }
+});
+
 router.get('/check-db-connection', async (req, res) => {
   const isConnect = await appService.testOracleConnection();
   if (isConnect) {
