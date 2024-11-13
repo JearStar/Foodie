@@ -10,12 +10,13 @@
   "scripts": {
     "prettier": "prettier --write .",
     "sync": "sh ./scripts/mac/sync-build-and-env.sh",
-    "tunnel": "sh ./scripts/mac/server-tunnel.sh"
+    "server-tunnel": "sh ./scripts/mac/server-tunnel.sh",
+    "db-tunnel": "sh ./scripts/mac/db-tunnel.sh"
   },
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.3",
-    "oracledb": "^5.2.0",
+    "oracledb": "^5.5.0",
     "uuid": "^11.0.2"
   },
   "devDependencies": {

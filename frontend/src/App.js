@@ -1,7 +1,17 @@
 import logo from './logo.svg';
 import './App.css';
+import CustomButton from './Button';
 
 function App() {
+  const handleButtonClick = async () => {
+    try {
+      const response = await fetch('/run-init-script-sql', {
+        method: 'POST',
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return (
     <div className="App">
       <header className="App-header">
@@ -17,6 +27,7 @@ function App() {
         >
           Learn React
         </a>
+        <CustomButton onClick={handleButtonClick}>Initiate DB</CustomButton>
       </header>
     </div>
   );
