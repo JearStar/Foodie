@@ -61,3 +61,89 @@ please follow these steps:
    http://localhost:<PORT NUMBER>
    ```
 7. When you are done using the application, remember to close your connection with `Ctrl + c` on the ugrad server to close the connection pool.
+
+## Node version
+Because the ugrad servers have node version 12.22.9, we also need to match the node version locally. Use node version manager
+to change your node version locally with 
+
+```
+nvm use 12.22.9
+```
+Using this version of node requires using the `module.export` syntax for exporting functions.
+
+## How to set up to run locally
+
+To avoid having to deploy every time you want to view your changes in the application, we can run the app locally by creating
+a tunnel to the Oracle DB on the ugrad servers. 
+
+### Prerequisites
+
+You need to have [Oracle Instant Client](https://www.oracle.com/database/technologies/instant-client/downloads.html) installed.
+Here are the steps to install it:
+
+1. From the link above, on Mac, download the Basic Package (DMG) as well as SQL*PLUS Package (DMG).
+
+2. Create a new folder in `/users/<name>` and name it `instantclient`. Open the two DMGs and drag all the files into this new
+folder.
+
+3. Make a new directory called `lib` also in `/users/<name>`.
+
+4. Next, we need to create a symbolic link in the `lib` directory to the `libclntsh.dylib` file in `instantclient`.
+Use the following command in `/users/<name>`:
+
+   ```
+   ln -s ~/instantclient/libclntsh.dylib ~/lib/
+   ```
+   Confirm that indeed a symbolic link was created by doing `cd lib` and `ls -la`.
+
+5. Next, we need to add some Oracle environment variables to `.zshrc` located in `/users/<name>`. You can check it is
+in there with `ls -la` again. Add the following lines to the file (replace `<name>` with whatever your user directory is called):
+
+   ```
+   export PATH=/Users/<name>/instantclient:$PATH
+   export ORACLE_HOME=/Users/<name>/instantclient
+   export DYLD_LIBRARY_PATH=/Users/<name>/instantclient
+   export OCI_LIB_DIR=/Users/<name>/instantclient
+   ```
+
+6. Save the file and set the variables with the command:
+   ```
+   source .zshrc
+   ```
+   
+   Check that this was successful with:
+
+   ```
+   echo $ORACLE_HOME
+   ```
+   As well as all the other variables.
+
+### Creating the tunnel to DB
+Now, on Mac, run the script:
+```
+sh scripts/mac/db-tunnel.sh
+```
+in the root folder of the project. It will respond with
+```
+Building SSH tunnel on port <PORT_NUMBER> to your oracle database...
+```
+Now your project will be able to access the database through `localhost:<PORT_NUMBER>`.
+
+If you are on IntelliJ, you can use the built-in database client to view the database directly.
+
+### Setting up Intellij DB client
+On IntelliJ, click on database (it should be an icon on either the side or the top) > Add data source > Oracle
+Enter the following fields:
+
+```
+Host: localhost
+Port: <PORT_NUMBER>
+SID: stu
+User: ora_<CWL>
+Password: a<STUDENT_NUMBER>
+
+```
+Click on Test connection to check the connection.
+
+Now, when you run `node server.js`, all the errors involving Oracle DB should be gone, and your application can now access
+the database directly.
