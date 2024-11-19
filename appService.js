@@ -62,6 +62,7 @@ async function withOracleDB(action) {
   }
 }
 
+// This function ignores all errors in the sql script and continues even if there are errors
 async function executeSqlFile(connection, filePath) {
   const sql = await fs.promises.readFile(filePath, 'utf8');
   const statements = sql
@@ -70,10 +71,15 @@ async function executeSqlFile(connection, filePath) {
     .filter((s) => s.length > 0);
 
   for (let statement of statements) {
-    await connection.execute(statement);
+    try {
+      await connection.execute(statement);
+    } catch (e) {
+    //   do nothing
+    }
   }
 }
 
+// This function ignores all errors in the sql script and continues even if there are errors
 async function executePlSqlFile(connection, filePath) {
   const plsql = await fs.promises.readFile(filePath, 'utf8');
   const blocks = plsql
@@ -82,7 +88,11 @@ async function executePlSqlFile(connection, filePath) {
     .filter((s) => s.length > 0);
 
   for (let block of blocks) {
-    await connection.execute(block);
+    try {
+      await connection.execute(block);
+    } catch (e) {
+    //   do nothing
+    }
   }
 }
 
@@ -112,9 +122,8 @@ async function runInitScriptSQL() {
       await connection.execute(
         `ALTER SESSION SET CURRENT_SCHEMA = ` + envVariables.ORACLE_USER
       );
-      await executePlSqlFile(connection, './scripts/sql/DropTables.sql');
-      console.log('finished drop');
-      await executeSqlFile(connection, './scripts/sql/Init.sql');
+      // await executeSqlFile(connection,'./scripts/sql/DropTables.sql')
+      await executeSqlFile(connection,'./scripts/sql/Init.sql');
       console.log('finished creation');
     } catch (err) {
       console.log('failed to execute sql script ' + err.message);

@@ -1,3 +1,18 @@
+DROP TABLE ReviewsDish;
+DROP TABLE LimitedTimeDish;
+DROP TABLE Dish;
+DROP TABLE Photo;
+DROP TABLE Review;
+ALTER TABLE FoodLocation DROP CONSTRAINT fk_foodlocation_reference_summary;
+ALTER TABLE Vote DROP CONSTRAINT fk_vote_reference_appuser;
+ALTER TABLE Vote DROP CONSTRAINT fk_vote_reference_usercomment;
+ALTER TABLE UserComment DROP CONSTRAINT fk_usercomment_reference_appuser;
+DROP TABLE Vote;
+DROP TABLE FoodLocationSummary;
+DROP TABLE FoodLocation;
+DROP TABLE UserComment;
+DROP TABLE AppUser;
+
 CREATE TABLE AppUser (
     UserID RAW(16) DEFAULT SYS_GUID() PRIMARY KEY,
     Email VARCHAR(50) NOT NULL,
