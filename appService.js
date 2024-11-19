@@ -125,8 +125,10 @@ async function runInitScriptSQL() {
       // await executeSqlFile(connection,'./scripts/sql/DropTables.sql')
       await executeSqlFile(connection,'./scripts/sql/Init.sql');
       console.log('finished creation');
+      return true;
     } catch (err) {
       console.log('failed to execute sql script ' + err.message);
+      return false;
     }
   });
 }
