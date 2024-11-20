@@ -131,6 +131,16 @@ async function runInitScriptSQL() {
   });
 }
 
+async function findUserPass(user, pass) {
+  return await withOracleDB(async (connection) => {
+    const result = await connection.execute('SELECT Password FROM AppUser WHERE Email= :ema',
+        [user]);
+    return result.rows;
+  }).catch(() => {
+    return Promise.reject();
+  });
+}
+
 async function initiateDemotable() {
   return await withOracleDB(async (connection) => {
     try {
@@ -194,6 +204,7 @@ module.exports = {
   initiateDemotable,
   insertDemotable,
   updateNameDemotable,
+  findUserPass,
   countDemotable,
   runInitScriptSQL,
   withOracleDB,
