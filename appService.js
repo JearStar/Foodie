@@ -131,13 +131,24 @@ async function runInitScriptSQL() {
   });
 }
 
-async function findUserPass(user, pass) {
+async function findUserPass(user) {
   return await withOracleDB(async (connection) => {
     const result = await connection.execute('SELECT Password FROM AppUser WHERE Email= :ema',
         [user]);
     return result.rows;
   }).catch(() => {
     return Promise.reject();
+  });
+}
+
+async function makeNewAcc(user, pass) {
+  return await withOracleDB(async (connection) => {
+    const result = await connection.execute(
+        'INSERT INTO AppUser(UserID, Email, Password, NumReviews) VALUES (DEFAULT, :e, :p, 0)',
+        [user, pass]);
+    return true;
+  }).catch(() => {
+    return false;
   });
 }
 
@@ -203,6 +214,7 @@ module.exports = {
   fetchDemotableFromDb,
   initiateDemotable,
   insertDemotable,
+  makeNewAcc,
   updateNameDemotable,
   findUserPass,
   countDemotable,
