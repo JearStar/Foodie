@@ -23,19 +23,19 @@ CREATE TABLE AppUser (
 );
 
 INSERT INTO AppUser(UserID, FirstName, LastName, Email, Password, NumReviews)
-VALUES (DEFAULT, 'Sabrina', 'Woo', 'sabrinawoo3895@gmail.com', 'iloveicecream1', 0);
+VALUES ('4d7577fc-636e-40b1-ab1f-f3c12422c84a', 'Sabrina', 'Woo', 'sabrinawoo3895@gmail.com', 'iloveicecream1', 0);
 
 INSERT INTO AppUser(UserID, FirstName, LastName, Email, Password, NumReviews)
-VALUES (DEFAULT, 'Sabrina', 'Woo','wsabrina@telus.net', 'bob@!', 0);
+VALUES ('45483f02-a838-4ff1-839e-d9ab83f6f46c', 'Sabrina', 'Woo','wsabrina@telus.net', 'bob@!', 0);
 
 INSERT INTO AppUser(UserID, FirstName, LastName, Email, Password, NumReviews)
-VALUES (DEFAULT, 'Jerry', 'Chiang','jerrychiang@gmail.com', 'jerryc', 0);
+VALUES ('5aba12e6-a3b0-4d19-a078-6f9f41a81eec', 'Jerry', 'Chiang','jerrychiang@gmail.com', 'jerryc', 0);
 
 INSERT INTO AppUser(UserID, FirstName, LastName, Email, Password, NumReviews)
-VALUES (DEFAULT, 'Alex', 'Jacobson','alexjacob@gmail.com', 'alexjacob', 0);
+VALUES ('b6751637-b434-419e-ae0d-1a0c7c405053', 'Alex', 'Jacobson','alexjacob@gmail.com', 'alexjacob', 0);
 
 INSERT INTO AppUser(UserID, FirstName, LastName, Email, Password, NumReviews)
-VALUES (DEFAULT, 'Bob', 'Smith','bobsmith@outlook.com', 'bob', 0);
+VALUES ('88e5791d-0fd7-4721-b8f6-5aad4845f095', 'Bob', 'Smith','bobsmith@outlook.com', 'bob', 0);
 
 
 CREATE TABLE UserComment (
