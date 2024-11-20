@@ -5,6 +5,7 @@ class FoodLocationSummary {
     description,
     foodLocationName,
     address,
+    city,
     postalCode,
     country
   ) {
