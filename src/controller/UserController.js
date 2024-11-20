@@ -85,4 +85,21 @@ router.get('/get-user-info', async (req, res) => {
   }
 });
 
+router.post('/authenticate-user', async (req, res) => {
+  try {
+    const result = await userService.authenticateUser(req.body.email, req.body.password);
+    if (!result) {
+      return res.status(404).json({
+        success: false,
+        error: 'Email or password is incorrect',
+      });
+    }
+    res.json({
+      success: true,
+    });
+  } catch (e) {
+    res.status(500).json({ success: false, error: e.message });
+  }
+});
+
 module.exports = router;

@@ -28,45 +28,28 @@ router.get('/check-db-connection', async (req, res) => {
   }
 });
 
-router.post('/login', async(req, res) => {
-  const user = req.body["user"];
-  const pass = req.body["pass"];
-  try {
-    const result = await appService.findUserPass(user);
-    if (result === []) {
-      res.status(404).json({status: "Email not found"});
-    } else if (exists(result, pass)) {
-      res.status(200).json({status: "Login successful"});
-    } else {
-      res.status(400).json({status: "Incorrect Password"});
-    }
-  } catch (err) {
-    res.status(500).json({ status: "Email not found" });
-  }
-});
-
-router.post('/newAcc', async(req, res) => {
-  const user = req.body["user"];
-  const pass = req.body["pass"];
+router.post('/newAcc', async (req, res) => {
+  const user = req.body['user'];
+  const pass = req.body['pass'];
   try {
     const result = await appService.findUserPass(user);
     if (exists(result, pass)) {
-      res.status(400).json({status: "Account with this username and password exists."});
+      res.status(400).json({ status: 'Account with this username and password exists.' });
     } else {
       const result2 = await appService.makeNewAcc(user, pass);
       if (result2 === true) {
-        res.status(200).json({status: "Successful."});
+        res.status(200).json({ status: 'Successful.' });
       } else {
-        res.status(500).json({ status: "Database error" });
+        res.status(500).json({ status: 'Database error' });
       }
     }
   } catch (err) {
-    res.status(500).json({ status: "Database error" });
+    res.status(500).json({ status: 'Database error' });
   }
 });
 
 function exists(arr, search) {
-  return arr.some(row => row.includes(search));
+  return arr.some((row) => row.includes(search));
 }
 
 router.get('/demotable', async (req, res) => {

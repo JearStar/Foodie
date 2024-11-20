@@ -78,10 +78,23 @@ async function getAll() {
   });
 }
 
+async function authenticateUser(email, password) {
+  return await withOracleDB(async (connection) => {
+    const result = await connection.execute(
+      'SELECT * FROM APPUSER WHERE EMAIL=:email AND PASSWORD=:password',
+      {
+        email: email,
+        password: password,
+      }
+    );
+    return result.rows.length !== 0;
+  });
+}
+
 module.exports = {
   insertUser,
   updatePasswordWithEmail,
   updateEmailWithEmail,
   getUserInfoWithID,
-  getAll,
+  authenticateUser,
 };
