@@ -1,9 +1,27 @@
 class User {
-  constructor(userID, email, password, numReviews) {
+  get firstName() {
+    return this._firstName;
+  }
+
+  set firstName(value) {
+    this._firstName = value;
+  }
+
+  get lastName() {
+    return this._lastName;
+  }
+
+  set lastName(value) {
+    this._lastName = value;
+  }
+  constructor(userID, firstName, lastName, email, password, numReviews) {
     this._userID = userID;
+    this._firstName = firstname;
+    this._lastName = lastName;
     this._email = email;
     this._password = password;
     this._numReviews = numReviews;
+    this._firstName = firstName;
   }
 
   get userID() {

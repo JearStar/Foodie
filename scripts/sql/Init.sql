@@ -15,25 +15,27 @@ DROP TABLE AppUser;
 
 CREATE TABLE AppUser (
     UserID VARCHAR(36) PRIMARY KEY,
-    Email VARCHAR(50) UNIQUE NOT NULL,
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50),
+    Email VARCHAR(50) NOT NULL,
     Password VARCHAR(20) NOT NULL,
     NumReviews INTEGER NOT NULL
 );
 
-INSERT INTO AppUser(UserID, Email, Password, NumReviews)
-VALUES ('34c5034e-b097-4b5c-9a12-0812a56d784a', 'sabrinawoo3895@gmail.com', 'iloveicecream1', 0);
+INSERT INTO AppUser(UserID, FirstName, LastName, Email, Password, NumReviews)
+VALUES (DEFAULT, 'Sabrina', 'Woo', 'sabrinawoo3895@gmail.com', 'iloveicecream1', 0);
 
-INSERT INTO AppUser(UserID, Email, Password, NumReviews)
-VALUES ('ff7f91ae-3408-41c1-9104-4c12fca18397', 'wsabrina@telus.net', 'bob@!', 0);
+INSERT INTO AppUser(UserID, FirstName, LastName, Email, Password, NumReviews)
+VALUES (DEFAULT, 'Sabrina', 'Woo','wsabrina@telus.net', 'bob@!', 0);
 
-INSERT INTO AppUser(UserID, Email, Password, NumReviews)
-VALUES ('d753b05d-1e1a-4056-b074-cb0f74a11ee7', 'jerrychiang@gmail.com', 'jerryc', 0);
+INSERT INTO AppUser(UserID, FirstName, LastName, Email, Password, NumReviews)
+VALUES (DEFAULT, 'Jerry', 'Chiang','jerrychiang@gmail.com', 'jerryc', 0);
 
-INSERT INTO AppUser(UserID, Email, Password, NumReviews)
-VALUES ('b5b5af34-6ee6-4561-aa94-25e1e815c3eb', 'alexjacob@gmail.com', 'alexjacob', 0);
+INSERT INTO AppUser(UserID, FirstName, LastName, Email, Password, NumReviews)
+VALUES (DEFAULT, 'Alex', 'Jacobson','alexjacob@gmail.com', 'alexjacob', 0);
 
-INSERT INTO AppUser(UserID, Email, Password, NumReviews)
-VALUES ('e3e245df-e132-4efa-b59d-288dcc638b2c', 'bobsmith@outlook.com', 'bob', 0);
+INSERT INTO AppUser(UserID, FirstName, LastName, Email, Password, NumReviews)
+VALUES (DEFAULT, 'Bob', 'Smith','bobsmith@outlook.com', 'bob', 0);
 
 
 CREATE TABLE UserComment (

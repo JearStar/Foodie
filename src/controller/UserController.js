@@ -10,7 +10,7 @@ RETURNS: {success : boolean}
  */
 router.put('/create-user', async (req, res) => {
   try {
-    const user = new User(null, req.body.email, req.body.password, null);
+    const user = new User(null, req.body.firstName, req.body.lastName, req.body.email, req.body.password, null);
     const result = await userService.insertUser(user);
     if (!result) {
       return res.status(400).json({ success: false, error: 'Failed to create user' });
@@ -64,9 +64,9 @@ router.post('/change-email', async (req, res) => {
 /*
 ENDPOINT: GET /api/users/get-user-info
 BODY: userID
-RETURNS ON SUCCESS: {success: boolean, data: { userID, email, password, numReviews }}
+RETURNS ON SUCCESS: {success: boolean, data: [{ userID, email, password, numReviews }]}
  */
-router.get('/get-user-info', async (req, res) => {
+router.post('/get-user-info', async (req, res) => {
   try {
     const result = await userService.getUserInfoWithID(req.body.userID);
     // const result = await userService.getAll();
