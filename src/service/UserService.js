@@ -1,10 +1,13 @@
 const { withOracleDB } = require('../../appService');
+const { bufferToUuid, convertBuffersToStrings, generateUUID } = require('../Helper');
+const User = require('../model/User');
 
 async function insertUser(user) {
   return await withOracleDB(async (connection) => {
     const result = await connection.execute(
-      `INSERT INTO APPUSER (USERID, EMAIL, PASSWORD, NUMREVIEWS) VALUES (SYS_GUID(), :email, :password, 0)`,
+      `INSERT INTO APPUSER (USERID, EMAIL, PASSWORD, NUMREVIEWS) VALUES (:userID, :email, :password, 0)`,
       {
+        userID: generateUUID(),
         email: user.email,
         password: user.password,
       },
@@ -55,9 +58,24 @@ async function getUserInfoWithID(userID) {
   });
 }
 
+async function getAll() {
+  return await withOracleDB(async (connection) => {
+    const result = await connection.execute('SELECT * FROM APPUSER');
+    return result.rows.map((row) => {
+      return {
+        user: row[0],
+        email: row[1],
+        password: row[2],
+        numReviews: row[3],
+      };
+    });
+  });
+}
+
 module.exports = {
   insertUser,
   updatePasswordWithEmail,
   updateEmailWithEmail,
   getUserInfoWithID,
+  getAll,
 };

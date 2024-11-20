@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -20,12 +20,7 @@
       <!-- An in-line placeholder to display connection status. -->
       <span id="dbStatus"> </span>
       <!-- A loading GIF, will be hided once get the status. -->
-      <img
-        id="loadingGif"
-        class="loading-gif"
-        src="loading_100px.gif"
-        alt="Loading..."
-      />
+      <img id="loadingGif" class="loading-gif" src="loading_100px.gif" alt="Loading..." />
     </h1>
 
     <br />
@@ -54,8 +49,8 @@
 
     <h2>Reset Demotable</h2>
     <p>
-      If you wish to reset the table press on the reset button. If this is the
-      first time you're running this page, you MUST use reset
+      If you wish to reset the table press on the reset button. If this is the first time you're
+      running this page, you MUST use reset
     </p>
     <button id="resetDemotable">reset</button> <br />
     <!-- A placeholder to display messages related to the reset operation. -->
@@ -68,15 +63,9 @@
 
     <h2>Insert Values into DemoTable</h2>
     <form id="insertDemotable">
-      ID: <input type="number" id="insertId" placeholder="Enter ID" required />
-      <br /><br />
+      ID: <input type="number" id="insertId" placeholder="Enter ID" required /> <br /><br />
       Name:
-      <input
-        type="text"
-        id="insertName"
-        placeholder="Enter Name"
-        maxlength="20"
-      />
+      <input type="text" id="insertName" placeholder="Enter Name" maxlength="20" />
       <br /><br />
 
       <button type="submit">insert</button> <br />
@@ -90,25 +79,15 @@
 
     <h2>Update Name in DemoTable</h2>
     <p>
-      The values are case sensitive and if you enter in the wrong case, the
-      update statement will not do anything.
+      The values are case sensitive and if you enter in the wrong case, the update statement will
+      not do anything.
     </p>
     <form id="updataNameDemotable">
       Old Name:
-      <input
-        type="text"
-        id="updateOldName"
-        placeholder="Enter Old Name"
-        required
-      />
+      <input type="text" id="updateOldName" placeholder="Enter Old Name" required />
       <br /><br />
       New Name:
-      <input
-        type="text"
-        id="updateNewName"
-        placeholder="Enter New Name"
-        maxlength="20"
-      />
+      <input type="text" id="updateNewName" placeholder="Enter New Name" maxlength="20" />
       <br /><br />
 
       <button type="submit">update</button> <br />

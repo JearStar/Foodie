@@ -1,5 +1,4 @@
 const express = require('express');
-const appService = require('../../appService');
 const router = express.Router();
 const userService = require('../service/UserService');
 const User = require('../model/User');
@@ -11,9 +10,7 @@ RETURNS: {success : boolean}
  */
 router.put('/create-user', async (req, res) => {
   try {
-    console.log("creating user object");
     const user = new User(null, req.body.email, req.body.password, null);
-    console.log("trying query");
     const result = await userService.insertUser(user);
     if (!result) {
       return res.status(400).json({ success: false, error: 'Failed to create user' });
@@ -51,7 +48,8 @@ RETURNS ON SUCCESS: {success: boolean, data: { userID, email, password, numRevie
  */
 router.get('/get-user-info', async (req, res) => {
   try {
-    const result = await userService.getUserInfoWithID(req.body.userID);
+    // const result = await userService.getUserInfoWithID(req.body.userID);
+    const result = await userService.getAll();
     if (!result) {
       return res.status(404).json({
         success: false,
@@ -60,12 +58,7 @@ router.get('/get-user-info', async (req, res) => {
     }
     res.json({
       success: true,
-      data: {
-        userID: result.USERID,
-        email: result.EMAIL,
-        password: result.PASSWORD,
-        numReviews: result.NUMREVIEWS,
-      },
+      data: result,
     });
   } catch (e) {
     res.status(500).json({ success: false, error: e.message });

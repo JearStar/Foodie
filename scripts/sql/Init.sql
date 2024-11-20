@@ -14,20 +14,20 @@ DROP TABLE UserComment;
 DROP TABLE AppUser;
 
 CREATE TABLE AppUser (
-    UserID RAW(16) DEFAULT SYS_GUID() PRIMARY KEY,
+    UserID VARCHAR(36) PRIMARY KEY,
     Email VARCHAR(50) NOT NULL,
     Password VARCHAR(20) NOT NULL,
     NumReviews INTEGER NOT NULL
 );
 
 CREATE TABLE UserComment (
-    CommentID RAW(16) DEFAULT SYS_GUID() PRIMARY KEY,
+    CommentID VARCHAR(36) PRIMARY KEY,
     CommentLikes INTEGER NOT NULL,
     Content VARCHAR(1000) NOT NULL,
     CommentTimestamp TIMESTAMP NOT NULL,
-    ParentID RAW(16) DEFAULT SYS_GUID() NOT NULL,
+    ParentID VARCHAR(36)  NOT NULL,
     ParentType VARCHAR(10) NOT NULL,
-    UserID RAW(16) DEFAULT SYS_GUID() NOT NULL,
+    UserID VARCHAR(36)  NOT NULL,
     CHECK (ParentType IN ('Review', 'Comment')),
     CONSTRAINT fk_usercomment_reference_appuser FOREIGN KEY (UserID) REFERENCES AppUser ON DELETE CASCADE
 );
@@ -40,15 +40,15 @@ CREATE TABLE FoodLocation (
     PostalCode VARCHAR(10),
     Country VARCHAR(50),
     Genre VARCHAR(50) NOT NULL,
-    FoodLocationSummaryID RAW(16) DEFAULT SYS_GUID() NOT NULL,
+    FoodLocationSummaryID VARCHAR(36)  NOT NULL,
     PRIMARY KEY (FoodLocationName, Address, Country, PostalCode)
 );
 
 CREATE TABLE Vote (
-    VoteID RAW(16) DEFAULT SYS_GUID() PRIMARY KEY,
+    VoteID VARCHAR(36) PRIMARY KEY,
     Value NUMBER(1) NOT NULL, -- boolean
-    UserID RAW(16) DEFAULT SYS_GUID() NOT NULL,
-    CommentID RAW(16) DEFAULT SYS_GUID() NOT NULL,
+    UserID VARCHAR(36)  NOT NULL,
+    CommentID VARCHAR(36)  NOT NULL,
     CONSTRAINT check_boolean CHECK (Value IN (0, 1)),
     CONSTRAINT fk_vote_reference_appuser FOREIGN KEY (UserID) REFERENCES AppUser ON DELETE CASCADE,
     CONSTRAINT fk_vote_reference_usercomment FOREIGN KEY (CommentID) REFERENCES UserComment ON DELETE CASCADE
@@ -56,7 +56,7 @@ CREATE TABLE Vote (
 
 
 CREATE TABLE FoodLocationSummary (
-    SummaryID RAW(16) DEFAULT SYS_GUID() PRIMARY KEY,
+    SummaryID VARCHAR(36) PRIMARY KEY,
     AverageRating FLOAT NOT NULL,
     Description VARCHAR(255) NOT NULL,
     FoodLocationName VARCHAR(50) NOT NULL,
@@ -69,7 +69,7 @@ CREATE TABLE FoodLocationSummary (
 ALTER TABLE FoodLocation ADD CONSTRAINT fk_foodlocation_reference_summary FOREIGN KEY (FoodLocationSummaryID) REFERENCES FoodLocationSummary(SummaryID);
 
 CREATE TABLE Review (
-    ReviewID RAW(16) DEFAULT SYS_GUID() PRIMARY KEY,
+    ReviewID VARCHAR(36) PRIMARY KEY,
     OverallRating SMALLINT NOT NULL,
     ServiceRating SMALLINT NOT NULL,
     WaitTimeRating SMALLINT NOT NULL,
@@ -79,19 +79,19 @@ CREATE TABLE Review (
     Address VARCHAR(150) NOT NULL,
     PostalCode VARCHAR(10) NOT NULL,
     Country VARCHAR(50) NOT NULL,
-    UserID RAW(16) DEFAULT SYS_GUID() NOT NULL,
+    UserID VARCHAR(36)  NOT NULL,
     FOREIGN KEY (UserID) REFERENCES AppUser ON DELETE CASCADE,
     FOREIGN KEY (FoodLocationName, Address, Country, PostalCode) REFERENCES FoodLocation ON DELETE CASCADE
 );
 
 CREATE TABLE Photo (
-    PhotoID RAW(16) DEFAULT SYS_GUID() PRIMARY KEY,
+    PhotoID VARCHAR(36) PRIMARY KEY,
     Image BLOB NOT NULL,
     PhotoLikes INTEGER NOT NULL,
     Description VARCHAR(1000),
     PhotoTimestamp TIMESTAMP NOT NULL,
-    ReviewID RAW(16) DEFAULT SYS_GUID() NOT NULL,
-    SummaryID RAW(16) DEFAULT SYS_GUID(),
+    ReviewID VARCHAR(36)  NOT NULL,
+    SummaryID VARCHAR(36) ,
     FOREIGN KEY (SummaryID) REFERENCES FoodLocationSummary ON DELETE CASCADE,
     FOREIGN KEY (ReviewID) REFERENCES Review ON DELETE CASCADE
 );
@@ -130,7 +130,7 @@ CREATE TABLE LimitedTimeDish (
 
 
 CREATE TABLE ReviewsDish (
-    ReviewID RAW(16) DEFAULT SYS_GUID(),
+    ReviewID VARCHAR(36),
     DishName VARCHAR(50),
     DishRating SMALLINT NOT NULL,
     FoodLocationName VARCHAR(50),
