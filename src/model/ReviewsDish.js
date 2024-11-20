@@ -1,13 +1,5 @@
 class ReviewsDish {
-  constructor(
-    reviewID,
-    dishName,
-    dishRating,
-    foodLocationName,
-    address,
-    postalCode,
-    country
-  ) {
+  constructor(reviewID, dishName, dishRating, foodLocationName, address, postalCode, country) {
     this._reviewID = reviewID;
     this._dishName = dishName;
     this._dishRating = dishRating;

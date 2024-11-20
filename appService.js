@@ -74,7 +74,7 @@ async function executeSqlFile(connection, filePath) {
     try {
       await connection.execute(statement);
     } catch (e) {
-    //   do nothing
+      //   do nothing
     }
   }
 }
@@ -91,7 +91,7 @@ async function executePlSqlFile(connection, filePath) {
     try {
       await connection.execute(block);
     } catch (e) {
-    //   do nothing
+      //   do nothing
     }
   }
 }
@@ -119,11 +119,9 @@ async function fetchDemotableFromDb() {
 async function runInitScriptSQL() {
   return await withOracleDB(async (connection) => {
     try {
-      await connection.execute(
-        `ALTER SESSION SET CURRENT_SCHEMA = ` + envVariables.ORACLE_USER
-      );
+      await connection.execute(`ALTER SESSION SET CURRENT_SCHEMA = ` + envVariables.ORACLE_USER);
       // await executeSqlFile(connection,'./scripts/sql/DropTables.sql')
-      await executeSqlFile(connection,'./scripts/sql/Init.sql');
+      await executeSqlFile(connection, './scripts/sql/Init.sql');
       console.log('finished creation');
       return true;
     } catch (err) {

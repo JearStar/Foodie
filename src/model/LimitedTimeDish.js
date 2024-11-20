@@ -1,13 +1,5 @@
 class LimitedTimeDish {
-  constructor(
-    dishName,
-    foodLocationName,
-    address,
-    postalCode,
-    country,
-    startDate,
-    endDate
-  ) {
+  constructor(dishName, foodLocationName, address, postalCode, country, startDate, endDate) {
     this._dishName = dishName;
     this._foodLocationName = foodLocationName;
     this._address = address;

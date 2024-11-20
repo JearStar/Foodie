@@ -160,18 +160,10 @@ async function countDemotable() {
 window.onload = function () {
   checkDbConnection();
   fetchTableData();
-  document
-    .getElementById('resetDemotable')
-    .addEventListener('click', resetDemotable);
-  document
-    .getElementById('insertDemotable')
-    .addEventListener('submit', insertDemotable);
-  document
-    .getElementById('updataNameDemotable')
-    .addEventListener('submit', updateNameDemotable);
-  document
-    .getElementById('countDemotable')
-    .addEventListener('click', countDemotable);
+  document.getElementById('resetDemotable').addEventListener('click', resetDemotable);
+  document.getElementById('insertDemotable').addEventListener('submit', insertDemotable);
+  document.getElementById('updataNameDemotable').addEventListener('submit', updateNameDemotable);
+  document.getElementById('countDemotable').addEventListener('click', countDemotable);
 };
 
 // General function to refresh the displayed table data.

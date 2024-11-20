@@ -2,10 +2,13 @@ const express = require('express');
 const appService = require('./appService');
 
 const router = express.Router();
+const userRouter = require('./src/controller/UserController');
 
 // ----------------------------------------------------------
 // API endpoints
 // Modify or extend these routes based on your project's needs.
+
+router.use('/users', userRouter);
 
 router.post('/run-init-script-sql', async (req, res) => {
   const initiateResult = await appService.runInitScriptSQL();

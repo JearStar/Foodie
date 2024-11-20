@@ -1,20 +1,24 @@
-
-import {withOracleDB} from "../../appService";
-const Service = require ("../../appService")
+const Service = require('../../appService');
 
 //INSERT ReviewsDish
-export async function insertReviewsDish(DishName, Price, Type, isHalal, isGlutenFree, isVegetarian, FoodLocationName, Address, PostalCode, Country)
-{
-    return await Service.(async (connection) => {
-        const result = await connection.execute(
-            `INSERT INTO ReviewsDish (ReviewID, DishName, DishRating) VALUES (:ReviewID, :DishName, :DishRating)`,
-            {ReviewID, DishName, DishRating},
-            { autoCommit: true }
-        );
-
-        return result.rowsAffected && result.rowsAffected > 0;
-    }).catch(() => {
-        console.error('Error inserting Reviews Dish:', error);
-        return false;
-    });
+async function insertReviewsDish(reviewsDish) {
+  return await Service.withOracleDB(async (connection) => {
+    const result = await connection.execute(
+      `INSERT INTO ReviewsDish (REVIEWID, DISHNAME, DISHRATING, FOODLOCATIONNAME, ADDRESS, POSTALCODE, COUNTRY) 
+VALUES (SYS_GUID(), :dishName, :dishRating, :foodLocationName, :address, :postalCode, :country)`,
+      {
+        dishName: reviewsDish.dishName,
+        dishRating: reviewsDish.dishRating,
+        foodLocationName: reviewsDish.foodLocationName,
+        address: reviewsDish.address,
+        postalCode: reviewsDish.postalCode,
+        country: reviewsDish.country,
+      },
+      { autoCommit: true }
+    );
+    return result.rowsAffected && result.rowsAffected > 0;
+  });
 }
+module.exports = {
+  insertReviewsDish,
+};

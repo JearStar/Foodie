@@ -66,9 +66,11 @@ please follow these steps:
 
 Because the ugrad servers have node version 12.22.9, we also need to match the node version locally. Use node version manager
 to change your node version locally with
+
 ```
 source $(brew --prefix nvm)/nvm.sh
 ```
+
 ```
 nvm use 12.22.9
 ```

@@ -1,13 +1,5 @@
 class Comment {
-  constructor(
-    commentID,
-    commentLikes,
-    content,
-    commentTimestamp,
-    parentID,
-    parentType,
-    userID
-  ) {
+  constructor(commentID, commentLikes, content, commentTimestamp, parentID, parentType, userID) {
     this._commentID = commentID;
     this._commentLikes = commentLikes;
     this._content = content;

@@ -1,13 +1,5 @@
 class Photo {
-  constructor(
-    photoID,
-    image,
-    photoLikes,
-    description,
-    photoTimestamp,
-    reviewID,
-    summaryID
-  ) {
+  constructor(photoID, image, photoLikes, description, photoTimestamp, reviewID, summaryID) {
     this._photoID = photoID;
     this._image = image;
     this._photoLikes = photoLikes;

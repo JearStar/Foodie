@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
 });
 
 // mount the router
-app.use('/', appController);
+app.use('/api', appController);
 
 // ----------------------------------------------------------
 // Starting the server

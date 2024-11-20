@@ -1,14 +1,5 @@
 class FoodLocation {
-  constructor(
-    foodLocationName,
-    numReviews,
-    address,
-    city,
-    postalCode,
-    country,
-    genre,
-    summaryID
-  ) {
+  constructor(foodLocationName, numReviews, address, city, postalCode, country, genre, summaryID) {
     this._foodLocationName = foodLocationName;
     this._numReviews = numReviews;
     this._address = address;

@@ -1,18 +1,26 @@
-const appService = require("../../appService");
+const appService = require('../../appService');
 
-export async function insertFLSummary(summaryID, avgRating, description, name, address,
-                                      postalCode, country) {
-    return await appService.withOracleDB(async (connection) => {
-        const result = await connection.execute(
-            `INSERT INTO FoodLocationSummary (summaryID, avgRating, description, name, address, postalCode, 
-                                 country) VALUES (:summaryID, :avgRating, :description, :name, :address, :postalCode,
-                                                  :country)`,
-            {summaryID, avgRating, description, name, address, postalCode, country},
-            { autoCommit: true }
-        );
+async function insertFLSummary(foodLocationSummary) {
+  return await appService.withOracleDB(async (connection) => {
+    const result = await connection.execute(
+      `INSERT INTO FoodLocationSummary (SUMMARYID, AVERAGERATING, DESCRIPTION, FOODLOCATIONNAME, ADDRESS, POSTALCODE, COUNTRY) 
+VALUES (:summaryID, :averageRating, :description, :foodLocationName, :address, :postalCode, :country)`,
+      {
+        summaryID: foodLocationSummary.summaryID,
+        averageRating: foodLocationSummary.averageRating,
+        description: foodLocationSummary.description,
+        foodLocationName: foodLocationSummary.foodLocationName,
+        address: foodLocationSummary.foodLocationName,
+        postalCode: foodLocationSummary.postalCode,
+        country: foodLocationSummary.country,
+      },
+      { autoCommit: true }
+    );
 
-        return result.rowsAffected && result.rowsAffected > 0;
-    }).catch(() => {
-        return false;
-    });
+    return result.rowsAffected && result.rowsAffected > 0;
+  });
 }
+
+module.exports = {
+  insertFLSummary,
+};
