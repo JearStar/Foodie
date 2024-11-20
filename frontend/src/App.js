@@ -3,8 +3,6 @@ import './App.css';
 import CustomButton from './Button';
 import LoginScreen from './LoginScreen';
 
-const localHost = 'http://localhost:65535';
-
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
 
@@ -20,17 +18,17 @@ function App() {
 
   if (!loggedIn) {
     return (
-      <div className="App">
-        <header className="App-header">
-          <p>
-            <LoginScreen onLoginSuccess={setLoggedIn(true)} />
-          </p>
-          <p>
-            <CustomButton onClick={handleButtonClick}>Initiate DB</CustomButton>
-          </p>
-        </header>
-      </div>
-    );
+        <div className="App">
+            <header className="App-header">
+                <p>
+                    <LoginScreen onLoginSuccess={() => setLoggedIn(true)}/>
+                </p>
+                <p>
+                    <CustomButton onClick={handleButtonClick}>Initiate DB</CustomButton>
+                </p>
+            </header>
+        </div>
+  );
   } else {
     return (
       <div className="App">

@@ -13,12 +13,30 @@ DROP TABLE FoodLocation;
 DROP TABLE UserComment;
 DROP TABLE AppUser;
 
+ALTER SESSION SET CURRENT_SCHEMA = ORA_xanderj;
+
 CREATE TABLE AppUser (
     UserID VARCHAR(36) PRIMARY KEY,
     Email VARCHAR(50) NOT NULL,
     Password VARCHAR(20) NOT NULL,
     NumReviews INTEGER NOT NULL
 );
+
+INSERT INTO AppUser(UserID, Email, Password, NumReviews)
+VALUES (DEFAULT, 'sabrinawoo3895@gmail.com', 'iloveicecream1', 0);
+
+INSERT INTO AppUser(UserID, Email, Password, NumReviews)
+VALUES (DEFAULT, 'wsabrina@telus.net', 'bob@!', 0);
+
+INSERT INTO AppUser(UserID, Email, Password, NumReviews)
+VALUES (DEFAULT, 'jerrychiang@gmail.com', 'jerryc', 0);
+
+INSERT INTO AppUser(UserID, Email, Password, NumReviews)
+VALUES (DEFAULT, 'alexjacob@gmail.com', 'alexjacob', 0);
+
+INSERT INTO AppUser(UserID, Email, Password, NumReviews)
+VALUES (DEFAULT, 'bobsmith@outlook.com', 'bob', 0);
+
 
 CREATE TABLE UserComment (
     CommentID VARCHAR(36) PRIMARY KEY,

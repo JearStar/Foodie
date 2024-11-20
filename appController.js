@@ -13,7 +13,7 @@ router.use('/users', userRouter);
 router.post('/run-init-script-sql', async (req, res) => {
   const initiateResult = await appService.runInitScriptSQL();
   if (initiateResult) {
-    res.json({ success: true });
+    res.status(200).json({ success: true });
   } else {
     res.status(500).json({ success: false });
   }
@@ -25,6 +25,23 @@ router.get('/check-db-connection', async (req, res) => {
     res.send('connected');
   } else {
     res.send('unable to connect');
+  }
+});
+
+router.post('/login', async(req, res) => {
+  const user = req.body["user"];
+  const pass = req.body["pass"];
+  try {
+    const result = await appService.findUserPass(user, pass);
+    if (result === []) {
+      res.status(404).json({status: "Email not found"});
+    } else if (pass.trim() === result[0][0]) {
+      res.status(200).json({status: "Login successful"});
+    } else {
+      res.status(400).json({status: "Incorrect Password"});
+    }
+  } catch (err) {
+    res.status(500).json({ status: "Email not found" });
   }
 });
 
