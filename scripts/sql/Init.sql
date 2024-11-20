@@ -17,7 +17,7 @@ CREATE TABLE AppUser (
     UserID VARCHAR(36) PRIMARY KEY,
     FirstName VARCHAR(50),
     LastName VARCHAR(50),
-    Email VARCHAR(50) NOT NULL,
+    Email VARCHAR(50) UNIQUE NOT NULL,
     Password VARCHAR(20) NOT NULL,
     NumReviews INTEGER NOT NULL
 );
