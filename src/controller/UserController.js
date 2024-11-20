@@ -42,14 +42,34 @@ router.post('/change-password', async (req, res) => {
 });
 
 /*
+ENDPOINT: POST /api/users/change-password
+BODY: oldEmail, newEmail
+RETURNS: {success : boolean}
+ */
+router.post('/change-email', async (req, res) => {
+  try {
+    const result = await userService.updateEmailWithEmail(req.body.oldEmail, req.body.newEmail);
+    if (!result) {
+      return res.status(400).json({
+        success: false,
+        error: 'Failed to update email for: ' + req.body.email,
+      });
+    }
+    res.json({ success: true });
+  } catch (e) {
+    res.status(500).json({ success: false, error: e.message });
+  }
+});
+
+/*
 ENDPOINT: GET /api/users/get-user-info
 BODY: userID
 RETURNS ON SUCCESS: {success: boolean, data: { userID, email, password, numReviews }}
  */
 router.get('/get-user-info', async (req, res) => {
   try {
-    // const result = await userService.getUserInfoWithID(req.body.userID);
-    const result = await userService.getAll();
+    const result = await userService.getUserInfoWithID(req.body.userID);
+    // const result = await userService.getAll();
     if (!result) {
       return res.status(404).json({
         success: false,

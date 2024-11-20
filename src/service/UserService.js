@@ -1,6 +1,5 @@
 const { withOracleDB } = require('../../appService');
-const { bufferToUuid, convertBuffersToStrings, generateUUID } = require('../Helper');
-const User = require('../model/User');
+const { generateUUID } = require('../Helper');
 
 async function insertUser(user) {
   return await withOracleDB(async (connection) => {
@@ -52,9 +51,16 @@ async function getUserInfoWithID(userID) {
       userID: userID,
     });
     if (result.rows.length === 0) {
-      return null;
+      return {};
     }
-    return result.rows[0];
+    return result.rows.map((row) => {
+      return {
+        user: row[0],
+        email: row[1],
+        password: row[2],
+        numReviews: row[3],
+      };
+    });
   });
 }
 
