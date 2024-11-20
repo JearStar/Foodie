@@ -11,7 +11,7 @@ function LoginScreen({onLoginSuccess}) {
     const [createNewAcc, setCreateNewAcc] = useState(false);
 
     const loginAtt = () => {
-        return fetch( "/login",
+        return fetch( "/api/login",
             {
                 method: 'POST',
                 body: JSON.stringify({"user": username, "pass": password}),

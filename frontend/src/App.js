@@ -8,7 +8,7 @@ function App() {
 
   const handleButtonClick = async () => {
     try {
-      const response = await fetch('/run-init-script-sql', {
+      const response = await fetch('/api/run-init-script-sql', {
         method: 'POST',
       });
     } catch (e) {
