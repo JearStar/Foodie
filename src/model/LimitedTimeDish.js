@@ -74,3 +74,4 @@ class LimitedTimeDish {
     this._endDate = value;
   }
 }
+module.exports = LimitedTimeDish;

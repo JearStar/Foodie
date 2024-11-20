@@ -64,3 +64,4 @@ class Photo {
     this._summaryID = value;
   }
 }
+module.exports = Photo;

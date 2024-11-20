@@ -83,3 +83,4 @@ class FoodLocationSummary {
     this._country = value;
   }
 }
+module.exports = FoodLocationSummary;

@@ -69,3 +69,4 @@ class ReviewsDish {
     this._country = value;
   }
 }
+module.exports = ReviewsDish;

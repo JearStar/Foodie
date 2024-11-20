@@ -107,3 +107,4 @@ class Dish {
     this._country = value;
   }
 }
+module.exports = Dish;

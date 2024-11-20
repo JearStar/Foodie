@@ -64,3 +64,5 @@ class Comment {
     this._userID = value;
   }
 }
+
+module.exports = Comment;

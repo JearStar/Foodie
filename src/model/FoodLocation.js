@@ -74,3 +74,4 @@ class FoodLocation {
     this._summaryID = value;
   }
 }
+module.exports = FoodLocation;

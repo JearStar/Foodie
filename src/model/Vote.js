@@ -38,3 +38,4 @@ class Vote {
     this._commentID = value;
   }
 }
+module.exports = Vote;

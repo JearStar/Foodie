@@ -38,3 +38,4 @@ class User {
     this._numReviews = value;
   }
 }
+module.exports = User;

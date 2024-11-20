@@ -113,3 +113,4 @@ class Review {
     this._userID = value;
   }
 }
+module.exports = Review;

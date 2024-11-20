@@ -2,6 +2,7 @@ const express = require('express');
 const appService = require('../../appService');
 const router = express.Router();
 const userService = require('../service/UserService');
+const User = require('../model/User');
 
 /*
 ENDPOINT: PUT /api/users/create-user
@@ -10,7 +11,9 @@ RETURNS: {success : boolean}
  */
 router.put('/create-user', async (req, res) => {
   try {
+    console.log("creating user object");
     const user = new User(null, req.body.email, req.body.password, null);
+    console.log("trying query");
     const result = await userService.insertUser(user);
     if (!result) {
       return res.status(400).json({ success: false, error: 'Failed to create user' });
