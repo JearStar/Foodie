@@ -5,7 +5,8 @@ function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [name, setName] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
@@ -17,14 +18,31 @@ function SignUp() {
     };
   }, []);
 
-  const handleSignUp = async (email, password, name) => {
+  const handleSignUp = async (email, password, firstName, lastName) => {
     try {
+      let userExistsResponse = await fetch('/api/users/user-exists', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: email }),
+      });
+      userExistsResponse = await userExistsResponse.json();
+      if (userExistsResponse.userExists) {
+        setError('This email already exists');
+        return false;
+      }
       const response = await fetch('/api/users/create-user', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, password, name }),
+        body: JSON.stringify({
+          email: email,
+          password: password,
+          firstName: firstName,
+          lastName: lastName,
+        }),
       });
       let signupResponse = await response.json();
 
@@ -48,7 +66,7 @@ function SignUp() {
       return;
     }
 
-    if (await handleSignUp(email, password, name)) {
+    if (await handleSignUp(email, password, firstName, lastName)) {
       navigate('/login');
     }
   };
@@ -63,18 +81,33 @@ function SignUp() {
           <h2 className="text-center mb-4 text-light">Sign Up</h2>
           {error && <div className="alert alert-danger">{error}</div>}
           <form onSubmit={handleSubmit}>
-            <div className="mb-3">
-              <label htmlFor="name" className="form-label text-center text-light">
-                Full Name
-              </label>
-              <input
-                type="text"
-                className="form-control form-control-sm"
-                id="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-              />
+            <div className="row mb-3">
+              <div className="col">
+                <label htmlFor="firstName" className="form-label text-light">
+                  First Name
+                </label>
+                <input
+                  type="text"
+                  className="form-control form-control-sm"
+                  id="firstName"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="col">
+                <label htmlFor="lastName" className="form-label text-light">
+                  Last Name
+                </label>
+                <input
+                  type="text"
+                  className="form-control form-control-sm"
+                  id="lastName"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  required
+                />
+              </div>
             </div>
             <div className="mb-3">
               <label htmlFor="email" className="form-label text-center text-light">

@@ -16,7 +16,7 @@ class User {
   }
   constructor(userID, firstName, lastName, email, password, numReviews) {
     this._userID = userID;
-    this._firstName = firstname;
+    this._firstName = firstName;
     this._lastName = lastName;
     this._email = email;
     this._password = password;

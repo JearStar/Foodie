@@ -27,21 +27,21 @@ function Login({ handleLogin }) {
 
       if (!response.ok) {
         setError(auth.error);
-        return false;
+        return null;
       }
 
-      return true;
+      return auth.user;
     } catch (e) {
       console.log('something weird happened');
-      return false;
+      return null;
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (await authentication(email, password)) {
-      handleLogin();
+    const user = await authentication(email, password);
+    if (user) {
+      handleLogin(user);
     }
   };
 

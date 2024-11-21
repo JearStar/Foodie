@@ -4,15 +4,30 @@ const { generateUUID } = require('../Helper');
 async function insertUser(user) {
   return await withOracleDB(async (connection) => {
     const result = await connection.execute(
-      `INSERT INTO APPUSER (USERID, EMAIL, PASSWORD, NUMREVIEWS) VALUES (:userID, :email, :password, 0)`,
+      `INSERT INTO APPUSER (USERID, FIRSTNAME, LASTNAME, EMAIL, PASSWORD, NUMREVIEWS) VALUES (:userID, :firstName, :lastName, :email, :password, 0)`,
       {
         userID: generateUUID(),
+        firstName: user.firstName,
+        lastName: user.lastName,
         email: user.email,
         password: user.password,
       },
       { autoCommit: true }
     );
     return result.rowsAffected && result.rowsAffected > 0;
+  });
+}
+
+async function emailExists(email) {
+  return await withOracleDB(async (connection) => {
+    const result = await connection.execute(
+      `SELECT * FROM APPUSER WHERE EMAIL=:email`,
+      {
+        email: email,
+      },
+      { autoCommit: true }
+    );
+    return result.rows.length !== 0;
   });
 }
 
@@ -87,12 +102,23 @@ async function authenticateUser(email, password) {
         password: password,
       }
     );
-    return result.rows.length !== 0;
+    if (result.rows.length === 0) {
+      return null;
+    }
+    return {
+      userID: result.rows[0][0],
+      firstName: result.rows[0][1],
+      lastName: result.rows[0][2],
+      email: result.rows[0][3],
+      password: result.rows[0][4],
+      numReviews: result.rows[0][5],
+    };
   });
 }
 
 module.exports = {
   insertUser,
+  emailExists,
   updatePasswordWithEmail,
   updateEmailWithEmail,
   getUserInfoWithID,

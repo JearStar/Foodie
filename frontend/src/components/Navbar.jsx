@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { UserContext } from '../contexts/UserContext';
 
-const Navbar = ({ isAuthenticated, handleLogout }) => {
+const Navbar = () => {
+  const { user, logout } = useContext(UserContext);
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-dark">
       <div className="container-fluid">
@@ -10,7 +12,7 @@ const Navbar = ({ isAuthenticated, handleLogout }) => {
         </Link>
         <div className="collapse navbar-collapse">
           <ul className="navbar-nav ms-auto">
-            {isAuthenticated ? (
+            {user ? (
               <>
                 <li className="nav-item">
                   <Link className="btn btn-dark" to="/home">
@@ -18,7 +20,7 @@ const Navbar = ({ isAuthenticated, handleLogout }) => {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <button className="btn btn-dark" onClick={handleLogout}>
+                  <button className="btn btn-dark" onClick={logout}>
                     Logout
                   </button>
                 </li>

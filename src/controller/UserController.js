@@ -10,12 +10,33 @@ RETURNS: {success : boolean}
  */
 router.put('/create-user', async (req, res) => {
   try {
-    const user = new User(null, req.body.firstName, req.body.lastName, req.body.email, req.body.password, null);
+    const user = new User(
+      null,
+      req.body.firstName,
+      req.body.lastName,
+      req.body.email,
+      req.body.password,
+      null
+    );
     const result = await userService.insertUser(user);
     if (!result) {
       return res.status(400).json({ success: false, error: 'Failed to create user' });
     }
     res.json({ success: true });
+  } catch (e) {
+    res.status(500).json({ success: false, error: e.message });
+  }
+});
+
+/*
+ENDPOINT: POST /api/users/user-exists
+BODY: email
+RETURNS: {success : boolean, result: boolean}
+ */
+router.post('/user-exists', async (req, res) => {
+  try {
+    const result = await userService.emailExists(req.body.email);
+    return res.json({ success: true, userExists: result });
   } catch (e) {
     res.status(500).json({ success: false, error: e.message });
   }
@@ -96,6 +117,7 @@ router.post('/authenticate-user', async (req, res) => {
     }
     res.json({
       success: true,
+      user: result,
     });
   } catch (e) {
     res.status(500).json({ success: false, error: e.message });

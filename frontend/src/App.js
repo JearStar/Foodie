@@ -9,7 +9,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { UserContext } from './contexts/UserContext';
 
 function App() {
-  const [isLoggedIn, setLoggedIn] = useState(false);
   const { user, login, logout } = useContext(UserContext);
 
   const handleButtonClick = async () => {
@@ -22,13 +21,10 @@ function App() {
     }
   };
 
-  const handleLogin = () => setLoggedIn(true);
-  const handleLogout = () => setLoggedIn(false);
-
   return (
     <div className="bg-dark">
       <Router>
-        {isLoggedIn && <Navbar isAuthenticated={isLoggedIn} handleLogout={handleLogout} />}
+        {user && <Navbar />}
         <div
           className="d-flex justify-content-center align-items-center"
           style={{ height: '100vh' }}
@@ -39,16 +35,16 @@ function App() {
               <Route
                 path="/login"
                 element={
-                  isLoggedIn ? (
+                  user ? (
                     <Navigate to="/home" />
                   ) : (
-                    <Login handleLogin={handleLogin} className="login-page" />
+                    <Login handleLogin={login} className="login-page" />
                   )
                 }
               />
-              <Route path="/home" element={isLoggedIn ? <Home /> : <Navigate to="/login" />} />
+              <Route path="/home" element={user ? <Home /> : <Navigate to="/login" />} />
               <Route path="/" element={<Navigate to="/login" />} />
-              <Route path="*" element={<Navigate to={isLoggedIn ? '/home' : '/login'} />} />
+              <Route path="*" element={<Navigate to={user ? '/home' : '/login'} />} />
             </Routes>
           </div>
         </div>
