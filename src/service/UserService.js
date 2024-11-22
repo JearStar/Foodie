@@ -1,16 +1,16 @@
 const { withOracleDB } = require('../../appService');
-const { generateUUID } = require('../Helper');
 
 async function insertUser(user) {
   return await withOracleDB(async (connection) => {
     const result = await connection.execute(
-      `INSERT INTO APPUSER (USERID, FIRSTNAME, LASTNAME, EMAIL, PASSWORD, NUMREVIEWS) VALUES (:userID, :firstName, :lastName, :email, :password, 0)`,
+      `INSERT INTO APPUSER (USERID, FIRSTNAME, LASTNAME, EMAIL, PASSWORD, NUMREVIEWS) VALUES (:userID, :firstName, :lastName, :email, :password, :numReviews)`,
       {
-        userID: generateUUID(),
+        userID: user.userID,
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
         password: user.password,
+        numReviews: user.numReviews
       },
       { autoCommit: true }
     );
@@ -110,7 +110,6 @@ async function authenticateUser(email, password) {
       firstName: result.rows[0][1],
       lastName: result.rows[0][2],
       email: result.rows[0][3],
-      password: result.rows[0][4],
       numReviews: result.rows[0][5],
     };
   });

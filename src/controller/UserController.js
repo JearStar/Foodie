@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const userService = require('../service/UserService');
 const User = require('../model/User');
+const { generateUUID } = require('../Helper');
 
 /*
 ENDPOINT: PUT /api/users/create-user
@@ -11,12 +12,12 @@ RETURNS: {success : boolean}
 router.put('/create-user', async (req, res) => {
   try {
     const user = new User(
-      null,
+      generateUUID(),
       req.body.firstName,
       req.body.lastName,
       req.body.email,
       req.body.password,
-      null
+      0
     );
     const result = await userService.insertUser(user);
     if (!result) {
@@ -106,6 +107,11 @@ router.post('/get-user-info', async (req, res) => {
   }
 });
 
+/*
+ENDPOINT: POST /api/users/authenticate-user
+BODY: { email, password }
+RETURNS ON SUCCESS: {success: boolean, user: { userID, firstName, lastName, email, numReviews }}
+ */
 router.post('/authenticate-user', async (req, res) => {
   try {
     const result = await userService.authenticateUser(req.body.email, req.body.password);

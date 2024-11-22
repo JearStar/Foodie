@@ -5,8 +5,9 @@ async function insertReviewsDish(reviewsDish) {
   return await Service.withOracleDB(async (connection) => {
     const result = await connection.execute(
       `INSERT INTO ReviewsDish (REVIEWID, DISHNAME, DISHRATING, FOODLOCATIONNAME, ADDRESS, POSTALCODE, COUNTRY) 
-VALUES (SYS_GUID(), :dishName, :dishRating, :foodLocationName, :address, :postalCode, :country)`,
+VALUES (:reviewID, :dishName, :dishRating, :foodLocationName, :address, :postalCode, :country)`,
       {
+        reviewID: reviewsDish.reviewID,
         dishName: reviewsDish.dishName,
         dishRating: reviewsDish.dishRating,
         foodLocationName: reviewsDish.foodLocationName,

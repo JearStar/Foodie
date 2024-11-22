@@ -3,12 +3,14 @@ const appService = require('./appService');
 
 const router = express.Router();
 const userRouter = require('./src/controller/UserController');
+const photoRouter = require('./src/controller/PhotoController');
 
 // ----------------------------------------------------------
 // API endpoints
 // Modify or extend these routes based on your project's needs.
 
 router.use('/users', userRouter);
+router.use('/photos', photoRouter);
 
 router.post('/run-init-script-sql', async (req, res) => {
   const initiateResult = await appService.runInitScriptSQL();

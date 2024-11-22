@@ -3,8 +3,9 @@ const { withOracleDB } = require('../../appService');
 async function addComment(comment) {
   return await withOracleDB(async (connection) => {
     const result = await connection.execute(
-      `INSERT INTO USERCOMMENT (COMMENTID, COMMENTLIKES, CONTENT, COMMENTTIMESTAMP, PARENTID, PARENTTYPE, USERID) VALUES (SYS_GUID(), :commentLikes, :content, :commentTimestamp, :parentID, :parentType, :userID)`,
+      `INSERT INTO USERCOMMENT (COMMENTID, COMMENTLIKES, CONTENT, COMMENTTIMESTAMP, PARENTID, PARENTTYPE, USERID) VALUES (:commentID, :commentLikes, :content, :commentTimestamp, :parentID, :parentType, :userID)`,
       {
+        commentID: comment.commentID,
         commentLikes: comment.commentLikes,
         content: comment.content,
         commentTimestamp: comment.commentTimestamp,

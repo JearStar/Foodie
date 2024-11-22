@@ -1,7 +1,7 @@
 class Photo {
-  constructor(photoID, image, photoLikes, description, photoTimestamp, reviewID, summaryID) {
+  constructor(photoID, imageURL, photoLikes, description, photoTimestamp, reviewID, summaryID) {
     this._photoID = photoID;
-    this._image = image;
+    this._imageURL = imageURL;
     this._photoLikes = photoLikes;
     this._description = description;
     this._photoTimestamp = photoTimestamp;
@@ -16,12 +16,12 @@ class Photo {
     this._photoID = value;
   }
 
-  get image() {
-    return this._image;
+  get imageURL() {
+    return this._imageURL;
   }
 
-  set image(value) {
-    this._image = value;
+  set imageURL(value) {
+    this._imageURL = value;
   }
 
   get photoLikes() {
