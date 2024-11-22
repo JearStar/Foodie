@@ -5,7 +5,7 @@ const Photo = require('../model/Photo');
 const { generateUUID } = require('../Helper');
 
 /*
-ENDPOINT: PUT /api/users/create-user
+ENDPOINT: PUT /api/users/insert-photo
 BODY: email, password
 RETURNS: {success : boolean}
  */

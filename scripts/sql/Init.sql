@@ -55,7 +55,6 @@ CREATE TABLE FoodLocationSummary (
     AverageRating FLOAT NOT NULL,
     Description VARCHAR(255) NOT NULL,
     FoodLocationName VARCHAR(50) NOT NULL,
-
     Address VARCHAR(150) NOT NULL,
     PostalCode VARCHAR(10) NOT NULL,
     Country VARCHAR(50) NOT NULL,

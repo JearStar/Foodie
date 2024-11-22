@@ -1,77 +1,85 @@
 class FoodLocation {
-  constructor(foodLocationName, numReviews, address, city, postalCode, country, genre, summaryID) {
-    this._foodLocationName = foodLocationName;
-    this._numReviews = numReviews;
-    this._address = address;
-    this._city = city;
-    this._postalCode = postalCode;
-    this._country = country;
-    this._genre = genre;
-    this._summaryID = summaryID;
-  }
-
-  get getFoodLocationName() {
+  get foodLocationName() {
     return this._foodLocationName;
   }
 
-  set setFoodLocationName(value) {
+  set foodLocationName(value) {
     this._foodLocationName = value;
   }
 
-  get getNumReviews() {
-    return this._numReviews;
-  }
-
-  set setNumReviews(value) {
-    this._numReviews = value;
-  }
-
-  get getAddress() {
+  get address() {
     return this._address;
   }
 
-  set setAddress(value) {
+  set address(value) {
     this._address = value;
   }
 
-  get getCity() {
-    return this._city;
-  }
-
-  set setCity(value) {
-    this._city = value;
-  }
-
-  get getPostalCode() {
+  get postalCode() {
     return this._postalCode;
   }
 
-  set setPostalCode(value) {
+  set postalCode(value) {
     this._postalCode = value;
   }
 
-  get getCountry() {
+  get country() {
     return this._country;
   }
 
-  set setCountry(value) {
+  set country(value) {
     this._country = value;
   }
 
-  get getGenre() {
+  get totalScore() {
+    return this._totalScore;
+  }
+
+  set totalScore(value) {
+    this._totalScore = value;
+  }
+
+  get numReviews() {
+    return this._numReviews;
+  }
+
+  set numReviews(value) {
+    this._numReviews = value;
+  }
+
+  get city() {
+    return this._city;
+  }
+
+  set city(value) {
+    this._city = value;
+  }
+
+  get genre() {
     return this._genre;
   }
 
-  set setGenre(value) {
+  set genre(value) {
     this._genre = value;
   }
 
-  get getSummaryID() {
+  get summaryID() {
     return this._summaryID;
   }
 
-  set setSummaryID(value) {
+  set summaryID(value) {
     this._summaryID = value;
+  }
+  constructor(foodLocationName, address, postalCode, country, totalScore, numReviews, city, genre, summaryID) {
+    this._foodLocationName = foodLocationName;
+    this._address = address;
+    this._postalCode = postalCode;
+    this._country = country;
+    this._totalScore = totalScore;
+    this._numReviews = numReviews;
+    this._city = city;
+    this._genre = genre;
+    this._summaryID = summaryID;
   }
 }
 module.exports = FoodLocation;

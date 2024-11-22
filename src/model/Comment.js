@@ -1,13 +1,4 @@
 class Comment {
-  constructor(commentID, commentLikes, content, commentTimestamp, parentID, parentType, userID) {
-    this._commentID = commentID;
-    this._commentLikes = commentLikes;
-    this._content = content;
-    this._commentTimestamp = commentTimestamp;
-    this._parentID = parentID;
-    this._parentType = parentType;
-    this._userID = userID;
-  }
   get commentID() {
     return this._commentID;
   }
@@ -40,20 +31,20 @@ class Comment {
     this._commentTimestamp = value;
   }
 
-  get parentID() {
-    return this._parentID;
+  get reviewID() {
+    return this._reviewID;
   }
 
-  set parentID(value) {
-    this._parentID = value;
+  set reviewID(value) {
+    this._reviewID = value;
   }
 
-  get parentType() {
-    return this._parentType;
+  get parentCommentID() {
+    return this._parentCommentID;
   }
 
-  set parentType(value) {
-    this._parentType = value;
+  set parentCommentID(value) {
+    this._parentCommentID = value;
   }
 
   get userID() {
@@ -62,6 +53,15 @@ class Comment {
 
   set userID(value) {
     this._userID = value;
+  }
+  constructor(commentID, commentLikes, content, commentTimestamp, reviewID, parentCommentID, userID) {
+    this._commentID = commentID;
+    this._commentLikes = commentLikes;
+    this._content = content;
+    this._commentTimestamp = commentTimestamp;
+    this._reviewID = reviewID;
+    this._parentCommentID = parentCommentID;
+    this._userID = userID;
   }
 }
 

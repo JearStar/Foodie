@@ -1,11 +1,4 @@
 class Vote {
-  constructor(voteID, value, userID, commentID) {
-    this._voteID = voteID;
-    this._value = value;
-    this._userID = userID;
-    this._commentID = commentID;
-  }
-
   get voteID() {
     return this._voteID;
   }
@@ -30,12 +23,27 @@ class Vote {
     this._userID = value;
   }
 
+  get photoID() {
+    return this._photoID;
+  }
+
+  set photoID(value) {
+    this._photoID = value;
+  }
+
   get commentID() {
     return this._commentID;
   }
 
   set commentID(value) {
     this._commentID = value;
+  }
+  constructor(voteID, value, userID, photoID, commentID) {
+    this._voteID = voteID;
+    this._value = value;
+    this._userID = userID;
+    this._photoID = photoID;
+    this._commentID = commentID;
   }
 }
 module.exports = Vote;

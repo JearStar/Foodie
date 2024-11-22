@@ -4,9 +4,6 @@ const appService = require('./appService');
 const router = express.Router();
 const userRouter = require('./src/controller/UserController');
 const photoRouter = require('./src/controller/PhotoController');
-const User = require("./src/model/User");
-const userService = require("./src/service/UserService");
-// const app = require("./frontend/src/App");
 
 // ----------------------------------------------------------
 // API endpoints
