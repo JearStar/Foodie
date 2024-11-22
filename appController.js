@@ -3,6 +3,8 @@ const appService = require('./appService');
 
 const router = express.Router();
 const userRouter = require('./src/controller/UserController');
+const foodLocationRouter = require('./src/controller/FoodLocationController');
+
 const photoRouter = require('./src/controller/PhotoController');
 
 // ----------------------------------------------------------
@@ -11,6 +13,7 @@ const photoRouter = require('./src/controller/PhotoController');
 
 router.use('/users', userRouter);
 router.use('/photos', photoRouter);
+router.use('/foodlocation', foodLocationRouter);
 
 router.post('/run-init-script-sql', async (req, res) => {
   const initiateResult = await appService.runInitScriptSQL();

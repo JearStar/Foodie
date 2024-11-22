@@ -71,9 +71,11 @@ async function getUserInfoWithID(userID) {
     return result.rows.map((row) => {
       return {
         user: row[0],
-        email: row[1],
-        password: row[2],
-        numReviews: row[3],
+        firstName: row[1],
+        lastName: row[2],
+        email: row[3],
+        password: row[4],
+        numReviews: row[5],
       };
     });
   });
