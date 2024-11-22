@@ -51,21 +51,6 @@ function App() {
       </Router>
     </div>
   );
-
-  // if (!loggedIn) {
-  //   return (
-  //       <div className="App">
-  //           <header className="App-header">
-  //               <p>
-  //                   <LoginScreen onLoginSuccess={() => setLoggedIn(true)}/>
-  //               </p>
-  //               <p>
-  //                   <CustomButton onClick={handleButtonClick}>Initiate DB</CustomButton>
-  //               </p>
-  //           </header>
-  //       </div>
-  //   );
-  // }
 }
 
 export default App;

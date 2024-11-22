@@ -59,8 +59,29 @@ CREATE TABLE FoodLocation (
     Country VARCHAR(50),
     Genre VARCHAR(50) NOT NULL,
     FoodLocationSummaryID VARCHAR(36)  NOT NULL,
-    PRIMARY KEY (FoodLocationName, Address, Country, PostalCode)
+    PRIMARY KEY (FoodLocationName, Address, PostalCode, Country)
 );
+
+INSERT INTO FoodLocation(FoodLocationName, NumReviews, Address, City, PostalCode, Country, Genre, FoodLocationSummaryID)
+VALUES ('Sushi Mura', 0, '6485 Oak Street', 'Vancouver', 'V6M 2W7', 'Canada', 'Japanese',
+        '550e8400-e29b-41d4-a716-446655440000');
+
+INSERT INTO FoodLocation(FoodLocationName, NumReviews, Address, City, PostalCode, Country, Genre, FoodLocationSummaryID)
+VALUES ('Published on Main', 200, '3593 Main Street', 'Vancouver', 'V5V 3N4', 'Canada', 'Mediterranean',
+        'b7e3c2f1-7654-4321-abcd-1234567890ab');
+
+INSERT INTO FoodLocation(FoodLocationName, NumReviews, Address, City, PostalCode, Country, Genre, FoodLocationSummaryID)
+VALUES ('McDonald’s', 85, '470 Yonge Street', 'Toronto', 'M4Y 1X5', 'Canada', 'American',
+        'c5d6e7f8-9a0b-1234-b7e8-f2a3b4d5e6f9');
+
+INSERT INTO FoodLocation(FoodLocationName, NumReviews, Address, City, PostalCode, Country, Genre, FoodLocationSummaryID)
+VALUES ('Café de Flore', 180, '172 Bd Saint-Germain', 'Paris', '75006', 'France', 'French',
+        'dbff5e43-67b4-44e2-b78d-5331a3c33fa5');
+
+INSERT INTO FoodLocation(FoodLocationName, NumReviews, Address, City, PostalCode, Country, Genre, FoodLocationSummaryID)
+VALUES ('Miku Vancouver', 30, '200 Granville Street #70', 'Vancouver', 'V6C 1S4', 'Canada', 'Japanese',
+        '11d61d1b-809f-41c3-82e5-d0a2078cfc04');
+
 
 CREATE TABLE Vote (
     VoteID VARCHAR(36) PRIMARY KEY,
@@ -83,6 +104,26 @@ CREATE TABLE FoodLocationSummary (
     Country VARCHAR(50) NOT NULL,
     FOREIGN KEY (FoodLocationName, Address, PostalCode, Country) REFERENCES FoodLocation ON DELETE CASCADE
 );
+
+INSERT INTO FoodLocationSummary(SummaryID, AverageRating, Description, FoodLocationName, Address, PostalCode, Country)
+VALUES ('550e8400-e29b-41d4-a716-446655440000', 4.8, 'A popular spot for authentic Japanese sushi and friendly service.',
+        'Sushi Mura', '6485 Oak Street', 'V6M 2W7', 'Canada');
+
+INSERT INTO FoodLocationSummary(SummaryID, AverageRating, Description, FoodLocationName, Address, PostalCode, Country)
+VALUES ('b7e3c2f1-7654-4321-abcd-1234567890ab', 4.5, 'Known for its Mediterranean-inspired dishes with a modern twist.',
+        'Published on Main', '3593 Main Street', 'V5V 3N4', 'Canada');
+
+INSERT INTO FoodLocationSummary(SummaryID, AverageRating, Description, FoodLocationName, Address, PostalCode, Country)
+VALUES ('c5d6e7f8-9a0b-1234-b7e8-f2a3b4d5e6f9', 3.8, 'A fast-food staple offering classic American burgers and fries.',
+        'McDonald’s', '470 Yonge Street', 'M4Y 1X5', 'Canada');
+
+INSERT INTO FoodLocationSummary(SummaryID, AverageRating, Description, FoodLocationName, Address, PostalCode, Country)
+VALUES ('dbff5e43-67b4-44e2-b78d-5331a3c33fa5', 4.2, 'A historic café in the heart of Paris, serving traditional French cuisine.',
+        'Café de Flore', '172 Bd Saint-Germain', '75006', 'France');
+
+INSERT INTO FoodLocationSummary(SummaryID, AverageRating, Description, FoodLocationName, Address, PostalCode, Country)
+VALUES ('11d61d1b-809f-41c3-82e5-d0a2078cfc04', 4.7, 'A highly rated Japanese restaurant with exquisite flavors and vibrant atmosphere.',
+        'Miku Vancouver', '200 Granville Street #70', 'V6C 1S4', 'Canada');
 
 ALTER TABLE FoodLocation ADD CONSTRAINT fk_foodlocation_reference_summary FOREIGN KEY (FoodLocationSummaryID) REFERENCES FoodLocationSummary(SummaryID);
 
