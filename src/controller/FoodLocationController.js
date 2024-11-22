@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const foodLocationService = require('../service/FoodLocationService');
+const flSummaryService = require('../service/FLSummaryService');
 const FoodLocation = require('../model/FoodLocation');
 const {withOracleDB} = require("../../appService");
 const userService = require("../service/UserService");
+const appService = require("../../appService");
 
 /*
 ENDPOINT: PUT /api/foodlocation/create-foodlocation
@@ -41,6 +43,20 @@ router.post('/get-foodlocation-info', async (req, res) => {
             success: true,
             data: result,
         });
+    } catch (e) {
+        res.status(500).json({ success: false, error: e.message });
+    }
+});
+
+router.post('/findLocs', async (req, res) => {
+    try {
+        const searchKey = req.body["search"];
+        const result1 = await foodLocationService.searchLocs(searchKey);
+        const result2 = await flSummaryService.searchSummaries(searchKey);
+        if (!result1 || !result2) {
+            return res.status(400).json({ success: false, error: 'Internal database error' });
+        }
+        res.json({ success: true, FoodLocations: result1, FoodLocationSummaries: result2 });
     } catch (e) {
         res.status(500).json({ success: false, error: e.message });
     }

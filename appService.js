@@ -154,30 +154,6 @@ async function makeNewAcc(user, pass) {
   });
 }
 
-async function searchLocs(searchKey) {
-  return await withOracleDB(async (connection) => {
-    const result = await connection.execute(
-        'SELECT * FROM FoodLocation WHERE (Lower(FoodLocationName) LIKE :s)',
-        ['%'+searchKey+'%']
-    );
-    return result.rows;
-  }).catch((e) => {
-    Promise.reject(e.message);
-  });
-}
-
-async function searchSummaries(searchKey) {
-  return await withOracleDB(async (connection) => {
-    const result = await connection.execute(
-        'SELECT * FROM FoodLocationSummary WHERE (Lower(FoodLocationName) LIKE :s)',
-        ['%'+searchKey+'%']
-    );
-    return result.rows;
-  }).catch((e) => {
-    Promise.reject(e.message);
-  });
-}
-
 async function initiateDemotable() {
   return await withOracleDB(async (connection) => {
     try {

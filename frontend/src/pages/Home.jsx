@@ -20,7 +20,7 @@ function Home() {
   // FYI, this returns the full FoodLocation and FoodLocationSummary for each search result.
   const sendSearch = async (enteredValue) => {
     try {
-      const response = await fetch('/api/findLocs', {
+      const response = await fetch('/api/foodlocation/findLocs', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

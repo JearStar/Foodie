@@ -51,6 +51,18 @@ WHERE FOODLOCATIONNAME=:name AND
   });
 }
 
+async function searchLocs(searchKey) {
+  return await withOracleDB(async (connection) => {
+    const result = await connection.execute(
+        'SELECT * FROM FoodLocation WHERE (Lower(FoodLocationName) LIKE :s)',
+        ['%'+searchKey+'%']
+    );
+    return result.rows;
+  }).catch((e) => {
+    Promise.reject(e.message);
+  });
+}
+
 async function getFoodLocationInfoWithSummaryID(FoodLocationSummaryID) {
     return await withOracleDB(async (connection) => {
         const result = await connection.execute('SELECT * FROM FOODLOCATION WHERE FOODLOCATIONSUMMARYID=:FoodLocationSummaryID', {
@@ -76,6 +88,6 @@ async function getFoodLocationInfoWithSummaryID(FoodLocationSummaryID) {
 module.exports = {
   insertFoodLocation,
   updateFoodLocationSummaryID,
-    getFoodLocationInfoWithSummaryID
-
+  getFoodLocationInfoWithSummaryID,
+  searchLocs
 };

@@ -57,20 +57,6 @@ function exists(arr, search) {
   return arr.some((row) => row.includes(search));
 }
 
-router.post('/findLocs', async (req, res) => {
-  try {
-    const searchKey = req.body["search"];
-    const result1 = await appService.searchLocs(searchKey);
-    const result2 = await appService.searchSummaries(searchKey);
-    if (!result1 || !result2) {
-      return res.status(400).json({ success: false, error: 'Internal database error' });
-    }
-    res.json({ success: true, FoodLocations: result1, FoodLocationSummaries: result2 });
-  } catch (e) {
-    res.status(500).json({ success: false, error: e.message });
-  }
-});
-
 router.get('/demotable', async (req, res) => {
   const tableContent = await appService.fetchDemotableFromDb();
   res.json({ data: tableContent });
