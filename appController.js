@@ -4,6 +4,9 @@ const appService = require('./appService');
 const router = express.Router();
 const userRouter = require('./src/controller/UserController');
 const photoRouter = require('./src/controller/PhotoController');
+const User = require("./src/model/User");
+const userService = require("./src/service/UserService");
+// const app = require("./frontend/src/App");
 
 // ----------------------------------------------------------
 // API endpoints
@@ -53,6 +56,20 @@ router.post('/newAcc', async (req, res) => {
 function exists(arr, search) {
   return arr.some((row) => row.includes(search));
 }
+
+router.post('/findLocs', async (req, res) => {
+  try {
+    const searchKey = req.body["search"];
+    const result1 = await appService.searchLocs(searchKey);
+    const result2 = await appService.searchSummaries(searchKey);
+    if (!result1 || !result2) {
+      return res.status(400).json({ success: false, error: 'Internal database error' });
+    }
+    res.json({ success: true, FoodLocations: result1, FoodLocationSummaries: result2 });
+  } catch (e) {
+    res.status(500).json({ success: false, error: e.message });
+  }
+});
 
 router.get('/demotable', async (req, res) => {
   const tableContent = await appService.fetchDemotableFromDb();
