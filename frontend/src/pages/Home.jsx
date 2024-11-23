@@ -34,13 +34,11 @@ function Home() {
         return null;
       }
       const foodLocations = res["FoodLocations"];
-      console.log(foodLocations);
       if (typeof foodLocations === "object") {
         setSearchLocs(foodLocations);   // placeholder
       }
 
       const foodLocationSummaries = res["FoodLocationSummaries"];
-      console.log(foodLocationSummaries);
       if (typeof foodLocationSummaries === "object") {
         setSearchSummaries(foodLocationSummaries);   // placeholder
       }

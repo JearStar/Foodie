@@ -219,8 +219,6 @@ module.exports = {
   makeNewAcc,
   updateNameDemotable,
   findUserPass,
-  searchLocs,
-  searchSummaries,
   countDemotable,
   runInitScriptSQL,
   withOracleDB,
