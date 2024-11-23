@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import Home from './pages/Home';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { UserContext } from './contexts/UserContext';
+import AddFoodLocation from "./pages/AddFoodLocation";
 
 function App() {
   const { user, login, logout } = useContext(UserContext);
@@ -25,6 +26,7 @@ function App() {
     <div className="bg-dark">
       <Router>
         {user && <Navbar />}
+        <div className='container' style={{ paddingTop: '30px' }}>
         <div
           className="d-flex justify-content-center align-items-center"
           style={{ height: '100vh' }}
@@ -43,10 +45,12 @@ function App() {
                 }
               />
               <Route path="/home" element={user ? <Home /> : <Navigate to="/login" />} />
+              <Route path="/add-location" element={<AddFoodLocation />}/>
               <Route path="/" element={<Navigate to="/login" />} />
               <Route path="*" element={<Navigate to={user ? '/home' : '/login'} />} />
             </Routes>
           </div>
+        </div>
         </div>
       </Router>
     </div>

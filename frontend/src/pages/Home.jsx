@@ -18,14 +18,15 @@ function Home() {
   }, []);
 
   // FYI, this returns the full FoodLocation and FoodLocationSummary for each search result.
-  const sendSearch = async (enteredValue) => {
+  const sendSearch = async (e) => {
+    e.preventDefault();
     try {
       const response = await fetch('/api/findLocs', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ search: enteredValue}),
+        body: JSON.stringify({ search: search.toLowerCase()}),
       });
       let res = await response.json();
 
@@ -48,7 +49,7 @@ function Home() {
       if (foodLocations.length === 0) {
         setMessage("No results found.");
       } else {
-        setMessage(foodLocations.length + " results found.");
+        setMessage(`${foodLocations.length} result${foodLocations.length === 1 ? '' : 's'} found`);
       }
 
       return null;
@@ -78,32 +79,31 @@ function Home() {
   }
 
   return (
-      <div className="col justify-content-center align-items-center">
-        <h1 className="text-light">
-          Hi {user.firstName} {user.lastName}! What can I do for you today?
-        </h1>
-        <div className="row mb-3">
-          <label htmlFor="Find by name" className="form-label text-center text-light">
-            Find by name (use lowercase)
+        <div className="d-flex flex-column justify-content-center align-items-center vh-100">
+          <h1 className="text-light text-center mt-3">
+            Hi {user.firstName} {user.lastName}! What can I do for you today?
+          </h1>
+          <div className='container mt-4 d-flex justify-content-center'>
+            <form className='d-flex' style={{width: '40%'}} role='search' onSubmit={sendSearch}>
+              <input
+                  className='form-control'
+                  type='search'
+                  placeholder='Search here...'
+                  aria-label='Search'
+                  title='Enter a search term'
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+              />
+              <button className='btn btn-dark custom-button' type='submit' disabled={search.trim() === ''}>
+                Search
+              </button>
+            </form>
+          </div>
+          <label className="form-label text-center text-light">
+            {message}
           </label>
-          <input
-              type="search"
-              className="form-control form-control-sm"
-              id="search"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-          />
-          <button className="btn btn-dark" disabled={search.trim() === ''} onClick={() => {
-            sendSearch(search);
-          }}>
-            Search
-          </button>
+          {displayResults()}
         </div>
-        <label className="form-label text-center text-light">
-          {message}
-        </label>
-        {displayResults()}
-      </div>
   );
 }
 

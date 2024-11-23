@@ -147,6 +147,8 @@ CREATE TABLE ReviewsDish (
     CONSTRAINT fk_reviewsdish_reference_dish FOREIGN KEY (DishName, FoodLocationName, Address, PostalCode, Country) REFERENCES Dish (DishName, FoodLocationName, Address, PostalCode, Country) ON DELETE CASCADE,
     PRIMARY KEY (ReviewID, DishName, FoodLocationName, Address, PostalCode, Country)
 );
+INSERT INTO AppUser(UserID, FirstName, LastName, Email, Password, NumReviews)
+VALUES ('7309d25b-1e98-4a82-ba00-8b412b1c7e2e', 'Admin', 'Admin', 'admin@admin.com', 'admin', 0);
 
 INSERT INTO AppUser(UserID, FirstName, LastName, Email, Password, NumReviews)
 VALUES ('4d7577fc-636e-40b1-ab1f-f3c12422c84a', 'Sabrina', 'Woo', 'sabrinawoo3895@gmail.com', 'iloveicecream1', 0);

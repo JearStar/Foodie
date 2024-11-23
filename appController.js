@@ -4,6 +4,7 @@ const appService = require('./appService');
 const router = express.Router();
 const userRouter = require('./src/controller/UserController');
 const photoRouter = require('./src/controller/PhotoController');
+const locationRouter = require('./src/controller/FoodLocationController');
 
 // ----------------------------------------------------------
 // API endpoints
@@ -11,6 +12,7 @@ const photoRouter = require('./src/controller/PhotoController');
 
 router.use('/users', userRouter);
 router.use('/photos', photoRouter);
+router.use('/locations', locationRouter);
 
 router.post('/run-init-script-sql', async (req, res) => {
   const initiateResult = await appService.runInitScriptSQL();
