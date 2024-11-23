@@ -9,6 +9,7 @@ import Profile from "./pages/Profile";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { UserContext } from './contexts/UserContext';
 import AddFoodLocation from "./pages/AddFoodLocation";
+import FoodLocation from "./pages/FoodLocation";
 
 function App() {
   const { user, login, logout } = useContext(UserContext);
@@ -47,7 +48,7 @@ function App() {
               <Route path="/home" element={user ? <Home /> : <Navigate to="/login" />} />
               <Route path="/add-location" element={<AddFoodLocation />}/>
               <Route path="/profile" element={user ? <Profile /> : <Navigate to="/login" />} />
-
+              <Route path="/location/:name/:country/:postalcode/:address" element={user ? <FoodLocation /> : <Navigate to="/login" />} />
               <Route path="/" element={<Navigate to="/login" />} />
               <Route path="*" element={<Navigate to={user ? '/home' : '/login'} />} />
             </Routes>

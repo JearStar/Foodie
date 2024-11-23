@@ -1,18 +1,25 @@
 import React, {useEffect, useState} from "react";
 import '../index.css';
+import { useParams } from "react-router-dom";
+
 
 const FoodLocation = () => {
     const [foodLocationInformation, setFoodLocationInformation] = useState({});
     const [foodLocationSummaryInformation, setFoodLocationSummaryInformation] = useState({});
     const [dishesInformation, setDishesInformation] = useState([]);
     const [viewDishes, setViewDishes] = useState(false)
-
-    // Fetch user information on component mount
+    const routeParams = useParams();
     useEffect(() => {
-        fetchFoodlocationInformation();
-        fetchFoodlocationSummaryInformation();
-        fetchDishes();
+        fetchFoodlocationInformation()
+            .then((foodLocationSummaryID) => {
+                fetchFoodlocationSummaryInformation(foodLocationSummaryID);
+            })
+            .catch((error) => {
+                console.error('Error fetching food location info:', error);
+            });
+        fetchDishes(); // This can still run independently
     }, []);
+
 
     const fetchFoodlocationInformation = async () => {
         try {
@@ -22,10 +29,10 @@ const FoodLocation = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    name: "Sushi Mura",
-                    address: "6485 Oak Street",
-                    postalCode: "V6M 2W7",
-                    country: "Canada"
+                    name: routeParams.name,
+                    address: routeParams.address,
+                    postalCode: routeParams.postalcode,
+                    country: routeParams.country
                 }),
             });
 
@@ -36,6 +43,8 @@ const FoodLocation = () => {
             const result = await response.json();
             console.log('Information retrieved successfully:', result);
             setFoodLocationInformation(result.data[0]);
+            return result.data[0].foodLocationSummaryID
+
         } catch (e) {
             console.error('Error retrieving food location information:', e);
         }
@@ -49,10 +58,10 @@ const FoodLocation = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    name: "Sushi Mura",
-                    address: "6485 Oak Street",
-                    postalCode: "V6M 2W7",
-                    country: "Canada"
+                    name: routeParams.name,
+                    address: routeParams.address,
+                    postalCode: routeParams.postalcode,
+                    country: routeParams.country
                 }),
             });
 
@@ -68,7 +77,7 @@ const FoodLocation = () => {
         }
     };
 
-    const fetchFoodlocationSummaryInformation = async () => {
+    const fetchFoodlocationSummaryInformation = async (id) => {
         try {
             const response = await fetch('/api/foodlocationsummary/get-foodlocationsummary-info', {
                 method: 'POST',
@@ -76,7 +85,10 @@ const FoodLocation = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    foodLocationSummaryID: "aa8e21cb-901b-4a8b-afcc-070a7ea2f749",
+                    foodLocationSummaryID: id,
+
+                    // foodLocationSummaryID: foodLocationInformation.foodLocationSummaryID,
+
                 }),
             });
 
@@ -93,6 +105,7 @@ const FoodLocation = () => {
     };
     return (
         <div className="app">
+
             <h1 className="mainheader">
                 {foodLocationInformation.name}
             </h1>

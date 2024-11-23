@@ -1,5 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import { UserContext } from '../contexts/UserContext';
+import {Link} from "react-router-dom";
 
 function Home() {
   const { user } = useContext(UserContext);
@@ -66,9 +67,13 @@ function Home() {
       for (const result of searchLocs) {
         dispArray.push(
             <div className="row mb-3">
-              <label className="form-label text-center text-light">
-                {result}
-              </label>
+              {/*<label className="form-label text-center text-light">*/}
+              {/*  /!*{result}*!/*/}
+              {/*  {result[0]}*/}
+              {/*</label>*/}
+              <Link  to={`/location/${result[0]}/${result[3]}/${result[2]}/${result[1]}`} >
+                View {result[0]}, {result[1]}, {result[6]}, {result[3]}
+              </Link>
             </div>
         );
       }
@@ -101,6 +106,7 @@ function Home() {
             {message}
           </label>
           {displayResults()}
+
         </div>
   );
 }
