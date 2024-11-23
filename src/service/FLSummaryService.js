@@ -1,4 +1,5 @@
 const appService = require('../../appService');
+const { withOracleDB } = require('../../appService');
 
 async function insertFLSummary(foodLocationSummary) {
   return await appService.withOracleDB(async (connection) => {
@@ -21,6 +22,19 @@ VALUES (:summaryID, :averageRating, :description, :foodLocationName, :address, :
   });
 }
 
+async function searchSummaries(searchKey) {
+  return await withOracleDB(async (connection) => {
+    const result = await connection.execute(
+        'SELECT * FROM FoodLocationSummary WHERE (Lower(FoodLocationName) LIKE :s)',
+        ['%'+searchKey+'%']
+    );
+    return result.rows;
+  }).catch((e) => {
+    Promise.reject(e.message);
+  });
+}
+
 module.exports = {
   insertFLSummary,
+  searchSummaries
 };

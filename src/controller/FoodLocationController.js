@@ -44,4 +44,42 @@ router.post('/create-location', async (req, res) => {
     }
 });
 
+/*
+ENDPOINT: GET /api/foodlocation/get-foodlocation-info
+BODY: foodLocationSummaryID
+RETURNS ON SUCCESS: {success: boolean, data: [{ userID, email, password, numReviews }]}
+ */
+router.post('/get-foodlocation-info', async (req, res) => {
+    try {
+        const result = await foodLocationService.getFoodLocationInfoWithSummaryID(req.body.FoodLocationSummaryID);
+        if (!result) {
+            return res.status(404).json({
+                success: false,
+                error: 'Failed to get food location information: ' + req.body.getFoodLocationInfoWithSummaryID,
+            });
+        }
+        res.json({
+            success: true,
+            data: result,
+        });
+    } catch (e) {
+        res.status(500).json({ success: false, error: e.message });
+    }
+});
+
+router.post('/findLocs', async (req, res) => {
+    try {
+        const searchKey = req.body["search"];
+        const result1 = await foodLocationService.searchLocs(searchKey);
+        const result2 = await flSummaryService.searchSummaries(searchKey);
+        if (!result1 || !result2) {
+            return res.status(400).json({ success: false, error: 'Internal database error' });
+        }
+        res.json({ success: true, FoodLocations: result1, FoodLocationSummaries: result2 });
+    } catch (e) {
+        res.status(500).json({ success: false, error: e.message });
+    }
+});
+
+
 module.exports = router;

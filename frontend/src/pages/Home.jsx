@@ -21,7 +21,7 @@ function Home() {
   const sendSearch = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('/api/findLocs', {
+      const response = await fetch('/api/foodlocation/findLocs', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -35,13 +35,11 @@ function Home() {
         return null;
       }
       const foodLocations = res["FoodLocations"];
-      console.log(foodLocations);
       if (typeof foodLocations === "object") {
         setSearchLocs(foodLocations);   // placeholder
       }
 
       const foodLocationSummaries = res["FoodLocationSummaries"];
-      console.log(foodLocationSummaries);
       if (typeof foodLocationSummaries === "object") {
         setSearchSummaries(foodLocationSummaries);   // placeholder
       }

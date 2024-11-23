@@ -3,6 +3,9 @@ const appService = require('./appService');
 
 const router = express.Router();
 const userRouter = require('./src/controller/UserController');
+const foodLocationRouter = require('./src/controller/FoodLocationController');
+const reviewRouter = require('./src/controller/ReviewController');
+
 const photoRouter = require('./src/controller/PhotoController');
 const locationRouter = require('./src/controller/FoodLocationController');
 
@@ -13,6 +16,8 @@ const locationRouter = require('./src/controller/FoodLocationController');
 router.use('/users', userRouter);
 router.use('/photos', photoRouter);
 router.use('/locations', locationRouter);
+router.use('/foodlocation', foodLocationRouter);
+router.use('/review', reviewRouter);
 
 router.post('/run-init-script-sql', async (req, res) => {
   const initiateResult = await appService.runInitScriptSQL();
@@ -55,68 +60,5 @@ router.post('/newAcc', async (req, res) => {
 function exists(arr, search) {
   return arr.some((row) => row.includes(search));
 }
-
-router.post('/findLocs', async (req, res) => {
-  try {
-    const searchKey = req.body["search"];
-    const result1 = await appService.searchLocs(searchKey);
-    const result2 = await appService.searchSummaries(searchKey);
-    if (!result1 || !result2) {
-      return res.status(400).json({ success: false, error: 'Internal database error' });
-    }
-    res.json({ success: true, FoodLocations: result1, FoodLocationSummaries: result2 });
-  } catch (e) {
-    res.status(500).json({ success: false, error: e.message });
-  }
-});
-
-router.get('/demotable', async (req, res) => {
-  const tableContent = await appService.fetchDemotableFromDb();
-  res.json({ data: tableContent });
-});
-
-router.post('/initiate-demotable', async (req, res) => {
-  const initiateResult = await appService.initiateDemotable();
-  if (initiateResult) {
-    res.json({ success: true });
-  } else {
-    res.status(500).json({ success: false });
-  }
-});
-
-router.post('/insert-demotable', async (req, res) => {
-  const { id, name } = req.body;
-  const insertResult = await appService.insertDemotable(id, name);
-  if (insertResult) {
-    res.json({ success: true });
-  } else {
-    res.status(500).json({ success: false });
-  }
-});
-
-router.post('/update-name-demotable', async (req, res) => {
-  const { oldName, newName } = req.body;
-  const updateResult = await appService.updateNameDemotable(oldName, newName);
-  if (updateResult) {
-    res.json({ success: true });
-  } else {
-    res.status(500).json({ success: false });
-  }
-});
-
-router.get('/count-demotable', async (req, res) => {
-  const tableCount = await appService.countDemotable();
-  if (tableCount >= 0) {
-    res.json({
-      success: true,
-      count: tableCount,
-    });
-  } else {
-    res.status(500).json({
-      success: false,
-      count: tableCount,
-    });
-  }
-});
 
 module.exports = router;

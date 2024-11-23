@@ -86,7 +86,7 @@ router.post('/change-email', async (req, res) => {
 /*
 ENDPOINT: GET /api/users/get-user-info
 BODY: userID
-RETURNS ON SUCCESS: {success: boolean, data: [{ userID, email, password, numReviews }]}
+RETURNS ON SUCCESS: {success: boolean, data: [{ userID, firstName, lastName, email, password, numReviews }]}
  */
 router.post('/get-user-info', async (req, res) => {
   try {

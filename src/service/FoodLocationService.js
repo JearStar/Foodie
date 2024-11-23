@@ -58,7 +58,44 @@ async function updateFoodLocationSummaryID(name, address, postalCode, country, n
     return result.rowsAffected && result.rowsAffected > 0;
   });
 }
+
+async function searchLocs(searchKey) {
+  return await withOracleDB(async (connection) => {
+    const result = await connection.execute(
+        'SELECT * FROM FoodLocation WHERE (Lower(FoodLocationName) LIKE :s)',
+        ['%'+searchKey+'%']
+    );
+    return result.rows;
+  }).catch((e) => {
+    Promise.reject(e.message);
+  });
+}
+
+async function getFoodLocationInfoWithSummaryID(FoodLocationSummaryID) {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute('SELECT * FROM FOODLOCATION WHERE FOODLOCATIONSUMMARYID=:FoodLocationSummaryID', {
+            FoodLocationSummaryID: FoodLocationSummaryID,
+        });
+        if (result.rows.length === 0) {
+            return {};
+        }
+        return result.rows.map((row) => {
+            return {
+                name: row[0],
+                numReviews: row[1],
+                address: row[2],
+                city: row[3],
+                postalCode: row[4],
+                country: row[5],
+                genre: row[6]
+            };
+        });
+    });
+}
+
 module.exports = {
   insertFoodLocation,
   updateFoodLocationSummaryID,
+  getFoodLocationInfoWithSummaryID,
+  searchLocs
 };
