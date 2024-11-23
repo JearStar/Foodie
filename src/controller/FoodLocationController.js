@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const foodLocationService = require('../service/FoodLocationService');
+const foodLocationSummaryService = require('../service/FLSummaryService');
+
 const FoodLocation = require('../model/FoodLocation');
 const FoodLocationSummary = require('../model/FoodLocationSummary');
 const { generateUUID } = require('../Helper');
@@ -71,7 +73,7 @@ router.post('/findLocs', async (req, res) => {
     try {
         const searchKey = req.body["search"];
         const result1 = await foodLocationService.searchLocs(searchKey);
-        const result2 = await flSummaryService.searchSummaries(searchKey);
+        const result2 = await foodLocationSummaryService.searchSummaries(searchKey);
         if (!result1 || !result2) {
             return res.status(400).json({ success: false, error: 'Internal database error' });
         }

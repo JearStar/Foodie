@@ -1,4 +1,4 @@
-import { withOracleDB } from '../../appService';
+const { withOracleDB } = require('../../appService');
 const Service = require('../../appService');
 
 //INSERT Review

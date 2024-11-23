@@ -103,7 +103,6 @@ async function getFoodLocationInfo(name, address, postalCode, country) {
 module.exports = {
   insertFoodLocation,
   updateFoodLocationSummaryID,
-  getFoodLocationInfoWithSummaryID,
   searchLocs,
     getFoodLocationInfo
 
