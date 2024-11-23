@@ -87,7 +87,34 @@ async function deleteReview(
     return result.rowsAffected && result.rowsAffected > 0;
   });
 }
+
+async function searchRevs(searchKey) {
+  return await withOracleDB(async (connection) => {
+    const result = await connection.execute(
+        'SELECT * FROM Review WHERE ReviewID=:id',
+        [searchKey]
+    );
+    return result.rows;
+  }).catch((e) => {
+    Promise.reject(e.message);
+  });
+}
+
+async function searchDishRevs(searchKey) {
+  return await withOracleDB(async (connection) => {
+    const result = await connection.execute(
+        'SELECT * FROM ReviewsDish WHERE ReviewID=:id',
+        [searchKey]
+    );
+    return result.rows;
+  }).catch((e) => {
+    Promise.reject(e.message);
+  });
+}
+
 module.exports = {
   insertReview,
   deleteReview,
+  searchRevs,
+  searchDishRevs,
 };
