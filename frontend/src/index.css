@@ -17,12 +17,12 @@ code {
 
 * {background-color: #f6e7dc}
 
-.profile {
+.app {
   color: #060747;
-  padding-left: 5vw;
-  padding-top: 5vh;
-  display: grid;
-  gap: 1.5vh;
+  /*padding-left: 5vw;*/
+  /*padding-top: 5vh;*/
+  /*display: grid;*/
+  /*gap: 1.5vh;*/
 }
 
 .mainheader {

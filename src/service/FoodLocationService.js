@@ -1,4 +1,5 @@
 const appService = require('../../appService');
+const { withOracleDB } = require('../../appService');
 
 async function insertFoodLocation(foodLocation, foodLocationSummary) {
   return await appService.withOracleDB(async (connection) => {
@@ -71,10 +72,14 @@ async function searchLocs(searchKey) {
   });
 }
 
-async function getFoodLocationInfoWithSummaryID(FoodLocationSummaryID) {
+async function getFoodLocationInfo(name, address, postalCode, country) {
     return await withOracleDB(async (connection) => {
-        const result = await connection.execute('SELECT * FROM FOODLOCATION WHERE FOODLOCATIONSUMMARYID=:FoodLocationSummaryID', {
-            FoodLocationSummaryID: FoodLocationSummaryID,
+        const result = await connection.execute('SELECT * FROM FOODLOCATION WHERE FOODLOCATIONNAME=:name AND ADDRESS=:address AND POSTALCODE=:postalCode AND COUNTRY=:country', {
+            name: name,
+            address: address,
+            postalCode: postalCode,
+            country: country
+
         });
         if (result.rows.length === 0) {
             return {};
@@ -82,12 +87,14 @@ async function getFoodLocationInfoWithSummaryID(FoodLocationSummaryID) {
         return result.rows.map((row) => {
             return {
                 name: row[0],
-                numReviews: row[1],
-                address: row[2],
-                city: row[3],
-                postalCode: row[4],
-                country: row[5],
-                genre: row[6]
+                address: row[1],
+                postalCode: row[2],
+                country: row[3],
+                totalScore: row[4],
+                numReviews: row[5],
+                city: row[6],
+                genre: row[7],
+                foodLocationSummaryID: row[8],
             };
         });
     });
@@ -97,5 +104,7 @@ module.exports = {
   insertFoodLocation,
   updateFoodLocationSummaryID,
   getFoodLocationInfoWithSummaryID,
-  searchLocs
+  searchLocs,
+    getFoodLocationInfo
+
 };

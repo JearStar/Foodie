@@ -6,8 +6,11 @@ const userRouter = require('./src/controller/UserController');
 const foodLocationRouter = require('./src/controller/FoodLocationController');
 const reviewRouter = require('./src/controller/ReviewController');
 
+const foodLocationSummaryRouter =  require('./src/controller/FoodLocationSummaryController');
 const photoRouter = require('./src/controller/PhotoController');
 const locationRouter = require('./src/controller/FoodLocationController');
+const dishRouter = require('./src/controller/DishController');
+
 
 // ----------------------------------------------------------
 // API endpoints
@@ -18,6 +21,8 @@ router.use('/photos', photoRouter);
 router.use('/locations', locationRouter);
 router.use('/foodlocation', foodLocationRouter);
 router.use('/review', reviewRouter);
+router.use('/foodlocationsummary', foodLocationSummaryRouter);
+router.use('/dish', dishRouter);
 
 router.post('/run-init-script-sql', async (req, res) => {
   const initiateResult = await appService.runInitScriptSQL();

@@ -110,7 +110,7 @@ router.post('/get-user-info', async (req, res) => {
 /*
 ENDPOINT: POST /api/users/authenticate-user
 BODY: { email, password }
-RETURNS ON SUCCESS: {success: boolean, user: { userID, firstName, lastName, email, numReviews }}
+RETURNS ON SUCCESS: {success: boolean, user: { userID, firstName, lastName, email, numReviews, password }}
  */
 router.post('/authenticate-user', async (req, res) => {
   try {

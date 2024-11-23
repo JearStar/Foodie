@@ -113,6 +113,7 @@ async function authenticateUser(email, password) {
       lastName: result.rows[0][2],
       email: result.rows[0][3],
       numReviews: result.rows[0][5],
+      password: result.rows[0][4],
     };
   });
 }

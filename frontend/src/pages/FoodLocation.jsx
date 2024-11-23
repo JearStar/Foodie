@@ -1,13 +1,17 @@
 import React, {useEffect, useState} from "react";
-
-
+import '../index.css';
 
 const FoodLocation = () => {
     const [foodLocationInformation, setFoodLocationInformation] = useState({});
+    const [foodLocationSummaryInformation, setFoodLocationSummaryInformation] = useState({});
+    const [dishesInformation, setDishesInformation] = useState([]);
+    const [viewDishes, setViewDishes] = useState(false)
 
     // Fetch user information on component mount
     useEffect(() => {
         fetchFoodlocationInformation();
+        fetchFoodlocationSummaryInformation();
+        fetchDishes();
     }, []);
 
     const fetchFoodlocationInformation = async () => {
@@ -18,7 +22,10 @@ const FoodLocation = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    FoodLocationSummaryID: "cb99dc29-cd12-4840-8bdc-a5c495b9af9e"
+                    name: "Sushi Mura",
+                    address: "6485 Oak Street",
+                    postalCode: "V6M 2W7",
+                    country: "Canada"
                 }),
             });
 
@@ -28,21 +35,114 @@ const FoodLocation = () => {
 
             const result = await response.json();
             console.log('Information retrieved successfully:', result);
-            setFoodLocationInformation(result.data[0]); // Set user info in state
+            setFoodLocationInformation(result.data[0]);
+        } catch (e) {
+            console.error('Error retrieving food location information:', e);
+        }
+    };
+
+    const fetchDishes = async () => {
+        try {
+            const response = await fetch('/api/dish/get-dish-info', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: "Sushi Mura",
+                    address: "6485 Oak Street",
+                    postalCode: "V6M 2W7",
+                    country: "Canada"
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error(`Error: ${response.status} ${response.statusText}`);
+            }
+
+            const result = await response.json();
+            console.log('Information retrieved successfully:', result);
+            setDishesInformation(result.data);
+        } catch (e) {
+            console.error('Error retrieving food location information:', e);
+        }
+    };
+
+    const fetchFoodlocationSummaryInformation = async () => {
+        try {
+            const response = await fetch('/api/foodlocationsummary/get-foodlocationsummary-info', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    foodLocationSummaryID: "aa8e21cb-901b-4a8b-afcc-070a7ea2f749",
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error(`Error: ${response.status} ${response.statusText}`);
+            }
+
+            const result = await response.json();
+            console.log('Information retrieved successfully:', result);
+            setFoodLocationSummaryInformation(result.data[0]);
         } catch (e) {
             console.error('Error retrieving food location information:', e);
         }
     };
     return (
-        <div>
-            <h1>
+        <div className="app">
+            <h1 className="mainheader">
                 {foodLocationInformation.name}
             </h1>
             <div>
-                {foodLocationInformation.address} {foodLocationInformation.city} {foodLocationInformation.country}
+                {foodLocationInformation.address} {foodLocationInformation.city} {foodLocationInformation.country} {foodLocationInformation.genre}
             </div>
-        </div>
+            <div>
+                {foodLocationSummaryInformation.description}
+            </div>
+            <div>
+                {foodLocationInformation.numReviews} reviews
+            </div>
+            <div>
+                Rating: {foodLocationSummaryInformation.averageRating}
+            </div>
 
+            {viewDishes ? <div>
+                <h2>Dishes</h2>
+                <div className="dishes-list">
+                    {dishesInformation.length > 0 ? (
+                        dishesInformation.map((dish, index) => (
+                            <div key={index} className="dish-card">
+                                <h2>{dish.dishName}</h2>
+                                <p>
+                                    <strong>Price:</strong> ${dish.price.toFixed(2)}
+                                </p>
+                                <p>
+                                    <strong>Type:</strong> {dish.type}
+                                </p>
+                                <p>
+                                    <strong>Halal:</strong> {dish.isHalal ? 'Yes' : 'No'}
+                                </p>
+                                <p>
+                                    <strong>Gluten-Free:</strong> {dish.isGlutenFree ? 'Yes' : 'No'}
+                                </p>
+                                <p>
+                                    <strong>Vegetarian:</strong> {dish.isVegetarian ? 'Yes' : 'No'}
+                                </p>
+                            </div>
+                        ))
+                    ) : (
+                        <p>No dishes available to display.</p>
+                    )}
+                </div>
+            </div> : ""}
+
+            <button onClick={() => setViewDishes(!viewDishes)}>
+                {!viewDishes ? "View All Dishes" : "Close"}
+            </button>
+        </div>
     )
 }
 

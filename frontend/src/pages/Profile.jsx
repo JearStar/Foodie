@@ -1,10 +1,13 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import '../index.css';
+import {UserContext} from "../contexts/UserContext";
 
 
-const user = "cb99dc29-cd12-4840-8bdc-a5c495b9af9e";
+// const user = "4d7577fc-636e-40b1-ab1f-f3c12422c84a";
 
 const Profile = () => {
+    const { user } = useContext(UserContext);
+
     const [userInformation, setUserInformation] = useState({});
 
     //Email
@@ -21,32 +24,33 @@ const Profile = () => {
 
     // Fetch user information on component mount
     useEffect(() => {
-        fetchUserInformation();
+        // fetchUserInformation();
+        setUserInformation(user)
     }, []);
 
-    const fetchUserInformation = async () => {
-        try {
-            const response = await fetch('/api/users/get-user-info', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    userID: "cb99dc29-cd12-4840-8bdc-a5c495b9af9e"
-                }),
-            });
-
-            if (!response.ok) {
-                throw new Error(`Error: ${response.status} ${response.statusText}`);
-            }
-
-            const result = await response.json();
-            console.log('Information retrieved successfully:', result);
-            setUserInformation(result.data[0]); // Set user info in state
-        } catch (e) {
-            console.error('Error retrieving user information:', e);
-        }
-    };
+    // const fetchUserInformation = async () => {
+    //     try {
+    //         const response = await fetch('/api/users/get-user-info', {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify({
+    //                 userID: user.userID
+    //             }),
+    //         });
+    //
+    //         if (!response.ok) {
+    //             throw new Error(`Error: ${response.status} ${response.statusText}`);
+    //         }
+    //
+    //         const result = await response.json();
+    //         console.log('Information retrieved successfully:', result);
+    //         setUserInformation(result.data[0]); // Set user info in state
+    //     } catch (e) {
+    //         console.error('Error retrieving user information:', e);
+    //     }
+    // };
 
     const changeEmail = async () => {
         try {
@@ -178,7 +182,7 @@ const Profile = () => {
     }
 
     return (
-        <div className="profile">
+        <div className="app">
             <h1 className= "mainheader"> My Profile </h1>
             <h2>Welcome {userInformation.firstName}</h2>
             <h3>Edit Account Details</h3>

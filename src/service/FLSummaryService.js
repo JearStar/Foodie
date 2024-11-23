@@ -1,5 +1,5 @@
 const appService = require('../../appService');
-const { withOracleDB } = require('../../appService');
+const {withOracleDB} = require("../../appService");
 
 async function insertFLSummary(foodLocationSummary) {
   return await appService.withOracleDB(async (connection) => {
@@ -21,6 +21,23 @@ VALUES (:summaryID, :averageRating, :description, :foodLocationName, :address, :
     return result.rowsAffected && result.rowsAffected > 0;
   });
 }
+async function getFoodLocationSummaryInfo(foodLocationSummaryID) {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute('SELECT * FROM FOODLOCATIONSUMMARY WHERE SUMMARYID=:foodLocationSummaryID', {
+            foodLocationSummaryID: foodLocationSummaryID
+        });
+        if (result.rows.length === 0) {
+            return {};
+        }
+        return result.rows.map((row) => {
+            return {
+                summaryID: row[0],
+                averageRating: row[1],
+                description: row[2]
+            };
+        });
+    });
+}
 
 async function searchSummaries(searchKey) {
   return await withOracleDB(async (connection) => {
@@ -36,5 +53,6 @@ async function searchSummaries(searchKey) {
 
 module.exports = {
   insertFLSummary,
-  searchSummaries
+  searchSummaries,
+    getFoodLocationSummaryInfo
 };

@@ -47,15 +47,15 @@ router.post('/create-location', async (req, res) => {
 /*
 ENDPOINT: GET /api/foodlocation/get-foodlocation-info
 BODY: foodLocationSummaryID
-RETURNS ON SUCCESS: {success: boolean, data: [{ userID, email, password, numReviews }]}
+RETURNS ON SUCCESS: {success: boolean, data: [{ name, address, postalCode, country, totalScore, numReviews, city, genre, foodLocationSummaryID }]}
  */
 router.post('/get-foodlocation-info', async (req, res) => {
     try {
-        const result = await foodLocationService.getFoodLocationInfoWithSummaryID(req.body.FoodLocationSummaryID);
+        const result = await foodLocationService.getFoodLocationInfo(req.body.name, req.body.address, req.body.postalCode, req.body.country);
         if (!result) {
             return res.status(404).json({
                 success: false,
-                error: 'Failed to get food location information: ' + req.body.getFoodLocationInfoWithSummaryID,
+                error: 'Failed to get food location information: ' + req.body.name + req.body.address + req.body.postalCode + req.body.country,
             });
         }
         res.json({
