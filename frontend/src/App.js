@@ -13,7 +13,6 @@ import FoodLocation from "./pages/FoodLocation";
 import ProfileComments from "./components/ProfileComments";
 import ProfileReviews from "./components/ProfileReviews";
 import EditAccountDetails from "./components/EditAccountDetails";
-import UserComments from "./components/UserComments";
 import './index.css';
 
 function App() {

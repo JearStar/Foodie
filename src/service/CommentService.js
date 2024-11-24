@@ -131,6 +131,6 @@ module.exports = {
   incrementCommentLikes,
   getCommentsFromUser,
   getComment,
-  getReplies
-  getCommentReview
+  getReplies,
+  getCommentReview,
 };
