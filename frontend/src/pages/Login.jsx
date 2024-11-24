@@ -46,17 +46,20 @@ function Login({ handleLogin }) {
   };
 
   return (
-    <div className="no-scroll">
+    <div className="app">
+      <div >
       <div
         className="container mt-5 d-flex justify-content-center align-items-center"
         style={{ minHeight: '100vh' }}
       >
         <div className="col-12 col-md-6 col-lg-4">
-          <h2 className="text-center mb-4 text-light">Login</h2>
+          <div className="mainheader">
+          <h1 className="text-center mb-4 ">Login</h1>
+          </div>
           {error && <div className="alert alert-danger">{error}</div>}
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
-              <label htmlFor="email" className="form-label text-center text-light">
+              <label htmlFor="email" className="form-label text-center ">
                 Email
               </label>
               <input
@@ -69,7 +72,7 @@ function Login({ handleLogin }) {
               />
             </div>
             <div className="mb-3">
-              <label htmlFor="password" className="form-label text-center text-light">
+              <label htmlFor="password" className="form-label text-center ">
                 Password
               </label>
               <input
@@ -82,17 +85,18 @@ function Login({ handleLogin }) {
               />
             </div>
             <div className="d-flex justify-content-center mb-3">
-              <button type="submit" className="btn btn-dark">
+              <button type="submit" class="btn btn-danger" style={{ width: '15vw' }} >
                 Login
               </button>
             </div>
           </form>
           <div className="d-flex justify-content-center">
-            <Link to="/signup" className="btn btn-link text-light p-0">
+            <Link to="/signup" className="btn btn-link  p-0">
               Create Account
             </Link>
           </div>
         </div>
+      </div>
       </div>
     </div>
   );
