@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const reviewService = require('../service/ReviewService');
+const foodLocationService = require("../service/FoodLocationService");
 const dishService = require("../service/DishService");
 
 
@@ -43,6 +44,24 @@ router.post('/get-user-reviews', async (req, res) => {
       return res.status(404).json({
         success: false,
         error: 'Failed to get user reviews from: ' + req.body.userID,
+      });
+    }
+    res.json({
+      success: true,
+      data: result,
+    });
+  } catch (e) {
+    res.status(500).json({ success: false, error: e.message });
+  }
+});
+
+router.post('/get-review-ids', async (req, res) => {
+  try {
+    const result = await reviewService.getReviewIDs(req.body.name, req.body.address, req.body.postalCode, req.body.country);
+    if (!result) {
+      return res.status(404).json({
+        success: false,
+        error: 'Failed to get review IDS: ' + req.body.name + req.body.address + req.body.postalCode + req.body.country,
       });
     }
     res.json({

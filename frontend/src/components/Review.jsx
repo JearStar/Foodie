@@ -6,12 +6,13 @@ function Review({ReviewID}) {
   const {user} = useContext(UserContext);
   const [reviewID] = useState(ReviewID);
   const [error, setError] = useState('');
-  const [overallRating, setOvrRating] = useState(null);
-  const [serviceRating, setSrvRating] = useState(null);
-  const [waitTimeRating, setWaitRating] = useState(null);
-  const [DayofWeek, setDayofWeek] = useState(null);
-  const [timeStamp, setTimeStamp] = useState(null);
-  const [userID, setUser] = useState(null);
+  const [overallRating, setOvrRating] = useState(-1);
+  const [serviceRating, setSrvRating] = useState(-1);
+  const [waitTimeRating, setWaitRating] = useState(-1);
+  const [dayofWeek, setDayofWeek] = useState('');
+  const [timeStamp, setTimeStamp] = useState('');
+  const [userID, setUser] = useState('');
+  const [userName, setUserName] = useState('');
   const [dishReviews, setDishReviews] = useState([]);
 
   // One call to get review info (excluding food location info)
@@ -29,15 +30,15 @@ function Review({ReviewID}) {
         setError(res.error);
         return null;
       }
-      const reviewInfo = res["reviewInfo"];
-      if (typeof reviewInfo === "object") {
-        setOvrRating(reviewInfo[1]);
-        setSrvRating(reviewInfo[2]);
-        setWaitRating(reviewInfo[3]);
-        setDayofWeek(reviewInfo[4]);
-        setTimeStamp(reviewInfo[5].split('.')[0]);
-        setUser(reviewInfo[10]);
-      }
+      const reviewInfo = res["reviewInfo"][0];
+      setOvrRating(reviewInfo[1]);
+      setSrvRating(reviewInfo[2]);
+      setWaitRating(reviewInfo[3]);
+      setDayofWeek(reviewInfo[4]);
+      setTimeStamp(reviewInfo[5]);
+      setUser(reviewInfo[10]);
+
+      getUserInfo(reviewInfo[10]);
 
       return null;
     } catch (e) {
@@ -73,6 +74,29 @@ function Review({ReviewID}) {
     }
   };
 
+  const getUserInfo = async (userID) => {
+    try {
+      const response = await fetch('/api/users/get-user-info', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({userID: userID}),
+      });
+      let res = await response.json();
+      const data = res.data;
+      if (!response.ok) {
+        setError(res.error);
+        return null;
+      }
+
+      setUserName(data.firstName + " " + data.lastName);
+    } catch (e) {
+      console.log('something weird happened');
+      return null;
+    }
+  }
+
   // One more recursive request for comments
 
   useEffect(() => {
@@ -87,9 +111,25 @@ function Review({ReviewID}) {
 
   return (
       <div className="col justify-content-center align-items-center">
-        <p>
-          E
-        </p>
+        {userName !== '' ? <div>
+          <p>
+            <strong>Overall:</strong> {overallRating}/5
+          </p>
+          <p>
+            <strong>Service:</strong> {serviceRating}/5
+          </p>
+          <p>
+            <strong>Wait time:</strong> {waitTimeRating}/5
+          </p>
+          <p>
+            <strong>Day of week visited:</strong> {dayofWeek}
+          </p>
+          <p>
+            <strong>Posted by:</strong> {userName} <strong>at</strong> {timeStamp}
+          </p>
+        </div> : ""}
       </div>
   );
 }
+
+export default Review;
