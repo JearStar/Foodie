@@ -166,11 +166,6 @@ function AddFoodLocation() {
                             </button>
                         </div>
                     </form>
-                    <div className="d-flex justify-content-center">
-                        <Link to="/login" className="btn btn-link text-light p-0">
-                            Log In
-                        </Link>
-                    </div>
                 </div>
             </div>
         </div>

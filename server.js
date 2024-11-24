@@ -16,7 +16,7 @@ app.use(express.json()); // Parse incoming JSON payloads
 // If you prefer some other file as default page other than 'index.html',
 //      you can adjust and use the bellow line of code to
 //      route to send 'DEFAULT_FILE_NAME.html' as default for root URL
-app.get('/', (req, res) => {
+app.get('*', (req, res) => {
   res.sendFile(__dirname + '/frontend/build/index.html');
 });
 

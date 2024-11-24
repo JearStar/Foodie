@@ -68,16 +68,12 @@ async function getUserInfoWithID(userID) {
     if (result.rows.length === 0) {
       return {};
     }
-    return result.rows.map((row) => {
-      return {
-        user: row[0],
-        firstName: row[1],
-        lastName: row[2],
-        email: row[3],
-        password: row[4],
-        numReviews: row[5],
-      };
-    });
+    return {
+      userID: result.rows[0][0],
+      firstName: result.rows[0][1],
+      lastName: result.rows[0][2],
+      numReviews: result.rows[0][5],
+    };
   });
 }
 
@@ -113,7 +109,6 @@ async function authenticateUser(email, password) {
       lastName: result.rows[0][2],
       email: result.rows[0][3],
       numReviews: result.rows[0][5],
-      password: result.rows[0][4],
     };
   });
 }

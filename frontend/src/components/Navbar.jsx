@@ -12,46 +12,17 @@ const Navbar = () => {
           Foodie
         </Link>
         <div className="collapse navbar-collapse">
-          <ul className="navbar-nav ms-auto">
-            {user ? (
-                <>
-                  <li className="nav-item">
-                    <Link className="btn btn-dark" to="/profile">
-                      Profile
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link className="btn btn-dark" to="/home">
-                      Home
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <button className="btn btn-dark" onClick={logout}>
-                      Logout
-                    </button>
-                  </li>
-                </>
-            ) : (
-                <>
-                  <li className="nav-item">
-                    <Link className="nav-link" to="/login">
-                      Login
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/">
-                    Sign Up
-                  </Link>
-                </li>
-              </>
-            )}
-          </ul>
             <ul className="navbar-nav ms-auto">
                 {user.userID === ADMIN_UUID && <li className="nav-item">
                     <Link className="btn btn-dark" to="/add-location">
                         Add Location
                     </Link>
                 </li>}
+                <li className="nav-item">
+                    <Link className="btn btn-dark" to={`/profile/${user.userID}`}>
+                        Profile
+                    </Link>
+                </li>
                 <li className="nav-item">
                     <Link className="btn btn-dark" to="/home">
                         Home

@@ -63,6 +63,21 @@ router.post('/change-password', async (req, res) => {
   }
 });
 
+
+router.post('/check-old-password', async (req, res) => {
+  try {
+    const result = await userService.authenticateUser(req.body.email, req.body.password);
+    if (!result) {
+      return res.status(400).json({
+        success: false,
+      });
+    }
+    res.json({ success: true });
+  } catch (e) {
+    res.status(500).json({ success: false, error: e.message });
+  }
+});
+
 /*
 ENDPOINT: POST /api/users/change-password
 BODY: oldEmail, newEmail
@@ -86,7 +101,7 @@ router.post('/change-email', async (req, res) => {
 /*
 ENDPOINT: GET /api/users/get-user-info
 BODY: userID
-RETURNS ON SUCCESS: {success: boolean, data: [{ userID, firstName, lastName, email, password, numReviews }]}
+RETURNS ON SUCCESS: {success: boolean, data: [{ userID, firstName, lastName, numReviews }]}
  */
 router.post('/get-user-info', async (req, res) => {
   try {
