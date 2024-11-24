@@ -14,22 +14,22 @@ const Navbar = () => {
         <div className="collapse navbar-collapse">
             <ul className="navbar-nav ms-auto">
                 {user.userID === ADMIN_UUID && <li className="nav-item">
-                    <Link className="btn btn-dark" to="/add-location">
+                    <Link class="btn btn-danger" to="/add-location">
                         Add Location
                     </Link>
                 </li>}
                 <li className="nav-item">
-                    <Link className="btn btn-dark" to={`/profile/${user.userID}`}>
+                    <Link className="btn btn-danger" to={`/profile/${user.userID}`}>
                         Profile
                     </Link>
                 </li>
                 <li className="nav-item">
-                    <Link className="btn btn-dark" to="/home">
+                    <Link class="btn btn-danger" to="/home">
                         Home
                     </Link>
                 </li>
                 <li className="nav-item">
-                    <button className="btn btn-dark" onClick={logout}>
+                    <button class="btn btn-danger" onClick={logout}>
                         Logout
                     </button>
                 </li>

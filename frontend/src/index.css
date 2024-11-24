@@ -17,13 +17,10 @@ code {
 
 * {background-color: #f6e7dc}
 
-.app {
-  color: #060747;
-  /*padding-left: 5vw;*/
-  /*padding-top: 5vh;*/
-  /*display: grid;*/
-  /*gap: 1.5vh;*/
+.app * {
+  color: #060747; /* This targets all child elements inside .app */
 }
+
 
 .mainheader {
   font-family: "Abril Fatface", serif;

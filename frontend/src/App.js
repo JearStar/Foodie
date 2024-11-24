@@ -55,6 +55,9 @@ function App() {
                 <Route path="comments" element={<ProfileComments />}/>
                 <Route path="edit-details" element={<EditAccountDetails />}/>
               </Route>
+              <Route path="/profile/:userID" element={user? <Profile /> : <Navigate to="/login" />} />
+              {/*<Route path="/profile/:userID/:comments" element={user? <UserComments /> : <Navigate to="/login" />} />*/}
+              {/*<Route path="/profile/:userID/:reviews" element={user? <UserReviews /> : <Navigate to="/login" />} />*/}
               <Route path="/location/:name/:country/:postalcode/:address" element={user ? <FoodLocation /> : <Navigate to="/login" />} />
               <Route path="/" element={<Navigate to="/login" />} />
               <Route path="*" element={<Navigate to={user ? '/home' : '/login'} />} />

@@ -67,10 +67,6 @@ function Home() {
       for (const result of searchLocs) {
         dispArray.push(
             <div className="row mb-3">
-              {/*<label className="form-label text-center text-light">*/}
-              {/*  /!*{result}*!/*/}
-              {/*  {result[0]}*/}
-              {/*</label>*/}
               <Link  to={`/location/${result[0]}/${result[3]}/${result[2]}/${result[1]}`} >
                 View {result[0]}, {result[1]}, {result[6]}, {result[3]}
               </Link>
@@ -91,13 +87,13 @@ function Home() {
               <input
                   className='form-control'
                   type='search'
-                  placeholder='Search here...'
+                  placeholder='Search locations...'
                   aria-label='Search'
                   title='Enter a search term'
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
               />
-              <button className='btn btn-dark custom-button' type='submit' disabled={search.trim() === ''}>
+              <button class="btn btn-danger"  type='submit' disabled={search.trim() === ''}>
                 Search
               </button>
             </form>
