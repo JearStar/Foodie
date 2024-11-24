@@ -44,8 +44,7 @@ const Profile = () => {
                     borderBottom: "1px solid #ddd",
                 }}
             >
-                <h1 className="mainheader">My Profile</h1>
-                <h2>Welcome {userInformation.firstName}</h2>
+                <h1 className="mainheader">{userInformation.firstName}'s Profile</h1>
                 <h2>Number of reviews: {userInformation.numReviews}</h2>
                 <ul className="nav">
                     <li className="nav-item">
@@ -71,7 +70,7 @@ const Profile = () => {
             {/* Main Content */}
             <div
                 style={{
-                    marginTop: "200px", // Ensure content starts below the absolute header
+                    marginTop: "200px",
                     padding: "20px",
                 }}
             >
