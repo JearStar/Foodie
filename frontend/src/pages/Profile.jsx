@@ -37,7 +37,7 @@ const Profile = () => {
             <div
                 className="position-absolute p-3"
                 style={{
-                    top: "60px",
+                    top: "70px",
                     left: 0,
                     width: "100%",
                     zIndex: 1000,
