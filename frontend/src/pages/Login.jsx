@@ -85,7 +85,7 @@ function Login({ handleLogin }) {
               />
             </div>
             <div className="d-flex justify-content-center mb-3">
-              <button type="submit" class="btn btn-danger" style={{ width: '15vw' }} >
+              <button type="submit" className="button" style={{ width: '15vw' }} >
                 Login
               </button>
             </div>

@@ -78,7 +78,7 @@ const UserReviews = () => {
                     }
                 }
                 result.push(
-                    <div>
+                    <div className="backgroundreview">
                         <h2>{review.locationName}</h2>
                         <div>{review.locationAddress}, {review.locationPostalCode}, {review.locationCountry}</div>
                         <div>Day visited: {review.dayVisited}, {review.timestamp}</div>

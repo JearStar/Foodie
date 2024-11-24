@@ -1,9 +1,8 @@
 import React, {useContext, useEffect, useState} from "react";
 import '../index.css';
 import {UserContext} from "../contexts/UserContext";
-import {useParams} from "react-router-dom";
-import EditAccountDetails from "../components/EditAccountDetails";
-import UserReviews from "../components/UserReviews";
+import {Link, Outlet, useParams} from "react-router-dom";
+
 
 
 const Profile = () => {
@@ -11,7 +10,6 @@ const Profile = () => {
     const { userID } = useParams();
     const { user } = useContext(UserContext);
 
-    // Fetch user information on component mount
     useEffect(() => {
         const fetchUserInformation = async () => {
             try {
@@ -39,24 +37,10 @@ const Profile = () => {
 
     return (
         <div className="app">
-            <h1 className= "mainheader"> My Profile </h1>
-            <h2>Welcome {userInformation.firstName}</h2>
-            <EditAccountDetails />
-            <UserReviews />
-
         <div>
             <div
-                className="position-absolute p-3"
-                style={{
-                    top: "70px",
-                    left: 0,
-                    width: "100%",
-                    zIndex: 1000,
-                    borderBottom: "1px solid #ddd",
-                }}
             >
                 <h1 className="mainheader">{userInformation.firstName}'s Profile</h1>
-                <h2>Number of reviews: {userInformation.numReviews}</h2>
                 <ul className="nav">
                     <li className="nav-item">
                         <Link className="nav-link" to="./reviews">
@@ -77,16 +61,11 @@ const Profile = () => {
                     )}
                 </ul>
             </div>
-
-            {/* Main Content */}
             <div
-                style={{
-                    marginTop: "200px",
-                    padding: "20px",
-                }}
             >
                 <Outlet />
             </div>
+        </div>
         </div>
     );
 };

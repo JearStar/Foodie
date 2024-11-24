@@ -187,7 +187,7 @@ const EditAccountDetails = () => {
                                 onChange={(e) => setNewEmail(e.target.value)}
                             />
                         </div>
-                        <button type="submit" className="btn btn-outline-danger">
+                        <button type="submit" className="button">
                             Update
                         </button>
                     </form>
@@ -199,7 +199,7 @@ const EditAccountDetails = () => {
             {
                 updateEmail ?
                     <button type="button" className="btn-close" aria-label="Close" onClick={updateEmailClick}/> :
-                    <button type="button" className="btn btn-danger " style={{ width: '15vw' }}onClick={updateEmailClick}> Update email</button>
+                    <button type="button" className="button" style={{ width: '15vw' }}onClick={updateEmailClick}> Update email</button>
             }
 
 
@@ -234,7 +234,7 @@ const EditAccountDetails = () => {
                                 onChange={(e) => setRetypeNewPassword(e.target.value)}
                             />
                         </div>
-                        <button type="submit" className="btn btn-outline-danger">
+                        <button type="submit" className="button">
                             Update
                         </button>
                     </form>
@@ -246,7 +246,7 @@ const EditAccountDetails = () => {
             {
                 updatePassword ?
                     <button type="button" className="btn-close" aria-label="Close" onClick={updatePasswordClick}/> :
-                    <button type="button" className="btn btn-danger" style={{ width: '15vw' }} onClick={updatePasswordClick}> Update password</button>
+                    <button type="button" className="button" style={{ width: '15vw' }} onClick={updatePasswordClick}> Update password</button>
             }
         </div>
     );

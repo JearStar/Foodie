@@ -78,7 +78,7 @@ function Home() {
   }
 
   return (
-        <div className="d-flex flex-column justify-content-center align-items-center vh-100">
+        <div >
           <h1 className="text-light text-center mt-3">
             Hi {user.firstName} {user.lastName}! What can I do for you today?
           </h1>
@@ -93,7 +93,7 @@ function Home() {
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
               />
-              <button class="btn btn-danger"  type='submit' disabled={search.trim() === ''}>
+              <button className="button"  type='submit' disabled={search.trim() === ''}>
                 Search
               </button>
             </form>
