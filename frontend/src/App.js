@@ -10,6 +10,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { UserContext } from './contexts/UserContext';
 import AddFoodLocation from "./pages/AddFoodLocation";
 import FoodLocation from "./pages/FoodLocation";
+import ProfileComments from "./components/ProfileComments";
+import ProfileReviews from "./components/ProfileReviews";
+import EditAccountDetails from "./components/EditAccountDetails";
 
 function App() {
   const { user, login} = useContext(UserContext);
@@ -25,7 +28,7 @@ function App() {
   };
 
   return (
-    <div className="bg-dark">
+    <div >
       <Router>
         {user && <Navbar />}
         <div
@@ -47,6 +50,11 @@ function App() {
               />
               <Route path="/home" element={user ? <Home /> : <Navigate to="/login" />} />
               <Route path="/add-location" element={(user && user.userID === ADMIN_UUID)? <AddFoodLocation /> : <Navigate to="/home"/>}/>
+              <Route path="/profile/:userID" element={user? <Profile /> : <Navigate to="/login" />}>
+                <Route path="reviews" element={<ProfileReviews />}/>
+                <Route path="comments" element={<ProfileComments />}/>
+                <Route path="edit-details" element={<EditAccountDetails />}/>
+              </Route>
               <Route path="/profile/:userID" element={user? <Profile /> : <Navigate to="/login" />} />
               {/*<Route path="/profile/:userID/:comments" element={user? <UserComments /> : <Navigate to="/login" />} />*/}
               {/*<Route path="/profile/:userID/:reviews" element={user? <UserReviews /> : <Navigate to="/login" />} />*/}
