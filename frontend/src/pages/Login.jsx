@@ -47,10 +47,9 @@ function Login({ handleLogin }) {
 
   return (
     <div className="app">
-      <div >
       <div
-        className="container mt-5 d-flex justify-content-center align-items-center"
-        style={{ minHeight: '100vh' }}
+        className="container mt-5 d-flex justify-content-center align-items-center pb"
+        style={{ minHeight: '100vh' , transform: 'translateY(-10vh)'}}
       >
         <div className="col-12 col-md-6 col-lg-4">
           <div className="mainheader">
@@ -96,7 +95,6 @@ function Login({ handleLogin }) {
             </Link>
           </div>
         </div>
-      </div>
       </div>
     </div>
   );

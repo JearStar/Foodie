@@ -10,6 +10,7 @@ const foodLocationSummaryRouter =  require('./src/controller/FoodLocationSummary
 const photoRouter = require('./src/controller/PhotoController');
 const locationRouter = require('./src/controller/FoodLocationController');
 const dishRouter = require('./src/controller/DishController');
+const commentRouter = require('./src/controller/CommentController')
 
 
 // ----------------------------------------------------------
@@ -23,6 +24,7 @@ router.use('/foodlocation', foodLocationRouter);
 router.use('/review', reviewRouter);
 router.use('/foodlocationsummary', foodLocationSummaryRouter);
 router.use('/dish', dishRouter);
+router.use('/comments', commentRouter);
 
 router.post('/run-init-script-sql', async (req, res) => {
   const initiateResult = await appService.runInitScriptSQL();

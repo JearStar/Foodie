@@ -35,7 +35,7 @@ const Profile = () => {
     return (
         <div>
             <div
-                className="position-absolute p-3"
+                className="position-absolute p-3 container"
                 style={{
                     top: "70px",
                     left: 0,
@@ -67,12 +67,12 @@ const Profile = () => {
                 </ul>
             </div>
 
-            {/* Main Content */}
             <div
                 style={{
-                    marginTop: "200px",
+                    marginTop: "100px",
                     padding: "20px",
                 }}
+                className='container'
             >
                 <Outlet />
             </div>

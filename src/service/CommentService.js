@@ -46,10 +46,20 @@ async function incrementCommentLikes(commentID) {
 
 async function getCommentsFromUser(userID) {
   return await withOracleDB(async (connection) => {
-    const result = await connection.execute('SELECT * FROM USERCOMMENT WHERE userID=:userID', [
-      userID,
-    ]);
-    return result.rows;
+    const result = await connection.execute('SELECT * FROM USERCOMMENT WHERE USERID=:userID', {
+      userID: userID
+    });
+    return result.rows.map((row) => {
+      return {
+        commentID: row[0],
+        commentLikes: row[1],
+        content: row[2],
+        contentTimestamp: row[3],
+        reviewID: row[4],
+        parentCommentID: row[5],
+        userID: row[6]
+      };
+    });
   });
 }
 
@@ -62,9 +72,38 @@ async function getComment(commentID) {
     if (result.rows.length === 0) {
       return null;
     }
-    return result.rows[0];
+
+      return {
+        commentID: result.rows[0][0],
+        commentLikes: result.rows[0][1],
+        content: result.rows[0][2],
+        contentTimestamp: result.rows[0][3],
+        reviewID: result.rows[0][4],
+        parentCommentID: result.rows[0][5],
+        userID: result.rows[0][6]
+      };
   });
 }
+
+async function getReplies(commentID) {
+  return await withOracleDB(async (connection) => {
+    const result = await connection.execute('SELECT * FROM USERCOMMENT WHERE PARENTCOMMENTID=:parentCommentID', {
+      parentCommentID: commentID
+    });
+    return result.rows.map((row) => {
+      return {
+        commentID: row[0],
+        commentLikes: row[1],
+        content: row[2],
+        contentTimestamp: row[3],
+        reviewID: row[4],
+        parentCommentID: row[5],
+        userID: row[6]
+      };
+    });
+  });
+}
+
 
 module.exports = {
   addComment,
@@ -72,4 +111,5 @@ module.exports = {
   incrementCommentLikes,
   getCommentsFromUser,
   getComment,
+  getReplies
 };

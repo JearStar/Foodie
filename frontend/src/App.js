@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
@@ -28,44 +28,42 @@ function App() {
   };
 
   return (
-    <div >
-      <Router>
-        {user && <Navbar />}
-        <div
-          className="d-flex justify-content-center align-items-center"
-          style={{ height: '100vh' }}
-        >
-          <div className="container mt-4">
-            <Routes>
-              <Route path="/signup" element={<SignUp />} />
-              <Route
-                path="/login"
-                element={
-                  user ? (
-                    <Navigate to="/home" />
-                  ) : (
-                    <Login handleLogin={login} className="login-page" />
-                  )
-                }
-              />
-              <Route path="/home" element={user ? <Home /> : <Navigate to="/login" />} />
-              <Route path="/add-location" element={(user && user.userID === ADMIN_UUID)? <AddFoodLocation /> : <Navigate to="/home"/>}/>
-              <Route path="/profile/:userID" element={user? <Profile /> : <Navigate to="/login" />}>
-                <Route path="reviews" element={<ProfileReviews />}/>
-                <Route path="comments" element={<ProfileComments />}/>
-                <Route path="edit-details" element={<EditAccountDetails />}/>
-              </Route>
-              <Route path="/profile/:userID" element={user? <Profile /> : <Navigate to="/login" />} />
-              {/*<Route path="/profile/:userID/:comments" element={user? <UserComments /> : <Navigate to="/login" />} />*/}
-              {/*<Route path="/profile/:userID/:reviews" element={user? <UserReviews /> : <Navigate to="/login" />} />*/}
-              <Route path="/location/:name/:country/:postalcode/:address" element={user ? <FoodLocation /> : <Navigate to="/login" />} />
-              <Route path="/" element={<Navigate to="/login" />} />
-              <Route path="*" element={<Navigate to={user ? '/home' : '/login'} />} />
-            </Routes>
+      <div>
+        <Router>
+          {user && <Navbar />}
+          <div
+              className="d-flex flex-column"
+              style={{ minHeight: '100vh' }}
+          >
+            <div className="container mt-4 flex-grow-1">
+              <Routes>
+                <Route path="/signup" element={<SignUp />} />
+                <Route
+                    path="/login"
+                    element={
+                      user ? (
+                          <Navigate to="/home" />
+                      ) : (
+                          <Login handleLogin={login} className="login-page" />
+                      )
+                    }
+                />
+                <Route path="/home" element={user ? <Home /> : <Navigate to="/login" />} />
+                <Route path="/add-location" element={(user && user.userID === ADMIN_UUID)? <AddFoodLocation /> : <Navigate to="/home"/>}/>
+                <Route path="/profile/:userID" element={user? <Profile /> : <Navigate to="/login" />}>
+                  <Route path="reviews" element={<ProfileReviews />}/>
+                  <Route path="comments" element={<ProfileComments />}/>
+                  <Route path="edit-details" element={<EditAccountDetails />}/>
+                </Route>
+                <Route path="/profile/:userID" element={user? <Profile /> : <Navigate to="/login" />} />
+                <Route path="/location/:name/:country/:postalcode/:address" element={user ? <FoodLocation /> : <Navigate to="/login" />} />
+                <Route path="/" element={<Navigate to="/login" />} />
+                <Route path="*" element={<Navigate to={user ? '/home' : '/login'} />} />
+              </Routes>
+            </div>
           </div>
-        </div>
-      </Router>
-    </div>
+        </Router>
+      </div>
   );
 }
 
