@@ -112,9 +112,35 @@ async function searchDishRevs(searchKey) {
   });
 }
 
+async function getUserReviews(userID) {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute('SELECT * FROM REVIEW WHERE USERID=:userID', {
+            userID: userID
+        });
+        if (result.rows.length === 0) {
+            return {};
+        }
+        return result.rows.map((row) => {
+            return {
+                reviewID: row[0],
+                overallRating: row[1],
+                serviceRating: row[2],
+                waitTimeRating: row[3],
+                dayVisited: row[4],
+                timestamp: row[5],
+                locationName: row[6],
+                locationAddress: row[7],
+                locationPostalCode: row[8],
+                locationCountry: row[9]
+            };
+        });
+    });
+}
+
 module.exports = {
   insertReview,
   deleteReview,
   searchRevs,
   searchDishRevs,
+    getUserReviews
 };

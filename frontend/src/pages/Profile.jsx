@@ -3,9 +3,8 @@ import '../index.css';
 import {UserContext} from "../contexts/UserContext";
 import {useParams} from "react-router-dom";
 import EditAccountDetails from "../components/EditAccountDetails";
+import UserReviews from "../components/UserReviews";
 
-
-// const user = "4d7577fc-636e-40b1-ab1f-f3c12422c84a";
 
 const Profile = () => {
     const [userInformation, setUserInformation] = useState({});
@@ -31,7 +30,7 @@ const Profile = () => {
 
                 const result = await response.json();
                 console.log('Information retrieved successfully:', result);
-                setUserInformation(result.data); // Set user info in state
+                setUserInformation(result.data);
             } catch (e) {
                 console.error('Error retrieving user information:', e);
             }
@@ -45,6 +44,8 @@ const Profile = () => {
             <h1 className= "mainheader"> My Profile </h1>
             <h2>Welcome {userInformation.firstName}</h2>
             <EditAccountDetails />
+            <UserReviews />
+
         </div>
     );
 };
