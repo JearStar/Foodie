@@ -105,6 +105,26 @@ async function getReplies(commentID) {
 }
 
 
+async function getCommentReview(userID) {
+  return await withOracleDB(async (connection) => {
+    const result = await connection.execute(
+        'SELECT * FROM USERCOMMENT WHERE USERID=:userID',
+        { userID: userID }
+    );
+    if (result.rows.length === 0) {
+      return null;
+    }
+    return result.rows.map((row) => {
+      return {
+        commentLikes: row[1],
+        commentContent: row[2],
+        commentTimestamp: row[3],
+        reviewID: row[4]
+      };
+    });
+  });
+}
+
 module.exports = {
   addComment,
   updateCommentContent,
@@ -112,4 +132,5 @@ module.exports = {
   getCommentsFromUser,
   getComment,
   getReplies
+  getCommentReview
 };
