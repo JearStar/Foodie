@@ -12,7 +12,7 @@ const UserComments = () => {
 
     async function fetchUserComments() {
         try {
-            const response = await fetch('/api/comment/get-users-comments', {
+            const response = await fetch('/api/comments/get-user-comments', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

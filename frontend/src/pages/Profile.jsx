@@ -35,17 +35,9 @@ const Profile = () => {
     return (
         <div>
             <div
-                className="position-absolute p-3 container"
-                style={{
-                    top: "70px",
-                    left: 0,
-                    width: "100%",
-                    zIndex: 1000,
-                    borderBottom: "1px solid #ddd",
-                }}
+
             >
                 <h1 className="mainheader">{userInformation.firstName}'s Profile</h1>
-                <h2>Number of reviews: {userInformation.numReviews}</h2>
                 <ul className="nav">
                     <li className="nav-item">
                         <Link className="nav-link" to="./reviews">

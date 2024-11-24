@@ -56,7 +56,7 @@ const EditAccountDetails = () => {
                 }),
             });
             response = await response.json();
-            console.log(response);
+
             if (!response.ok || !response.success) {
                 alert("Old password is incorrect");
                 return false;
@@ -172,82 +172,82 @@ const EditAccountDetails = () => {
     }
 
     return (
-        <div className="container d-flex justify-content-center my-5 py-5">
-            <div className="col-12 col-md-6 col-lg-4">
-                <div className="text-center">
-                    <h3>Edit Account Details</h3>
-                    <h4>Email</h4>
-                    <div>
-                        {updateEmail && (
-                            <form onSubmit={handleSubmitEmail} className="p-3">
-                                <div className="mb-3">
-                                    <input
-                                        type="email"
-                                        className="form-control w-100 mx-auto"
-                                        placeholder="New email"
-                                        value={newEmail}
-                                        onChange={(e) => setNewEmail(e.target.value)}
-                                    />
-                                </div>
-                                <button type="submit" className="btn btn-outline-danger">
-                                    Update
-                                </button>
-                            </form>
-                        )}
-                    </div>
-
-                    {
-                        updateEmail ?
-                            <button type="button" className="btn-close" aria-label="Close" onClick={updateEmailClick}/> :
-                            <button type="button" className="btn btn-danger " style={{ width: '15vw' }}onClick={updateEmailClick}> Update email</button>
-                    }
-
-
-                    <h4>Password</h4>
-                    <div>
-                        {updatePassword && (
-                            <form onSubmit={handleSubmitPassword} className="p-3">
-                                <div className="mb-3">
-                                    <input
-                                        type="password"
-                                        className="form-control w-100 mx-auto"
-                                        placeholder="Old password"
-                                        value={oldPassword}
-                                        onChange={(e) => setOldPassword(e.target.value)}
-                                    />
-                                </div>
-                                <div className="mb-3">
-                                    <input
-                                        type="password"
-                                        className="form-control w-100 mx-auto"
-                                        placeholder="New password"
-                                        value={newPassword}
-                                        onChange={(e) => setNewPassword(e.target.value)}
-                                    />
-                                </div>
-                                <div className="mb-3">
-                                    <input
-                                        type="password"
-                                        className="form-control w-100 mx-auto"
-                                        placeholder="Retype new password"
-                                        value={retypeNewPassword}
-                                        onChange={(e) => setRetypeNewPassword(e.target.value)}
-                                    />
-                                </div>
-                                <button type="submit" className="btn btn-outline-danger">
-                                    Update
-                                </button>
-                            </form>
-                        )}
-                    </div>
-
-                    {
-                        updatePassword ?
-                            <button type="button" className="btn-close" aria-label="Close" onClick={updatePasswordClick}/> :
-                            <button type="button" className="btn btn-danger" style={{ width: '15vw' }} onClick={updatePasswordClick}> Update password</button>
-                    }
-                </div>
+        <div className="app">
+            <h3 className='mainheader'>Edit Account Details</h3>
+            <h4>Email</h4>
+            <div>
+                {updateEmail ? (
+                    <form onSubmit={handleSubmitEmail} className="p-3">
+                        <div className="mb-3">
+                            <input
+                                type="email"
+                                className="form-control w-50"
+                                placeholder="New email"
+                                value={newEmail}
+                                onChange={(e) => setNewEmail(e.target.value)}
+                            />
+                        </div>
+                        <button type="submit" className="button">
+                            Update
+                        </button>
+                    </form>
+                ) : (
+                    ""
+                )}
             </div>
+
+            {
+                updateEmail ?
+                    <button type="button" className="btn-close" aria-label="Close" onClick={updateEmailClick}/> :
+                    <button type="button" className="button" style={{ width: '15vw' }}onClick={updateEmailClick}> Update email</button>
+            }
+
+
+            <h4>Password</h4>
+            <div>
+                {updatePassword ? (
+                    <form onSubmit={handleSubmitPassword} className="p-3">
+                        <div className="mb-3">
+                            <input
+                                type="password"
+                                className="form-control w-50"
+                                placeholder="Old password"
+                                value={oldPassword}
+                                onChange={(e) => setOldPassword(e.target.value)}
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <input
+                                type="password"
+                                className="form-control w-50"
+                                placeholder="New password"
+                                value={newPassword}
+                                onChange={(e) => setNewPassword(e.target.value)}
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <input
+                                type="password"
+                                className="form-control w-50"
+                                placeholder="Retype new password"
+                                value={retypeNewPassword}
+                                onChange={(e) => setRetypeNewPassword(e.target.value)}
+                            />
+                        </div>
+                        <button type="submit" className="button">
+                            Update
+                        </button>
+                    </form>
+                ) : (
+                    ""
+                )}
+            </div>
+
+            {
+                updatePassword ?
+                    <button type="button" className="btn-close" aria-label="Close" onClick={updatePasswordClick}/> :
+                    <button type="button" className="button" style={{ width: '15vw' }} onClick={updatePasswordClick}> Update password</button>
+            }
         </div>
     );
 };
