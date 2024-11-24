@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import {Link} from "react-router-dom";
 
 const CommentCard = ({
                          commentID,
@@ -49,7 +50,7 @@ const CommentCard = ({
                 }
 
                 const result = await response.json();
-                setName(result.data.firstName + result.data.lastName);
+                setName(`${result.data.firstName} ${result.data.lastName}`);
             } catch (e) {
                 console.error("Error retrieving user information:", e);
             }
@@ -64,7 +65,11 @@ const CommentCard = ({
             <div className="card w-100">
                 <div className="card-body p-4">
                     <div>
-                        <h5>{name}</h5>
+                        <h5>
+                            <Link to={`/profile/${userID}`} className="text-decoration-none text-dark">
+                                {name}
+                            </Link>
+                        </h5>
                         <p className="small">{contentTimestamp}</p>
                         <p>{content}</p>
 
@@ -90,10 +95,10 @@ const CommentCard = ({
                         <div
                             className="mt-3"
                             style={{
-                                paddingTop: "10px", // add some space before the replies
-                                marginTop: "15px", // avoid overlap with other content
-                                position: "relative", // keep replies within the section
-                                overflowY: "auto", // allow scrolling for large sets of replies
+                                paddingTop: "10px",
+                                marginTop: "15px",
+                                position: "relative",
+                                overflowY: "auto",
                             }}
                         >
                             {replies.map((reply) => (
