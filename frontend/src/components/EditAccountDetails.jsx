@@ -5,7 +5,7 @@ import {UserContext} from "../contexts/UserContext";
 
 
 const EditAccountDetails = () => {
-    const { user } = useContext(UserContext);
+    const { user, logout } = useContext(UserContext);
 
     //Email
     const [updateEmail, setUpdateEmail] = useState(false);
@@ -157,6 +157,41 @@ const EditAccountDetails = () => {
 
     }
 
+    const deleteAccount = async () => {
+        try {
+            const response = await fetch('/api/users/delete-account', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    userID: user.userID
+                }),
+            });
+            const result = await response.json();
+            if (!response.ok || !result.success) {
+                return false
+            }
+            return true;
+        } catch (e) {
+            console.error('Error retrieving deleting user:', e);
+            return false;
+        }
+    }
+
+    const handleDeleteAccount = () => {
+        const userConfirmed = window.confirm("Are you sure you want to delete your account? This action cannot be undone.");
+        if (userConfirmed) {
+            if(deleteAccount()) {
+                console.log("Account deleted");
+                logout();
+            }
+
+        } else {
+            console.log("Action canceled");
+        }
+    }
+
     function updatePasswordClick () {
         setUpdatePassword(!updatePassword)
     }
@@ -248,6 +283,8 @@ const EditAccountDetails = () => {
                     <button type="button" className="btn-close" aria-label="Close" onClick={updatePasswordClick}/> :
                     <button type="button" className="button" style={{ width: '15vw' }} onClick={updatePasswordClick}> Update password</button>
             }
+
+            <button type="button" className="my-5 button" onClick={handleDeleteAccount}>Delete Account</button>
         </div>
     );
 };

@@ -3,7 +3,6 @@ import {Link} from "react-router-dom";
 
 const CommentCard = ({
                          commentID,
-                         commentLikes,
                          content,
                          contentTimestamp,
                          reviewID,
@@ -13,9 +12,31 @@ const CommentCard = ({
     const [showReplies, setShowReplies] = useState(false);
     const [replies, setReplies] = useState([]);
     const [name, setName] = useState('');
+    const [likes, setLikes] = useState(0);
+    const [likeStatus, setLikeStatus] = useState(false);
 
     const handleShowReplies = () => {
         setShowReplies(!showReplies);
+    };
+
+    const handleLike = async () => {
+        try {
+            const newStatus = !likeStatus;
+            const apiEndpoint = newStatus ? "/api/comments/like" : "/api/comments/delete-like";
+
+            const response = await fetch(apiEndpoint, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ commentID, userID }),
+            });
+
+            if (response.ok) {
+                setLikes((prev) => prev + (newStatus ? 1 : -1));
+                setLikeStatus(newStatus);
+            }
+        } catch (err) {
+            console.error("Error updating like status:", err);
+        }
     };
 
     useEffect(() => {
@@ -56,14 +77,65 @@ const CommentCard = ({
             }
         };
 
+        const fetchLikes = async () => {
+            try {
+                const response = await fetch("/api/comments/get-comment-likes", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ commentID: commentID }),
+                });
+
+                if (response.ok) {
+                   const data = await response.json();
+                   setLikes((data.numLikes));
+                } else {
+                    console.error(`Error fetching comment likes: ${response.status}`);
+                }
+
+            } catch (e) {
+                console.error("Error fetching comment likes:", e);
+            }
+        }
+
+        const fetchLikeStatus = async () => {
+            try {
+                const response = await fetch("/api/comments/comment-liked-by-user", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ commentID: commentID, userID: userID }),
+                });
+                const data = await response.json();
+                if (response.ok && data.isLiked) {
+                    setLikeStatus(true);
+                    console.log("is Liked")
+                } else {
+                    setLikeStatus(false);
+                    console.log("is not Liked")
+                }
+            } catch (e) {
+                console.error("Error fetching comment likes:", e);
+            }
+        }
+
         fetchUserInformation();
         fetchComments();
+        fetchLikes();
+        fetchLikeStatus();
     }, [reviewID]);
 
     return (
         <div className="d-flex flex-start mb-4">
-            <div className="card w-100">
-                <div className="card-body p-4">
+            <div className="card w-100" style={{
+                backgroundColor: '#f4dfd0',
+                border: 'none',
+                borderLeft: '4px solid #f47356',
+                borderRadius: '0',
+            }}>
+                <div className="card-body p-4 pe-0">
                     <div>
                         <h5>
                             <Link to={`/profile/${userID}`} className="text-decoration-none text-dark">
@@ -75,13 +147,16 @@ const CommentCard = ({
 
                         <div className="d-flex justify-content-between align-items-center">
                             <div className="d-flex align-items-center">
-                                <a href="#!" className="link-muted me-2">
-                                    <i className="fas fa-thumbs-up me-1"></i>{commentLikes}
-                                </a>
+                                <button
+                                    className={`btn p-0 ${likeStatus ? "text-danger" : "text-muted"}`}
+                                    onClick={handleLike}
+                                    style={{fontSize: "1.5rem", background: "none", border: "none"}}
+                                >
+                                    <i className={`bi ${likeStatus ? "bi-heart-fill" : "bi-heart"}`}></i>
+                                </button>
+                                <span className={`ms-2 fs-4 ${likeStatus ? "text-danger" : "text-dark"} fw-bold`}
+                                      id="like-count">{likes}</span>
                             </div>
-                            <a href="#!" className="link-muted">
-                                <i className="fas fa-reply me-1"></i> Reply
-                            </a>
                         </div>
                     </div>
 

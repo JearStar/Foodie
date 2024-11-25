@@ -3,10 +3,9 @@ const { withOracleDB } = require('../../appService');
 async function addComment(comment) {
   return await withOracleDB(async (connection) => {
     const result = await connection.execute(
-      `INSERT INTO USERCOMMENT (COMMENTID, COMMENTLIKES, CONTENT, COMMENTTIMESTAMP, PARENTID, PARENTTYPE, USERID) VALUES (:commentID, :commentLikes, :content, :commentTimestamp, :parentID, :parentType, :userID)`,
+      `INSERT INTO USERCOMMENT (COMMENTID, CONTENT, COMMENTTIMESTAMP, PARENTID, PARENTTYPE, USERID) VALUES (:commentID, :content, :commentTimestamp, :parentID, :parentType, :userID)`,
       {
         commentID: comment.commentID,
-        commentLikes: comment.commentLikes,
         content: comment.content,
         commentTimestamp: comment.commentTimestamp,
         parentID: comment.parentID,
@@ -32,18 +31,6 @@ async function updateCommentContent(commentID, newContent) {
   });
 }
 
-async function incrementCommentLikes(commentID) {
-  return await withOracleDB(async (connection) => {
-    const result = await connection.execute(
-      `UPDATE USERCOMMENT SET commentLikes = commentLikes + 1 where commentID=:commentID`,
-      { commentID: commentID },
-      { autoCommit: true }
-    );
-
-    return result.rowsAffected && result.rowsAffected > 0;
-  });
-}
-
 async function getCommentsFromUser(userID) {
   return await withOracleDB(async (connection) => {
     const result = await connection.execute('SELECT * FROM USERCOMMENT WHERE USERID=:userID', {
@@ -52,12 +39,11 @@ async function getCommentsFromUser(userID) {
     return result.rows.map((row) => {
       return {
         commentID: row[0],
-        commentLikes: row[1],
-        content: row[2],
-        contentTimestamp: row[3],
-        reviewID: row[4],
-        parentCommentID: row[5],
-        userID: row[6]
+        content: row[1],
+        contentTimestamp: row[2],
+        reviewID: row[3],
+        parentCommentID: row[4],
+        userID: row[5]
       };
     });
   });
@@ -75,12 +61,11 @@ async function getComment(commentID) {
 
       return {
         commentID: result.rows[0][0],
-        commentLikes: result.rows[0][1],
-        content: result.rows[0][2],
-        contentTimestamp: result.rows[0][3],
-        reviewID: result.rows[0][4],
-        parentCommentID: result.rows[0][5],
-        userID: result.rows[0][6]
+        content: result.rows[0][1],
+        contentTimestamp: result.rows[0][2],
+        reviewID: result.rows[0][3],
+        parentCommentID: result.rows[0][4],
+        userID: result.rows[0][5]
       };
   });
 }
@@ -93,12 +78,11 @@ async function getReplies(commentID) {
     return result.rows.map((row) => {
       return {
         commentID: row[0],
-        commentLikes: row[1],
-        content: row[2],
-        contentTimestamp: row[3],
-        reviewID: row[4],
-        parentCommentID: row[5],
-        userID: row[6]
+        content: row[1],
+        contentTimestamp: row[2],
+        reviewID: row[3],
+        parentCommentID: row[4],
+        userID: row[5]
       };
     });
   });
@@ -128,7 +112,6 @@ async function getCommentReview(userID) {
 module.exports = {
   addComment,
   updateCommentContent,
-  incrementCommentLikes,
   getCommentsFromUser,
   getComment,
   getReplies,

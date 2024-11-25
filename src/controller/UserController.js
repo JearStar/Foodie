@@ -78,6 +78,20 @@ router.post('/check-old-password', async (req, res) => {
   }
 });
 
+router.post('/delete-account', async (req, res) => {
+  try {
+    const result = await userService.deleteAccount(req.body.userID);
+    if (!result) {
+      return res.status(400).json({
+        success: false,
+      });
+    }
+    res.json({ success: true });
+  } catch (e) {
+    res.status(500).json({ success: false, error: e.message });
+  }
+});
+
 /*
 ENDPOINT: POST /api/users/change-password
 BODY: oldEmail, newEmail

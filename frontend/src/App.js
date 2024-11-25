@@ -13,6 +13,7 @@ import FoodLocation from "./pages/FoodLocation";
 import ProfileComments from "./components/ProfileComments";
 import UserReviews from "./components/UserReviews";
 import EditAccountDetails from "./components/EditAccountDetails";
+import 'bootstrap-icons/font/bootstrap-icons.css';
 import './index.css';
 
 function App() {

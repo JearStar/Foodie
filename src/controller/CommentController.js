@@ -3,11 +3,13 @@ const router = express.Router();
 const Comment = require('../model/Comment');
 const { generateUUID } = require('../Helper');
 const commentService = require("../service/CommentService");
+const voteService = require('../service/VoteService');
+const Vote = require("../model/Vote");
 
 /*
 ENDPOINT: GET /api/comments/get-user-comments
 BODY: userID
-RETURNS : {success: boolean, data: [{ "commentID", "commentLikes", "content", "contentTimestamp", "reviewID", "parentCommentID", "userID"}]}
+RETURNS : {success: boolean, data: [{ "commentID", "content", "contentTimestamp", "reviewID", "parentCommentID", "userID"}]}
  */
 router.post('/get-user-comments', async (req, res) => {
     try {
@@ -39,6 +41,59 @@ router.post('/get-replies', async (req, res) => {
         res.json({
             success: true,
             data: result,
+        });
+    } catch (e) {
+        res.status(500).json({ success: false, error: e.message });
+    }
+});
+
+router.post('/get-comment-likes', async (req, res) => {
+    try {
+        const result = await voteService.getCommentLikes(req.body.commentID);
+        res.json({
+            success: true,
+            numLikes: result,
+        });
+    } catch (e) {
+        res.status(500).json({ success: false, error: e.message });
+    }
+});
+
+router.post('/comment-liked-by-user', async (req, res) => {
+    try {
+        const result = await voteService.commentLikedByUser(req.body.commentID, req.body.userID);
+        res.json({
+            success: true,
+            isLiked: result,
+        });
+    } catch (e) {
+        res.status(500).json({ success: false, error: e.message });
+    }
+});
+
+router.post('/like', async (req, res) => {
+    try {
+        const vote = new Vote(generateUUID(), req.body.userID, null, req.body.commentID);
+        const result = await voteService.insertVote(vote);
+        if (!result) {
+            return res.status(400).json({success: false, error: "failed to insert like"});
+        }
+        res.json({
+            success: true
+        });
+    } catch (e) {
+        res.status(500).json({ success: false, error: e.message });
+    }
+});
+
+router.post('/delete-like', async (req, res) => {
+    try {
+        const result = await voteService.deleteCommentLike(req.body.commentID, req.body.userID);
+        if (!result) {
+            return res.status(400).json({success: false, error: "failed to delete like"});
+        }
+        res.json({
+            success: true
         });
     } catch (e) {
         res.status(500).json({ success: false, error: e.message });

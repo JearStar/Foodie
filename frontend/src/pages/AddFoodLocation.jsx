@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import "../index.css"
 
 function AddFoodLocation() {
     const [locationName, setLocationName] = useState('');
@@ -11,7 +11,6 @@ function AddFoodLocation() {
     const [description, setDescription] = useState('');
     const [status, setStatus] = useState('idle');
     const [error, setError] = useState('');
-    const navigate = useNavigate();
 
     const handleCreate = async (locationName, locationAddress, postalCode, country, city, genre, description) => {
         try {
@@ -161,7 +160,7 @@ function AddFoodLocation() {
                             />
                         </div>
                         <div className="d-flex justify-content-center mb-5">
-                            <button type="submit" className="btn btn-dark w-50">
+                            <button type="submit" className="button w-50">
                                 Add
                             </button>
                         </div>

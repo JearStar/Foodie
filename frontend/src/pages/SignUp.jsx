@@ -149,7 +149,7 @@ function SignUp() {
               />
             </div>
             <div className="d-flex justify-content-center mb-3">
-              <button type="submit" className="btn btn-dark w-50">
+              <button type="submit" className="button w-50">
                 Sign Up
               </button>
             </div>

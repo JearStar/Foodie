@@ -25,13 +25,13 @@ CREATE TABLE AppUser (
 
 CREATE TABLE UserComment (
     CommentID VARCHAR(36) PRIMARY KEY,
-    CommentLikes INTEGER NOT NULL,
     Content VARCHAR(1000) NOT NULL,
     CommentTimestamp TIMESTAMP NOT NULL,
     ReviewID VARCHAR(36),
     ParentCommentID VARCHAR(36),
     UserID VARCHAR(36)  NOT NULL,
     CONSTRAINT fk_usercomment_reference_appuser FOREIGN KEY (UserID) REFERENCES AppUser ON DELETE CASCADE,
+    CONSTRAINT fk_usercomment_parent FOREIGN KEY (ParentCommentID) REFERENCES UserComment(CommentID) ON DELETE CASCADE,
     CHECK (ReviewID IS NOT NULL OR ParentCommentID IS NOT NULL),
     CHECK (ReviewID IS NULL OR ParentCommentID IS NULL)
 );
@@ -94,11 +94,9 @@ CREATE TABLE Photo (
 
 CREATE TABLE Vote (
     VoteID VARCHAR(36) PRIMARY KEY,
-    Value NUMBER(1) NOT NULL,
     UserID VARCHAR(36)  NOT NULL,
     PhotoID VARCHAR(36),
     CommentID VARCHAR(36),
-    CONSTRAINT check_boolean CHECK (Value IN (0, 1)),
     CONSTRAINT fk_vote_reference_appuser FOREIGN KEY (UserID) REFERENCES APPUSER ON DELETE CASCADE,
     CONSTRAINT fk_vote_reference_usercomment FOREIGN KEY (CommentID) REFERENCES USERCOMMENT ON DELETE CASCADE,
     CONSTRAINT fk_vote_reference_photo FOREIGN KEY (PhotoID) REFERENCES PHOTO ON DELETE CASCADE,
@@ -341,23 +339,23 @@ VALUES ('12b671b9-3826-46ba-a9d2-dc5a2f74ad64', 4, 4, 3, 4, '2024-09-30 14:00:00
 
 COMMIT;
 
-INSERT INTO UserComment (CommentID, CommentLikes, Content, CommentTimestamp, ReviewID, ParentCommentID, UserID)
-VALUES ('27a7d50f-4b98-4f20-a631-f3a6b6f1f5b3', 3, 'It was a great experience.', '2024-10-13 14:23:00', '5b3c2a1d-d5c4-4e9e-80cd-3e5d232df9f1', NULL, '4d7577fc-636e-40b1-ab1f-f3c12422c84a');
+INSERT INTO UserComment (CommentID, Content, CommentTimestamp, ReviewID, ParentCommentID, UserID)
+VALUES ('27a7d50f-4b98-4f20-a631-f3a6b6f1f5b3','It was a great experience.', '2024-10-13 14:23:00', '5b3c2a1d-d5c4-4e9e-80cd-3e5d232df9f1', NULL, '4d7577fc-636e-40b1-ab1f-f3c12422c84a');
 
-INSERT INTO UserComment (CommentID, CommentLikes, Content, CommentTimestamp, ReviewID, ParentCommentID, UserID)
-VALUES ('df8475e2-2e64-4a62-bbd1-c1d5d174d9f7', 1, 'Can you clarify what you mean by this?', '2024-10-13 14:45:00', NULL, '27a7d50f-4b98-4f20-a631-f3a6b6f1f5b3', '5aba12e6-a3b0-4d19-a078-6f9f41a81eec');
+INSERT INTO UserComment (CommentID, Content, CommentTimestamp, ReviewID, ParentCommentID, UserID)
+VALUES ('df8475e2-2e64-4a62-bbd1-c1d5d174d9f7', 'Can you clarify what you mean by this?', '2024-10-13 14:45:00', NULL, '27a7d50f-4b98-4f20-a631-f3a6b6f1f5b3', '5aba12e6-a3b0-4d19-a078-6f9f41a81eec');
 
-INSERT INTO UserComment (CommentID, CommentLikes, Content, CommentTimestamp, ReviewID, ParentCommentID, UserID)
-VALUES ('c6dc8a9f-5a28-43fd-be68-49aa9b22e684', 6, 'no + ratio', '2024-10-13 14:46:00', NULL, 'df8475e2-2e64-4a62-bbd1-c1d5d174d9f7', '4d7577fc-636e-40b1-ab1f-f3c12422c84a');
+INSERT INTO UserComment (CommentID, Content, CommentTimestamp, ReviewID, ParentCommentID, UserID)
+VALUES ('c6dc8a9f-5a28-43fd-be68-49aa9b22e684', 'no + ratio', '2024-10-13 14:46:00', NULL, 'df8475e2-2e64-4a62-bbd1-c1d5d174d9f7', '4d7577fc-636e-40b1-ab1f-f3c12422c84a');
 
-INSERT INTO UserComment (CommentID, CommentLikes, Content, CommentTimestamp, ReviewID, ParentCommentID, UserID)
-VALUES ('4cbe489b-6748-41a4-8a5e-7e5d5b924bfb', 0, 'This comment thread has been really informative, thanks!', '2024-10-13 14:55:00', NULL, 'c6dc8a9f-5a28-43fd-be68-49aa9b22e684', 'b6751637-b434-419e-ae0d-1a0c7c405053');
+INSERT INTO UserComment (CommentID, Content, CommentTimestamp, ReviewID, ParentCommentID, UserID)
+VALUES ('4cbe489b-6748-41a4-8a5e-7e5d5b924bfb', 'This comment thread has been really informative, thanks!', '2024-10-13 14:55:00', NULL, 'c6dc8a9f-5a28-43fd-be68-49aa9b22e684', 'b6751637-b434-419e-ae0d-1a0c7c405053');
 
-INSERT INTO UserComment (CommentID, CommentLikes, Content, CommentTimestamp, ReviewID, ParentCommentID, UserID)
-VALUES ('ac8b1f75-4321-45a3-9783-6d89ab23c0b1', 0, 'I paid so much for some doodoo donkey food.', '2024-10-13 14:40:00', 'd6b9c3e1-893b-4d6c-b39a-24dbb7a0289d', NULL, 'b6751637-b434-419e-ae0d-1a0c7c405053');
+INSERT INTO UserComment (CommentID, Content, CommentTimestamp, ReviewID, ParentCommentID, UserID)
+VALUES ('ac8b1f75-4321-45a3-9783-6d89ab23c0b1', 'I paid so much for some doodoo donkey food.', '2024-10-13 14:40:00', 'd6b9c3e1-893b-4d6c-b39a-24dbb7a0289d', NULL, 'b6751637-b434-419e-ae0d-1a0c7c405053');
 
-INSERT INTO UserComment (CommentID, CommentLikes, Content, CommentTimestamp, ReviewID, ParentCommentID, UserID)
-VALUES ('fe8b3e22-fc7d-4a1e-b36a-b7e2487c3c75', 0, 'It was okay. Not great, not terrible.', '2024-10-13 14:50:00', 'dbff5e43-67b4-44e2-b78d-5331a3c33fa5', NULL, '88e5791d-0fd7-4721-b8f6-5aad4845f095');
+INSERT INTO UserComment (CommentID, Content, CommentTimestamp, ReviewID, ParentCommentID, UserID)
+VALUES ('fe8b3e22-fc7d-4a1e-b36a-b7e2487c3c75', 'It was okay. Not great, not terrible.', '2024-10-13 14:50:00', 'dbff5e43-67b4-44e2-b78d-5331a3c33fa5', NULL, '88e5791d-0fd7-4721-b8f6-5aad4845f095');
 
 COMMIT;
 
@@ -396,29 +394,29 @@ INSERT INTO Photo (PhotoID, ImageURL, PhotoLikes, Description, PhotoTimestamp, R
 
 COMMIT;
 
-INSERT INTO Vote (VoteID, Value, UserID, PhotoID, CommentID) VALUES ('550e8400-e29b-41d4-a716-446655440000', 1, '5aba12e6-a3b0-4d19-a078-6f9f41a81eec', NULL,'27a7d50f-4b98-4f20-a631-f3a6b6f1f5b3');
-INSERT INTO Vote (VoteID, Value, UserID, PhotoID, CommentID) VALUES ('3e9b07de-b29a-43e7-9d22-1c90d1c0beef', 1, 'b6751637-b434-419e-ae0d-1a0c7c405053', NULL,'27a7d50f-4b98-4f20-a631-f3a6b6f1f5b3');
-INSERT INTO Vote (VoteID, Value, UserID, PhotoID, CommentID) VALUES ('c70d12f0-5c0f-4fcb-93a9-1a0b93a7d5b1', 1, '88e5791d-0fd7-4721-b8f6-5aad4845f095', NULL,'27a7d50f-4b98-4f20-a631-f3a6b6f1f5b3');
-INSERT INTO Vote (VoteID, Value, UserID, PhotoID, CommentID) VALUES ('6e1481a6-71f1-47e8-b8ec-9f788bfcf7fb', 1, 'fb6a2c9e-9e6b-4b83-8f5f-77c0d4990b9b', NULL,'27a7d50f-4b98-4f20-a631-f3a6b6f1f5b3');
-INSERT INTO Vote (VoteID, Value, UserID, PhotoID, CommentID) VALUES ('803f4b93-b2b6-40d7-bb3d-5f98d05476a9', 0, '1c62e735-5f83-4cd9-94b0-cb49cf4b92c3', NULL,'27a7d50f-4b98-4f20-a631-f3a6b6f1f5b3');
+INSERT INTO Vote (VoteID, UserID, PhotoID, CommentID) VALUES ('550e8400-e29b-41d4-a716-446655440000', '5aba12e6-a3b0-4d19-a078-6f9f41a81eec', NULL,'27a7d50f-4b98-4f20-a631-f3a6b6f1f5b3');
+INSERT INTO Vote (VoteID, UserID, PhotoID, CommentID) VALUES ('3e9b07de-b29a-43e7-9d22-1c90d1c0beef', 'b6751637-b434-419e-ae0d-1a0c7c405053', NULL,'27a7d50f-4b98-4f20-a631-f3a6b6f1f5b3');
+INSERT INTO Vote (VoteID, UserID, PhotoID, CommentID) VALUES ('c70d12f0-5c0f-4fcb-93a9-1a0b93a7d5b1', '88e5791d-0fd7-4721-b8f6-5aad4845f095', NULL,'27a7d50f-4b98-4f20-a631-f3a6b6f1f5b3');
+INSERT INTO Vote (VoteID, UserID, PhotoID, CommentID) VALUES ('6e1481a6-71f1-47e8-b8ec-9f788bfcf7fb', 'fb6a2c9e-9e6b-4b83-8f5f-77c0d4990b9b', NULL,'27a7d50f-4b98-4f20-a631-f3a6b6f1f5b3');
+INSERT INTO Vote (VoteID, UserID, PhotoID, CommentID) VALUES ('803f4b93-b2b6-40d7-bb3d-5f98d05476a9', '1c62e735-5f83-4cd9-94b0-cb49cf4b92c3', NULL,'27a7d50f-4b98-4f20-a631-f3a6b6f1f5b3');
 
-INSERT INTO Vote (VoteID, Value, UserID, PhotoID, CommentID) VALUES ('af7633d6-5003-4c84-94f3-90a21ca0c50b', 1, '4d7577fc-636e-40b1-ab1f-f3c12422c84a', NULL,'df8475e2-2e64-4a62-bbd1-c1d5d174d9f7');
-INSERT INTO Vote (VoteID, Value, UserID, PhotoID, CommentID) VALUES ('01602621-4c54-411d-9f2b-f351270e3142', 1, 'b6751637-b434-419e-ae0d-1a0c7c405053', NULL,'df8475e2-2e64-4a62-bbd1-c1d5d174d9f7');
-INSERT INTO Vote (VoteID, Value, UserID, PhotoID, CommentID) VALUES ('7992a70e-4b0a-4348-a39e-f10133ba63a2', 0, '88e5791d-0fd7-4721-b8f6-5aad4845f095', NULL,'df8475e2-2e64-4a62-bbd1-c1d5d174d9f7');
+INSERT INTO Vote (VoteID, UserID, PhotoID, CommentID) VALUES ('af7633d6-5003-4c84-94f3-90a21ca0c50b', '4d7577fc-636e-40b1-ab1f-f3c12422c84a', NULL,'df8475e2-2e64-4a62-bbd1-c1d5d174d9f7');
+INSERT INTO Vote (VoteID, UserID, PhotoID, CommentID) VALUES ('01602621-4c54-411d-9f2b-f351270e3142', 'b6751637-b434-419e-ae0d-1a0c7c405053', NULL,'df8475e2-2e64-4a62-bbd1-c1d5d174d9f7');
+INSERT INTO Vote (VoteID, UserID, PhotoID, CommentID) VALUES ('7992a70e-4b0a-4348-a39e-f10133ba63a2', '88e5791d-0fd7-4721-b8f6-5aad4845f095', NULL,'df8475e2-2e64-4a62-bbd1-c1d5d174d9f7');
 
-INSERT INTO Vote (VoteID, Value, UserID, PhotoID, CommentID) VALUES ('82894643-07fc-4d81-a9b3-b399198d29d3', 1, '35f30e4a-25d2-43d4-a55c-fc9b5a30895c', NULL,'c6dc8a9f-5a28-43fd-be68-49aa9b22e684');
-INSERT INTO Vote (VoteID, Value, UserID, PhotoID, CommentID) VALUES ('b4020886-1d28-4bae-95c8-94d9580d4f17', 1, '8141ad7b-e670-44ff-bc3b-d9ea6de3eacf', NULL,'c6dc8a9f-5a28-43fd-be68-49aa9b22e684');
-INSERT INTO Vote (VoteID, Value, UserID, PhotoID, CommentID) VALUES ('ef3466ed-0c22-460f-85ec-e27fab1b3c3b', 1, 'b6e2a413-df97-4bfb-9b88-e5a0d4345b43', NULL,'c6dc8a9f-5a28-43fd-be68-49aa9b22e684');
-INSERT INTO Vote (VoteID, Value, UserID, PhotoID, CommentID) VALUES ('cb1cadc3-877e-47db-8bb7-30c9fe2cf2f3', 1, 'af943d85-91e5-4089-b20f-8923d4949b2d', NULL,'c6dc8a9f-5a28-43fd-be68-49aa9b22e684');
-INSERT INTO Vote (VoteID, Value, UserID, PhotoID, CommentID) VALUES ('f0c91cc6-6737-49e3-875d-bad2b400b33a', 1, '3c8b4731-3483-4a78-b63a-c5f72c8d51c2', NULL,'c6dc8a9f-5a28-43fd-be68-49aa9b22e684');
-INSERT INTO Vote (VoteID, Value, UserID, PhotoID, CommentID) VALUES ('fc944569-fc0d-4dc3-af7f-de277b0b944c', 1, '92ad6d5e-b2ab-4e19-9099-bc6fb6f8c245', NULL,'c6dc8a9f-5a28-43fd-be68-49aa9b22e684');
+INSERT INTO Vote (VoteID, UserID, PhotoID, CommentID) VALUES ('82894643-07fc-4d81-a9b3-b399198d29d3', '35f30e4a-25d2-43d4-a55c-fc9b5a30895c', NULL,'c6dc8a9f-5a28-43fd-be68-49aa9b22e684');
+INSERT INTO Vote (VoteID, UserID, PhotoID, CommentID) VALUES ('b4020886-1d28-4bae-95c8-94d9580d4f17', '8141ad7b-e670-44ff-bc3b-d9ea6de3eacf', NULL,'c6dc8a9f-5a28-43fd-be68-49aa9b22e684');
+INSERT INTO Vote (VoteID, UserID, PhotoID, CommentID) VALUES ('ef3466ed-0c22-460f-85ec-e27fab1b3c3b', 'b6e2a413-df97-4bfb-9b88-e5a0d4345b43', NULL,'c6dc8a9f-5a28-43fd-be68-49aa9b22e684');
+INSERT INTO Vote (VoteID, UserID, PhotoID, CommentID) VALUES ('cb1cadc3-877e-47db-8bb7-30c9fe2cf2f3', 'af943d85-91e5-4089-b20f-8923d4949b2d', NULL,'c6dc8a9f-5a28-43fd-be68-49aa9b22e684');
+INSERT INTO Vote (VoteID, UserID, PhotoID, CommentID) VALUES ('f0c91cc6-6737-49e3-875d-bad2b400b33a', '3c8b4731-3483-4a78-b63a-c5f72c8d51c2', NULL,'c6dc8a9f-5a28-43fd-be68-49aa9b22e684');
+INSERT INTO Vote (VoteID, UserID, PhotoID, CommentID) VALUES ('fc944569-fc0d-4dc3-af7f-de277b0b944c', '92ad6d5e-b2ab-4e19-9099-bc6fb6f8c245', NULL,'c6dc8a9f-5a28-43fd-be68-49aa9b22e684');
 
-INSERT INTO Vote (VoteID, Value, UserID, PhotoID, CommentID) VALUES ('fdc08edf-aee1-4d1c-9c31-6993a69e7ebb', 1, '35f30e4a-25d2-43d4-a55c-fc9b5a30895c', 'a23d5e01-9c8f-4d5c-87a9-3a27b6c8a7ab', NULL);
-INSERT INTO Vote (VoteID, Value, UserID, PhotoID, CommentID) VALUES ('3d76e1c2-7f5c-4b87-9ce9-66ed1a84a555', 1, '8141ad7b-e670-44ff-bc3b-d9ea6de3eacf', 'a23d5e01-9c8f-4d5c-87a9-3a27b6c8a7ab', NULL);
-INSERT INTO Vote (VoteID, Value, UserID, PhotoID, CommentID) VALUES ('484eba5a-8e97-43f4-b2aa-573c78a87dad', 1, 'b6e2a413-df97-4bfb-9b88-e5a0d4345b43', 'a23d5e01-9c8f-4d5c-87a9-3a27b6c8a7ab', NULL);
-INSERT INTO Vote (VoteID, Value, UserID, PhotoID, CommentID) VALUES ('1a6dafd5-d321-4380-b597-3f7e500826c2', 1, 'af943d85-91e5-4089-b20f-8923d4949b2d', 'a23d5e01-9c8f-4d5c-87a9-3a27b6c8a7ab', NULL);
-INSERT INTO Vote (VoteID, Value, UserID, PhotoID, CommentID) VALUES ('a21e3e0b-e3df-4316-a00e-4d1e03485feb', 1, '3c8b4731-3483-4a78-b63a-c5f72c8d51c2', 'a23d5e01-9c8f-4d5c-87a9-3a27b6c8a7ab', NULL);
-INSERT INTO Vote (VoteID, Value, UserID, PhotoID, CommentID) VALUES ('c9fcd7ed-95ed-47e5-94d4-110fb3c6f5b1', 1, '92ad6d5e-b2ab-4e19-9099-bc6fb6f8c245', 'a23d5e01-9c8f-4d5c-87a9-3a27b6c8a7ab', NULL);
+INSERT INTO Vote (VoteID, UserID, PhotoID, CommentID) VALUES ('fdc08edf-aee1-4d1c-9c31-6993a69e7ebb', '35f30e4a-25d2-43d4-a55c-fc9b5a30895c', 'a23d5e01-9c8f-4d5c-87a9-3a27b6c8a7ab', NULL);
+INSERT INTO Vote (VoteID, UserID, PhotoID, CommentID) VALUES ('3d76e1c2-7f5c-4b87-9ce9-66ed1a84a555', '8141ad7b-e670-44ff-bc3b-d9ea6de3eacf', 'a23d5e01-9c8f-4d5c-87a9-3a27b6c8a7ab', NULL);
+INSERT INTO Vote (VoteID, UserID, PhotoID, CommentID) VALUES ('484eba5a-8e97-43f4-b2aa-573c78a87dad', 'b6e2a413-df97-4bfb-9b88-e5a0d4345b43', 'a23d5e01-9c8f-4d5c-87a9-3a27b6c8a7ab', NULL);
+INSERT INTO Vote (VoteID, UserID, PhotoID, CommentID) VALUES ('1a6dafd5-d321-4380-b597-3f7e500826c2', 'af943d85-91e5-4089-b20f-8923d4949b2d', 'a23d5e01-9c8f-4d5c-87a9-3a27b6c8a7ab', NULL);
+INSERT INTO Vote (VoteID, UserID, PhotoID, CommentID) VALUES ('a21e3e0b-e3df-4316-a00e-4d1e03485feb', '3c8b4731-3483-4a78-b63a-c5f72c8d51c2', 'a23d5e01-9c8f-4d5c-87a9-3a27b6c8a7ab', NULL);
+INSERT INTO Vote (VoteID, UserID, PhotoID, CommentID) VALUES ('c9fcd7ed-95ed-47e5-94d4-110fb3c6f5b1', '92ad6d5e-b2ab-4e19-9099-bc6fb6f8c245', 'a23d5e01-9c8f-4d5c-87a9-3a27b6c8a7ab', NULL);
 
 
 COMMIT;

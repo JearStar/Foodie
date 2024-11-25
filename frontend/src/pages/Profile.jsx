@@ -61,7 +61,7 @@ const Profile = () => {
 
             <div
                 style={{
-                    marginTop: "100px",
+                    marginTop: "50px",
                     padding: "20px",
                 }}
                 className='container'

@@ -18,6 +18,19 @@ async function insertUser(user) {
   });
 }
 
+async function deleteAccount(userID) {
+  return await withOracleDB(async (connection) => {
+    const result = await connection.execute(
+        `DELETE FROM APPUSER WHERE USERID=:userID`,
+        {
+          userID: userID,
+        },
+        { autoCommit: true }
+    );
+    return result.rowsAffected && result.rowsAffected > 0;
+  });
+}
+
 async function emailExists(email) {
   return await withOracleDB(async (connection) => {
     const result = await connection.execute(
@@ -113,6 +126,7 @@ async function authenticateUser(email, password) {
   });
 }
 
+
 module.exports = {
   insertUser,
   emailExists,
@@ -120,4 +134,5 @@ module.exports = {
   updateEmailWithEmail,
   getUserInfoWithID,
   authenticateUser,
+  deleteAccount,
 };

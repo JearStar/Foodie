@@ -90,7 +90,7 @@ function Login({ handleLogin }) {
             </div>
           </form>
           <div className="d-flex justify-content-center">
-            <Link to="/signup" className="btn btn-link  p-0">
+            <Link to="/signup" className="btn btn-link text-light p-0">
               Create Account
             </Link>
           </div>
