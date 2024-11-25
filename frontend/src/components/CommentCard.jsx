@@ -9,7 +9,7 @@ const CommentCard = ({
                          firstName,
                          lastName,
                          userID,
-                         onReload
+                         onReload,
                      }) => {
     const {user} = useContext(UserContext);
     const [showReplies, setShowReplies] = useState(false);
@@ -18,6 +18,12 @@ const CommentCard = ({
     const [likeStatus, setLikeStatus] = useState(false);
     const [showReplyBox, setShowReplyBox] = useState(false);
     const [replyContent, setReplyContent] = useState('');
+    const [reloadTrigger, setReloadTrigger] = useState(false);
+
+    const handleReload = () => {
+        console.log("reloaded " + content);
+        setReloadTrigger(!reloadTrigger);
+    }
 
     const handleShowReplies = () => {
         setShowReplies(!showReplies);
@@ -32,6 +38,7 @@ const CommentCard = ({
                     body: JSON.stringify({ commentID }),
                 });
                 if (response.ok) {
+                    handleReload();
                     onReload();
                 } else {
                     console.error(`Error deleting comment: ${response.status}`);
@@ -57,6 +64,7 @@ const CommentCard = ({
             if (response.ok) {
                 setReplyContent('');
                 setShowReplyBox(false);
+                handleReload();
                 onReload();
             } else {
                 console.error("Failed to submit reply:", response.statusText);
@@ -86,70 +94,70 @@ const CommentCard = ({
         }
     };
 
+    const fetchComments = async () => {
+        try {
+            const response = await fetch(`/api/comments/get-replies`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ commentID: commentID }),
+            });
+            const data = await response.json();
+            setReplies(data.data);
+        } catch (err) {
+            console.error('Error fetching comments:', err);
+        }
+    };
+
+    const fetchLikes = async () => {
+        try {
+            const response = await fetch("/api/comments/get-comment-likes", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ commentID: commentID }),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                setLikes((data.numLikes));
+            } else {
+                console.error(`Error fetching comment likes: ${response.status}`);
+            }
+
+        } catch (e) {
+            console.error("Error fetching comment likes:", e);
+        }
+    }
+
+    const fetchLikeStatus = async () => {
+        try {
+            const response = await fetch("/api/comments/comment-liked-by-user", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ commentID: commentID, userID: user.userID }),
+            });
+            const data = await response.json();
+            if (response.ok && data.isLiked) {
+                setLikeStatus(true);
+            } else {
+                setLikeStatus(false);
+            }
+        } catch (e) {
+            console.error("Error fetching comment likes:", e);
+        }
+    }
+
     useEffect(() => {
-        const fetchComments = async () => {
-            try {
-                const response = await fetch(`/api/comments/get-replies`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ commentID: commentID }),
-                });
-                const data = await response.json();
-                setReplies(data.data);
-            } catch (err) {
-                console.error('Error fetching comments:', err);
-            }
-        };
-
-
-        const fetchLikes = async () => {
-            try {
-                const response = await fetch("/api/comments/get-comment-likes", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ commentID: commentID }),
-                });
-
-                if (response.ok) {
-                   const data = await response.json();
-                   setLikes((data.numLikes));
-                } else {
-                    console.error(`Error fetching comment likes: ${response.status}`);
-                }
-
-            } catch (e) {
-                console.error("Error fetching comment likes:", e);
-            }
-        }
-
-        const fetchLikeStatus = async () => {
-            try {
-                const response = await fetch("/api/comments/comment-liked-by-user", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ commentID: commentID, userID: user.userID }),
-                });
-                const data = await response.json();
-                if (response.ok && data.isLiked) {
-                    setLikeStatus(true);
-                } else {
-                    setLikeStatus(false);
-                }
-            } catch (e) {
-                console.error("Error fetching comment likes:", e);
-            }
-        }
-
         fetchComments();
         fetchLikes();
         fetchLikeStatus();
-    }, [commentID]);
+        console.log("re-fetched replies")
+    }, [commentID, reloadTrigger]);
 
     return (
         <div className="d-flex flex-start mb-4">
@@ -255,7 +263,7 @@ const CommentCard = ({
                                     lastName={reply.lastName}
                                     commentTimestamp={reply.commentTimestamp}
                                     userID={reply.userID}
-                                    onReload={onReload}
+                                    onReload={handleReload}
                                 />
                             ))}
                         </div>

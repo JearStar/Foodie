@@ -17,6 +17,11 @@ function Review({ReviewID}) {
   const [userID, setUser] = useState('');
   const [userName, setUserName] = useState('');
   const [dishReviews, setDishReviews] = useState([]);
+  const [reloadTrigger, setReloadTrigger] = useState(false);
+
+  const handleReload = () => {
+    setReloadTrigger(!reloadTrigger);
+  }
 
 
   const getTopComment = async () => {
@@ -129,7 +134,7 @@ function Review({ReviewID}) {
     getReviewInfo();
     getDishReviews();
     getTopComment();
-  }, [reviewID]);
+  }, [reviewID, reloadTrigger]);
 
   return (
       <div className="col justify-content-center align-items-center">
@@ -147,7 +152,7 @@ function Review({ReviewID}) {
           <div>Posted by: {userName}</div>
         </div> : ""}
         {topComment ? <div>
-          <CommentSection comments={[topComment]} onReload={getTopComment}/>
+          <CommentSection comments={[topComment]} onReload={handleReload}/>
         </div> : ""}
       </div>
   );
