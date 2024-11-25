@@ -20,7 +20,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
-
+.carrot-btn {
+  background-color: var(--light-button-color) !important;
+  color: #ffffff !important;
+}
 
 
 .app {
