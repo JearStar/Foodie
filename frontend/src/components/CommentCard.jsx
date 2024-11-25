@@ -217,7 +217,7 @@ const CommentCard = ({
                                 ></textarea>
                                 <div className="mt-2">
                                     <button
-                                        className="btn btn-primary me-2"
+                                        className="btn carrot-btn me-2"
                                         onClick={handleSubmitReply}
                                     >
                                         Submit
