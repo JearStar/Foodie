@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import CommentCard from "./CommentCard";
 
+
 const CommentSection = ({comments, onReload}) => {
     const [commentList, setCommentList] = useState([]);
     useEffect(() => {
@@ -16,7 +17,7 @@ const CommentSection = ({comments, onReload}) => {
                             <CommentCard
                                 commentID={comment.commentID}
                                 content={comment.content}
-                                contentTimestamp={comment.contentTimestamp}
+                                commentTimestamp={comment.commentTimestamp}
                                 firstName={comment.firstName}
                                 lastName={comment.lastName}
                                 userID={comment.userID}

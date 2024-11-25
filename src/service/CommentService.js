@@ -39,7 +39,7 @@ async function getCommentsFromUser(userID) {
       return {
         commentID: row[0],
         content: row[1],
-        contentTimestamp: row[2],
+        commentTimestamp: row[2],
         firstName: row[3],
         lastName: row[4],
         userID: row[5]
@@ -48,19 +48,26 @@ async function getCommentsFromUser(userID) {
   });
 }
 
-async function getTopComment(searchKey) {
+async function getTopComment(reviewID) {
   return await withOracleDB(async (connection) => {
     const result = await connection.execute(
-        'SELECT * FROM UserComment WHERE ReviewID=:id',
-        [searchKey]
+        'SELECT c.COMMENTID, c.CONTENT, c.COMMENTTIMESTAMP, u.FIRSTNAME, u.LASTNAME, u.USERID FROM USERCOMMENT c JOIN APPUSER u ON c.USERID=u.USERID WHERE c.REVIEWID=:reviewID',
+        {
+          reviewID: reviewID
+        }
     );
     if (result.rows.length === 0) {
-      return [];
+      return null;
     }
-    return result.rows;
-  }).catch((e) => {
-    Promise.reject(e.message);
-  });
+    return {
+      commentID: result.rows[0][0],
+      content: result.rows[0][1],
+      commentTimestamp: result.rows[0][2],
+      firstName: result.rows[0][3],
+      lastName: result.rows[0][4],
+      userID: result.rows[0][5]
+    };
+  })
 }
 
 async function getComment(commentID) {
@@ -76,7 +83,7 @@ async function getComment(commentID) {
       return {
         commentID: result.rows[0][0],
         content: result.rows[0][1],
-        contentTimestamp: result.rows[0][2],
+        commentTimestamp: result.rows[0][2],
         reviewID: result.rows[0][3],
         parentCommentID: result.rows[0][4],
         userID: result.rows[0][5]
@@ -93,7 +100,7 @@ async function getReplies(commentID) {
       return {
         commentID: row[0],
         content: row[1],
-        contentTimestamp: row[2],
+        commentTimestamp: row[2],
         firstName: row[3],
         lastName: row[4],
         userID: row[5]

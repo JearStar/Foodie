@@ -2,11 +2,12 @@ import React, {useContext, useEffect, useState} from 'react';
 import { UserContext } from '../contexts/UserContext';
 import {useInRouterContext} from "react-router-dom";
 import CommentCard from "./CommentCard";
+import CommentSection from "./CommentSection";
 
 function Review({ReviewID}) {
   const {user} = useContext(UserContext);
   const [reviewID] = useState(ReviewID);
-  const [topCommentInfo, setTopComentInfo] = useState([]);
+  const [topComment, setTopComment] = useState(null);
   const [error, setError] = useState('');
   const [overallRating, setOvrRating] = useState(-1);
   const [serviceRating, setSrvRating] = useState(-1);
@@ -16,6 +17,28 @@ function Review({ReviewID}) {
   const [userID, setUser] = useState('');
   const [userName, setUserName] = useState('');
   const [dishReviews, setDishReviews] = useState([]);
+
+
+  const getTopComment = async () => {
+    try {
+      const response = await fetch('/api/comments/getTopComment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({reviewID: ReviewID}),
+      });
+      let res = await response.json();
+      if (!response.ok || !res.success) {
+        setError(res.error);
+      }
+      if (res.topComment) {
+        setTopComment(res.topComment);
+      }
+    } catch (e) {
+      console.log('something weird happened');
+    }
+  };
 
   // One call to get review info (excluding food location info)
   const getReviewInfo = async () => {
@@ -41,34 +64,6 @@ function Review({ReviewID}) {
       setUser(reviewInfo[10]);
 
       getUserInfo(reviewInfo[10]);
-
-      return null;
-    } catch (e) {
-      console.log('something weird happened');
-      return null;
-    }
-  };
-
-  const getTopComment = async () => {
-    try {
-      const response = await fetch('/api/comments/getTopComment', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({id: ReviewID}),
-      });
-      let res = await response.json();
-      if (!response.ok) {
-        setError(res.error);
-        return null;
-      }
-      const commentInfo = res["commentInfo"];
-      if (commentInfo.length === 0) {
-        return null;
-      }
-      setTopComentInfo(commentInfo[0]);
-      console.log(commentInfo[0]);
 
       return null;
     } catch (e) {
@@ -134,12 +129,7 @@ function Review({ReviewID}) {
     getReviewInfo();
     getDishReviews();
     getTopComment();
-    document.body.style.overflow = 'hidden';
-
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, []);
+  }, [reviewID]);
 
   return (
       <div className="col justify-content-center align-items-center">
@@ -156,18 +146,8 @@ function Review({ReviewID}) {
           ) : ""}
           <div>Posted by: {userName}</div>
         </div> : ""}
-        {topCommentInfo.length !== 0 ? <div>
-          <CommentCard
-              key={topCommentInfo[0]}
-              commentID={topCommentInfo[0]}
-              commentLikes={topCommentInfo[1]}
-              content={topCommentInfo[2]}
-              contentTimestamp={topCommentInfo[3]}
-              reviewID={topCommentInfo[4]}
-              parentCommentID={topCommentInfo[5]}
-              userID={topCommentInfo[6]}
-              onReload={}
-          />
+        {topComment ? <div>
+          <CommentSection comments={[topComment]} onReload={getTopComment}/>
         </div> : ""}
       </div>
   );

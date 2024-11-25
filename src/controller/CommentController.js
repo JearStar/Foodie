@@ -9,12 +9,8 @@ const reviewService = require("../service/ReviewService");
 
 router.post('/getTopComment', async (req, res) => {
     try {
-        const searchKey = req.body["id"];
-        const result = await commentService.getTopComment(searchKey);
-        if (!result) {
-            return res.status(400).json({ success: false, error: 'Internal database error' });
-        }
-        res.json({ success: true, commentInfo: result});
+        const result = await commentService.getTopComment(req.body.reviewID);
+        res.json({ success: true, topComment: result});
     } catch (e) {
         res.status(500).json({ success: false, error: e.message });
     }
@@ -23,7 +19,7 @@ router.post('/getTopComment', async (req, res) => {
 /*
 ENDPOINT: GET /api/comments/get-user-comments
 BODY: userID
-RETURNS : {success: boolean, data: [{ "commentID", "content", "contentTimestamp", "reviewID", "parentCommentID", "userID"}]}
+RETURNS : {success: boolean, data: [{ "commentID", "content", "commentTimestamp", "reviewID", "parentCommentID", "userID"}]}
  */
 router.post('/get-user-comments', async (req, res) => {
     try {

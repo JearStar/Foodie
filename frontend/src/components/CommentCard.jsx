@@ -5,7 +5,7 @@ import {UserContext} from "../contexts/UserContext";
 const CommentCard = ({
                          commentID,
                          content,
-                         contentTimestamp,
+                         commentTimestamp,
                          firstName,
                          lastName,
                          userID,
@@ -18,7 +18,6 @@ const CommentCard = ({
     const [likeStatus, setLikeStatus] = useState(false);
     const [showReplyBox, setShowReplyBox] = useState(false);
     const [replyContent, setReplyContent] = useState('');
-    const [reloadTrigger, setReloadTrigger] = useState(0);
 
     const handleShowReplies = () => {
         setShowReplies(!showReplies);
@@ -33,7 +32,6 @@ const CommentCard = ({
                     body: JSON.stringify({ commentID }),
                 });
                 if (response.ok) {
-                    setReloadTrigger((prev) => prev + 1);
                     onReload();
                 } else {
                     console.error(`Error deleting comment: ${response.status}`);
@@ -59,7 +57,7 @@ const CommentCard = ({
             if (response.ok) {
                 setReplyContent('');
                 setShowReplyBox(false);
-                setReloadTrigger((prev) => prev + 1);
+                onReload();
             } else {
                 console.error("Failed to submit reply:", response.statusText);
             }
@@ -151,7 +149,7 @@ const CommentCard = ({
         fetchComments();
         fetchLikes();
         fetchLikeStatus();
-    }, [commentID, reloadTrigger]);
+    }, [commentID]);
 
     return (
         <div className="d-flex flex-start mb-4">
@@ -168,7 +166,7 @@ const CommentCard = ({
                                 {`${firstName} ${lastName}`}
                             </Link>
                         </h5>
-                        <p className="small">{contentTimestamp}</p>
+                        <p className="small">{commentTimestamp}</p>
                         <p>{content}</p>
 
                         <div className="d-flex justify-content-between align-items-center">
@@ -255,8 +253,7 @@ const CommentCard = ({
                                     content={reply.content}
                                     firstName={reply.firstName}
                                     lastName={reply.lastName}
-                                    contentTimestamp={reply.contentTimestamp}
-                                    parentCommentID={reply.parentCommentID}
+                                    commentTimestamp={reply.commentTimestamp}
                                     userID={reply.userID}
                                     onReload={onReload}
                                 />
