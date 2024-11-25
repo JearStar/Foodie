@@ -5,6 +5,20 @@ const { generateUUID } = require('../Helper');
 const commentService = require("../service/CommentService");
 const voteService = require('../service/VoteService');
 const Vote = require("../model/Vote");
+const reviewService = require("../service/ReviewService");
+
+router.post('/getTopComment', async (req, res) => {
+    try {
+        const searchKey = req.body["id"];
+        const result = await commentService.getTopComment(searchKey);
+        if (!result) {
+            return res.status(400).json({ success: false, error: 'Internal database error' });
+        }
+        res.json({ success: true, commentInfo: result});
+    } catch (e) {
+        res.status(500).json({ success: false, error: e.message });
+    }
+});
 
 /*
 ENDPOINT: GET /api/comments/get-user-comments

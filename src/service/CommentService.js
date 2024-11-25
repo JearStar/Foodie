@@ -48,6 +48,21 @@ async function getCommentsFromUser(userID) {
   });
 }
 
+async function getTopComment(searchKey) {
+  return await withOracleDB(async (connection) => {
+    const result = await connection.execute(
+        'SELECT * FROM UserComment WHERE ReviewID=:id',
+        [searchKey]
+    );
+    if (result.rows.length === 0) {
+      return [];
+    }
+    return result.rows;
+  }).catch((e) => {
+    Promise.reject(e.message);
+  });
+}
+
 async function getComment(commentID) {
   return await withOracleDB(async (connection) => {
     const result = await connection.execute(
@@ -128,6 +143,7 @@ module.exports = {
   updateCommentContent,
   getCommentsFromUser,
   getComment,
+  getTopComment,
   getReplies,
   getCommentReview,
 };

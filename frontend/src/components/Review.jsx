@@ -1,10 +1,12 @@
 import React, {useContext, useEffect, useState} from 'react';
 import { UserContext } from '../contexts/UserContext';
 import {useInRouterContext} from "react-router-dom";
+import CommentCard from "./CommentCard";
 
 function Review({ReviewID}) {
   const {user} = useContext(UserContext);
   const [reviewID] = useState(ReviewID);
+  const [topCommentInfo, setTopComentInfo] = useState([]);
   const [error, setError] = useState('');
   const [overallRating, setOvrRating] = useState(-1);
   const [serviceRating, setSrvRating] = useState(-1);
@@ -47,6 +49,34 @@ function Review({ReviewID}) {
     }
   };
 
+  const getTopComment = async () => {
+    try {
+      const response = await fetch('/api/comments/getTopComment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({id: ReviewID}),
+      });
+      let res = await response.json();
+      if (!response.ok) {
+        setError(res.error);
+        return null;
+      }
+      const commentInfo = res["commentInfo"];
+      if (commentInfo.length === 0) {
+        return null;
+      }
+      setTopComentInfo(commentInfo[0]);
+      console.log(commentInfo[0]);
+
+      return null;
+    } catch (e) {
+      console.log('something weird happened');
+      return null;
+    }
+  };
+
   // Another call to get all dish reviews corresponding to reviewID
   const getDishReviews = async () => {
     try {
@@ -63,7 +93,8 @@ function Review({ReviewID}) {
         return null;
       }
       const dishReviewInfo = res["dishReviews"];
-      if (typeof dishReviewInfo === "object") {
+      console.log(dishReviewInfo);
+      if (typeof dishReviewInfo === "object" && dishReviewInfo.length > 0) {
         setDishReviews(dishReviewInfo);
       }
 
@@ -102,6 +133,7 @@ function Review({ReviewID}) {
   useEffect(() => {
     getReviewInfo();
     getDishReviews();
+    getTopComment();
     document.body.style.overflow = 'hidden';
 
     return () => {
@@ -112,21 +144,30 @@ function Review({ReviewID}) {
   return (
       <div className="col justify-content-center align-items-center">
         {userName !== '' ? <div>
-          <p>
-            <strong>Overall:</strong> {overallRating}/5
-          </p>
-          <p>
-            <strong>Service:</strong> {serviceRating}/5
-          </p>
-          <p>
-            <strong>Wait time:</strong> {waitTimeRating}/5
-          </p>
-          <p>
-            <strong>Day of week visited:</strong> {dayofWeek}
-          </p>
-          <p>
-            <strong>Posted by:</strong> {userName} <strong>at</strong> {timeStamp}
-          </p>
+          <div>Day visited: {dayofWeek}, {timeStamp}</div>
+          <div>Overall rating: {overallRating}</div>
+          <div>Service rating: {serviceRating}</div>
+          <div>Wait time rating: {waitTimeRating}</div>
+          <div><strong>Dish ratings: </strong></div>
+          {dishReviews.length > 0 ? (
+              dishReviews.map((dishReview) => (
+                  <div>{dishReview[1]}: {dishReview[2]}</div>
+              ))
+          ) : ""}
+          <div>Posted by: {userName}</div>
+        </div> : ""}
+        {topCommentInfo.length !== 0 ? <div>
+          <CommentCard
+              key={topCommentInfo[0]}
+              commentID={topCommentInfo[0]}
+              commentLikes={topCommentInfo[1]}
+              content={topCommentInfo[2]}
+              contentTimestamp={topCommentInfo[3]}
+              reviewID={topCommentInfo[4]}
+              parentCommentID={topCommentInfo[5]}
+              userID={topCommentInfo[6]}
+              onReload={}
+          />
         </div> : ""}
       </div>
   );
