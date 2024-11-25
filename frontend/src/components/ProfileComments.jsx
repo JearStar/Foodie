@@ -7,7 +7,9 @@ function ProfileComments() {
     const { userID } = useParams();
     const [comments, setComments] = useState([]);
     const [reloadTrigger, setReloadTrigger] = useState(0);
+
     const handleReload = () => {
+        console.log("triggered!!!")
         setReloadTrigger((prev) => prev + 1);
     };
     useEffect( () => {
@@ -31,6 +33,13 @@ function ProfileComments() {
         };
         fetchComments();
     }, [userID, reloadTrigger]);
+
+    if (!comments) {
+        return <div>Loading comments...</div>
+    }
+    if (comments.length === 0) {
+        return <div>No comments</div>
+    }
     return (
         <CommentSection comments={comments} onReload={handleReload}/>
     );

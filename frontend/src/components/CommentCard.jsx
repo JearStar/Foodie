@@ -33,6 +33,7 @@ const CommentCard = ({
                     body: JSON.stringify({ commentID }),
                 });
                 if (response.ok) {
+                    setReloadTrigger((prev) => prev + 1);
                     onReload();
                 } else {
                     console.error(`Error deleting comment: ${response.status}`);
@@ -139,10 +140,8 @@ const CommentCard = ({
                 const data = await response.json();
                 if (response.ok && data.isLiked) {
                     setLikeStatus(true);
-                    console.log("is Liked")
                 } else {
                     setLikeStatus(false);
-                    console.log("is not Liked")
                 }
             } catch (e) {
                 console.error("Error fetching comment likes:", e);

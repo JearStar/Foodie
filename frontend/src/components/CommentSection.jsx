@@ -4,17 +4,8 @@ import CommentCard from "./CommentCard";
 const CommentSection = ({comments, onReload}) => {
     const [commentList, setCommentList] = useState([]);
     useEffect(() => {
-        if (Array.isArray(comments)) {
-            setCommentList(comments);
-        }
+        setCommentList(comments);
     }, [comments]);
-
-    if (!comments) {
-        return <div>Loading comments...</div>;
-    }
-    if (commentList.length === 0) {
-        return <div>No comments...</div>
-    }
 
     return (
         <section>
