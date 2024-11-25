@@ -100,4 +100,33 @@ router.post('/delete-like', async (req, res) => {
     }
 });
 
+router.post('/delete-comment', async (req, res) => {
+    try {
+        const result = await commentService.deleteComment(req.body.commentID);
+        if (!result) {
+            return res.status(400).json({success: false, error: "failed to delete comment"});
+        }
+        res.json({
+            success: true
+        });
+    } catch (e) {
+        res.status(500).json({ success: false, error: e.message });
+    }
+});
+
+router.post('/reply', async (req, res) => {
+    try {
+        const comment = new Comment(generateUUID(), req.body.content, null, null, req.body.commentID, req.body.userID);
+        const result = await commentService.addComment(comment);
+        if (!result) {
+            return res.status(400).json({success: false, error: "failed to insert reply"});
+        }
+        res.json({
+            success: true
+        });
+    } catch (e) {
+        res.status(500).json({ success: false, error: e.message });
+    }
+});
+
 module.exports = router;

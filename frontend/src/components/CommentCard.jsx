@@ -1,22 +1,70 @@
-import React, { useEffect, useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {Link} from "react-router-dom";
+import {UserContext} from "../contexts/UserContext";
 
 const CommentCard = ({
                          commentID,
                          content,
                          contentTimestamp,
-                         reviewID,
-                         parentCommentID,
-                         userID
+                         firstName,
+                         lastName,
+                         userID,
+                         onReload
                      }) => {
+    const {user} = useContext(UserContext);
     const [showReplies, setShowReplies] = useState(false);
     const [replies, setReplies] = useState([]);
-    const [name, setName] = useState('');
     const [likes, setLikes] = useState(0);
     const [likeStatus, setLikeStatus] = useState(false);
+    const [showReplyBox, setShowReplyBox] = useState(false);
+    const [replyContent, setReplyContent] = useState('');
+    const [reloadTrigger, setReloadTrigger] = useState(0);
 
     const handleShowReplies = () => {
         setShowReplies(!showReplies);
+    };
+
+    const handleDelete = async () => {
+        if (window.confirm("Are you sure you want to delete this comment?")) {
+            try {
+                const response = await fetch("/api/comments/delete-comment", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ commentID }),
+                });
+                if (response.ok) {
+                    onReload();
+                } else {
+                    console.error(`Error deleting comment: ${response.status}`);
+                }
+            } catch (err) {
+                console.error("Error deleting comment:", err);
+            }
+        }
+    };
+
+    const handleSubmitReply = async () => {
+        try {
+            const response = await fetch("/api/comments/reply", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    commentID: commentID,
+                    userID: user.userID,
+                    content: replyContent,
+                }),
+            });
+
+            if (response.ok) {
+                setReplyContent('');
+                setShowReplyBox(false);
+                setReloadTrigger((prev) => prev + 1);
+            } else {
+                console.error("Failed to submit reply:", response.statusText);
+            }
+        } catch (err) {
+            console.error("Error submitting reply:", err);
+        }
     };
 
     const handleLike = async () => {
@@ -27,7 +75,7 @@ const CommentCard = ({
             const response = await fetch(apiEndpoint, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ commentID, userID }),
+                body: JSON.stringify({ commentID: commentID, userID: user.userID }),
             });
 
             if (response.ok) {
@@ -56,26 +104,6 @@ const CommentCard = ({
             }
         };
 
-        const fetchUserInformation = async () => {
-            try {
-                const response = await fetch("/api/users/get-user-info", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ userID: userID }),
-                });
-
-                if (!response.ok) {
-                    throw new Error(`Error: ${response.status} ${response.statusText}`);
-                }
-
-                const result = await response.json();
-                setName(`${result.data.firstName} ${result.data.lastName}`);
-            } catch (e) {
-                console.error("Error retrieving user information:", e);
-            }
-        };
 
         const fetchLikes = async () => {
             try {
@@ -106,7 +134,7 @@ const CommentCard = ({
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify({ commentID: commentID, userID: userID }),
+                    body: JSON.stringify({ commentID: commentID, userID: user.userID }),
                 });
                 const data = await response.json();
                 if (response.ok && data.isLiked) {
@@ -121,11 +149,10 @@ const CommentCard = ({
             }
         }
 
-        fetchUserInformation();
         fetchComments();
         fetchLikes();
         fetchLikeStatus();
-    }, [reviewID]);
+    }, [commentID, reloadTrigger]);
 
     return (
         <div className="d-flex flex-start mb-4">
@@ -139,7 +166,7 @@ const CommentCard = ({
                     <div>
                         <h5>
                             <Link to={`/profile/${userID}`} className="text-decoration-none text-dark">
-                                {name}
+                                {`${firstName} ${lastName}`}
                             </Link>
                         </h5>
                         <p className="small">{contentTimestamp}</p>
@@ -157,7 +184,53 @@ const CommentCard = ({
                                 <span className={`ms-2 fs-4 ${likeStatus ? "text-danger" : "text-dark"} fw-bold`}
                                       id="like-count">{likes}</span>
                             </div>
+                            {user.userID === userID && <button
+                                className="btn p-0 position-absolute top-0 end-0 m-2 text-muted"
+                                style={{
+                                    fontSize: "1.5rem",
+                                    background: "none",
+                                    border: "none",
+                                }}
+                                onClick={handleDelete}
+                            >
+                                <i className="bi bi-trash"></i>
+                            </button>}
                         </div>
+                    </div>
+
+                    <div className="mt-2">
+                        <button
+                            className="btn btn-link text-decoration-none"
+                            onClick={() => setShowReplyBox(!showReplyBox)}
+                        >
+                            {showReplyBox ? "Cancel Reply" : "Reply"}
+                        </button>
+
+                        {showReplyBox && (
+                            <div className="mt-3">
+                                <textarea
+                                    className="form-control"
+                                    value={replyContent}
+                                    onChange={(e) => setReplyContent(e.target.value)}
+                                    rows="3"
+                                    placeholder="Write your reply..."
+                                ></textarea>
+                                <div className="mt-2">
+                                    <button
+                                        className="btn btn-primary me-2"
+                                        onClick={handleSubmitReply}
+                                    >
+                                        Submit
+                                    </button>
+                                    <button
+                                        className="btn btn-secondary"
+                                        onClick={() => setShowReplyBox(false)}
+                                    >
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+                        )}
                     </div>
 
                     {replies && replies.length > 0 && (
@@ -180,12 +253,13 @@ const CommentCard = ({
                                 <CommentCard
                                     key={reply.commentID}
                                     commentID={reply.commentID}
-                                    commentLikes={reply.commentLikes}
                                     content={reply.content}
+                                    firstName={reply.firstName}
+                                    lastName={reply.lastName}
                                     contentTimestamp={reply.contentTimestamp}
-                                    reviewID={reply.reviewID}
                                     parentCommentID={reply.parentCommentID}
                                     userID={reply.userID}
+                                    onReload={onReload}
                                 />
                             ))}
                         </div>

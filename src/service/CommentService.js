@@ -3,13 +3,12 @@ const { withOracleDB } = require('../../appService');
 async function addComment(comment) {
   return await withOracleDB(async (connection) => {
     const result = await connection.execute(
-      `INSERT INTO USERCOMMENT (COMMENTID, CONTENT, COMMENTTIMESTAMP, PARENTID, PARENTTYPE, USERID) VALUES (:commentID, :content, :commentTimestamp, :parentID, :parentType, :userID)`,
+      `INSERT INTO USERCOMMENT (COMMENTID, CONTENT, COMMENTTIMESTAMP, REVIEWID, PARENTCOMMENTID, USERID) VALUES (:commentID, :content, SYSDATE, :reviewID, :parentCommentID, :userID)`,
       {
         commentID: comment.commentID,
         content: comment.content,
-        commentTimestamp: comment.commentTimestamp,
-        parentID: comment.parentID,
-        parentType: comment.parentType,
+        reviewID: comment.reviewID,
+        parentCommentID: comment.parentCommentID,
         userID: comment.userID,
       },
       { autoCommit: true }
@@ -33,7 +32,7 @@ async function updateCommentContent(commentID, newContent) {
 
 async function getCommentsFromUser(userID) {
   return await withOracleDB(async (connection) => {
-    const result = await connection.execute('SELECT * FROM USERCOMMENT WHERE USERID=:userID', {
+    const result = await connection.execute('SELECT c.COMMENTID, c.CONTENT, c.COMMENTTIMESTAMP, u.FIRSTNAME, u.LASTNAME, u.USERID FROM USERCOMMENT c JOIN APPUSER u ON c.USERID=u.USERID WHERE u.USERID=:userID ORDER BY c.COMMENTTIMESTAMP DESC', {
       userID: userID
     });
     return result.rows.map((row) => {
@@ -41,8 +40,8 @@ async function getCommentsFromUser(userID) {
         commentID: row[0],
         content: row[1],
         contentTimestamp: row[2],
-        reviewID: row[3],
-        parentCommentID: row[4],
+        firstName: row[3],
+        lastName: row[4],
         userID: row[5]
       };
     });
@@ -72,7 +71,7 @@ async function getComment(commentID) {
 
 async function getReplies(commentID) {
   return await withOracleDB(async (connection) => {
-    const result = await connection.execute('SELECT * FROM USERCOMMENT WHERE PARENTCOMMENTID=:parentCommentID', {
+    const result = await connection.execute('SELECT c.COMMENTID, c.CONTENT, c.COMMENTTIMESTAMP, u.FIRSTNAME, u.LASTNAME, u.USERID FROM USERCOMMENT c JOIN APPUSER u ON c.USERID=u.USERID WHERE c.PARENTCOMMENTID=:parentCommentID ORDER BY c.COMMENTTIMESTAMP', {
       parentCommentID: commentID
     });
     return result.rows.map((row) => {
@@ -80,8 +79,8 @@ async function getReplies(commentID) {
         commentID: row[0],
         content: row[1],
         contentTimestamp: row[2],
-        reviewID: row[3],
-        parentCommentID: row[4],
+        firstName: row[3],
+        lastName: row[4],
         userID: row[5]
       };
     });
@@ -109,7 +108,22 @@ async function getCommentReview(userID) {
   });
 }
 
+async function deleteComment(commentID) {
+  return await withOracleDB(async (connection) => {
+    const result = await connection.execute(
+        `DELETE FROM USERCOMMENT WHERE COMMENTID=:commentID`,
+        {
+          commentID: commentID,
+        },
+        { autoCommit: true }
+    );
+
+    return result.rowsAffected && result.rowsAffected > 0;
+  });
+}
+
 module.exports = {
+  deleteComment,
   addComment,
   updateCommentContent,
   getCommentsFromUser,

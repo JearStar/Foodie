@@ -6,9 +6,12 @@ import CommentSection from "./CommentSection";
 function ProfileComments() {
     const { userID } = useParams();
     const [comments, setComments] = useState([]);
+    const [reloadTrigger, setReloadTrigger] = useState(0);
+    const handleReload = () => {
+        setReloadTrigger((prev) => prev + 1);
+    };
     useEffect( () => {
         const fetchComments = async () => {
-            console.log(userID);
             try {
                 const response = await fetch(`/api/comments/get-user-comments`, {
                     method: "POST",
@@ -27,9 +30,9 @@ function ProfileComments() {
             }
         };
         fetchComments();
-    }, [userID]);
+    }, [userID, reloadTrigger]);
     return (
-        <CommentSection comments={comments}/>
+        <CommentSection comments={comments} onReload={handleReload}/>
     );
 }
 export default ProfileComments;

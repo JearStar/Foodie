@@ -7,14 +7,6 @@ class Comment {
     this._commentID = value;
   }
 
-  get commentLikes() {
-    return this._commentLikes;
-  }
-
-  set commentLikes(value) {
-    this._commentLikes = value;
-  }
-
   get content() {
     return this._content;
   }
@@ -54,9 +46,8 @@ class Comment {
   set userID(value) {
     this._userID = value;
   }
-  constructor(commentID, commentLikes, content, commentTimestamp, reviewID, parentCommentID, userID) {
+  constructor(commentID, content, commentTimestamp, reviewID, parentCommentID, userID) {
     this._commentID = commentID;
-    this._commentLikes = commentLikes;
     this._content = content;
     this._commentTimestamp = commentTimestamp;
     this._reviewID = reviewID;
