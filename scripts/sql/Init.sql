@@ -326,7 +326,7 @@ INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, DayO
 VALUES ('b1f1c5b9-79fb-4a6d-9a58-9b953a114481', 4, 4, 3, 5, '2024-10-01 12:31:00', 'Sushi Mura', '6485 Oak Street', 'V6M 2W7', 'Canada', 'fb6a2c9e-9e6b-4b83-8f5f-77c0d4990b9b');
 
 INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, DayOfWeekVisited, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID)
-VALUES ('d6b9c3e1-893b-4d6c-b39a-24dbb7a0289d', 4, 5, 4, 3, '2024-09-28 19:45:00', 'Published on Main', '3593 Main Street', 'V5V 3N4', 'Canada', '5aba12e6-a3b0-4d19-a078-6f9f41a81eec');
+VALUES ('d6b9c3e1-893b-4d6c-b39a-24dbb7a0289d', 4, 5, 4, 3, '2024-09-28 19:45:00', 'Published on Main', '3593 Main Street', 'V5V 3N4', 'Canada', 'b6751637-b434-419e-ae0d-1a0c7c405053');
 
 INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, DayOfWeekVisited, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID)
 VALUES ('f01f6e3e-a768-4e3e-924b-7c92983f089a', 3, 3, 2, 2, '2024-09-25 10:00:00', 'McDonald’s', '470 Yonge Street', 'M4Y 1X5', 'Canada', '5aba12e6-a3b0-4d19-a078-6f9f41a81eec');

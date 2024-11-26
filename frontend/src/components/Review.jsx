@@ -3,6 +3,7 @@ import { UserContext } from '../contexts/UserContext';
 import {useInRouterContext} from "react-router-dom";
 import CommentCard from "./CommentCard";
 import CommentSection from "./CommentSection";
+import PhotoScroller from "./PhotoScroller";
 
 function Review({ReviewID}) {
   const {user} = useContext(UserContext);
@@ -18,11 +19,29 @@ function Review({ReviewID}) {
   const [userName, setUserName] = useState('');
   const [dishReviews, setDishReviews] = useState([]);
   const [reloadTrigger, setReloadTrigger] = useState(false);
+  const [photos, setPhotos] = useState([]);
 
   const handleReload = () => {
     setReloadTrigger(!reloadTrigger);
   }
 
+  const getPhotosForReview = async () => {
+    try {
+      const response = await fetch('/api/photos/get-photos-for-review', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ reviewID: ReviewID}),
+      });
+      let res = await response.json();
+      if (response.ok) {
+        setPhotos(res.photos);
+      }
+    } catch (err) {
+      console.log("something went wrong with fetching")
+    }
+  }
 
   const getTopComment = async () => {
     try {
@@ -134,6 +153,7 @@ function Review({ReviewID}) {
     getReviewInfo();
     getDishReviews();
     getTopComment();
+    getPhotosForReview()
   }, [reviewID, reloadTrigger]);
 
   return (
@@ -152,6 +172,9 @@ function Review({ReviewID}) {
           ) : ""}
           <div>Posted by: {userName}</div>
         </div> : ""}
+        <div className="mt-4 w-100 d-flex justify-content-center">
+          {photos.length > 0 && <PhotoScroller photos={photos}/>}
+        </div>
         {topComment ? <div>
           <CommentSection comments={[topComment]} onReload={handleReload}/>
         </div> : ""}

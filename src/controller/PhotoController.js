@@ -50,6 +50,24 @@ router.post('/get-photos-from-user-of-food-type', async (req, res) => {
     }
 });
 
+router.post('/get-photos-for-review', async (req, res) => {
+    try {
+        const result = await photoService.getPhotosForReview(req.body.reviewID);
+        if (!result) {
+            return res.status(404).json({
+                success: false,
+                error: `Failed to get photos from user ${req.body.user} of food type ${req.body.type}`,
+            });
+        }
+        res.json({
+            success: true,
+            photos: result,
+        });
+    } catch (e) {
+        res.status(500).json({ success: false, error: e.message });
+    }
+});
+
 
 router.post('/get-photo-likes', async (req, res) => {
     try {

@@ -1,6 +1,7 @@
 import React, {useContext, useEffect, useState} from "react";
 import '../index.css';
 import {Link, useParams} from "react-router-dom";
+import Review from "./Review";
 
 
 const UserReviews = () => {
@@ -41,15 +42,24 @@ const UserReviews = () => {
         <div className="app">
             <h1 className="mainheader"> Reviews </h1>
             <div >
+                {/*{userReviews.length > 0 ? (*/}
+                {/*    userReviews.map((review, index) => (*/}
+                {/*        <div className="backgroundreview">*/}
+                {/*            <h2>{review.locationName}</h2>*/}
+                {/*            <div>{review.locationAddress}, {review.locationPostalCode}, {review.locationCountry}</div>*/}
+                {/*            <div>Day visited: {review.dayVisited}, {review.timestamp}</div>*/}
+                {/*            <div>Overall rating: {review.overallRating}</div>*/}
+                {/*            <div>Service rating: {review.serviceRating}</div>*/}
+                {/*            <div>Wait time rating: {review.waitTimeRating}</div>*/}
+                {/*        </div>*/}
+                {/*    ))*/}
+                {/*) : (*/}
+                {/*    <p>No reviews available to display.</p>*/}
+                {/*)}*/}
                 {userReviews.length > 0 ? (
                     userReviews.map((review, index) => (
-                        <div className="backgroundreview">
-                            <h2>{review.locationName}</h2>
-                            <div>{review.locationAddress}, {review.locationPostalCode}, {review.locationCountry}</div>
-                            <div>Day visited: {review.dayVisited}, {review.timestamp}</div>
-                            <div>Overall rating: {review.overallRating}</div>
-                            <div>Service rating: {review.serviceRating}</div>
-                            <div>Wait time rating: {review.waitTimeRating}</div>
+                        <div key={index} className="review-card">
+                            <Review ReviewID={review.reviewID}/>
                         </div>
                     ))
                 ) : (

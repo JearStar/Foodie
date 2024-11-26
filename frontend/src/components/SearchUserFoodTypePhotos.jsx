@@ -46,7 +46,7 @@ const SearchUserFoodTypePhotos = () => {
                         onChange={(e) => setSearch(e.target.value)}
                     />
                     <button
-                        className="btn btn-primary"
+                        className="btn carrot-btn"
                         type="submit"
                         disabled={search.trim() === ''}
                     >

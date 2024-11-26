@@ -101,7 +101,7 @@ const PhotoScroller = ({ photos }) => {
         <div className="d-flex flex-column align-items-center">
             <div className="d-flex align-items-center">
                 <button
-                    className="btn btn-primary me-2"
+                    className="btn carrot-btn me-2"
                     onClick={goLeft}
                 >
                     &#8249;
@@ -165,7 +165,7 @@ const PhotoScroller = ({ photos }) => {
                                         <strong>{photo.foodLocationName}</strong>
                                     </p>
                                     <p className="mb-1">
-                                        <strong>{`${photo.address}, ${photo.city}, ${photo.country} ${photo.postalCode}`}</strong>
+                                        <strong>{`${photo.address}, ${photo.city}, ${photo.country}`}</strong>
                                     </p>
 
                                 </div>
@@ -174,7 +174,7 @@ const PhotoScroller = ({ photos }) => {
                     </div>
                 </div>
                 <button
-                    className="btn btn-primary ms-2"
+                    className="btn carrot-btn ms-2"
                     onClick={goRight}
                 >
                     &#8250;
