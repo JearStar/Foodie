@@ -235,87 +235,87 @@ UPDATE FoodLocation SET FoodLocationSummaryID = 'e2085150-c55c-4aea-a08f-b398c86
 
 
 INSERT INTO Dish (DishName, Price, Type, isHalal, isGlutenFree, isVegetarian, FoodLocationName, Address, PostalCode, Country)
-VALUES ('Spicy Tuna Roll', 12.99, 'Sushi', 1, 0, 0, 'Sushi Mura', '6485 Oak Street', 'V6M 2W7', 'Canada');
+VALUES ('Spicy Tuna Roll', 12.99, 'sushi', 1, 0, 0, 'Sushi Mura', '6485 Oak Street', 'V6M 2W7', 'Canada');
 
 INSERT INTO Dish (DishName, Price, Type, isHalal, isGlutenFree, isVegetarian, FoodLocationName, Address, PostalCode, Country)
-VALUES ('Tuna Sashimi 5pcs', 12.95, 'Sushi', 1, 1, 0, 'Sushi Mura', '6485 Oak Street', 'V6M 2W7', 'Canada');
+VALUES ('Tuna Sashimi 5pcs', 12.95, 'sushi', 1, 1, 0, 'Sushi Mura', '6485 Oak Street', 'V6M 2W7', 'Canada');
 
 INSERT INTO Dish (DishName, Price, Type, isHalal, isGlutenFree, isVegetarian, FoodLocationName, Address, PostalCode, Country)
-VALUES ('Salmon Sashimi 5pcs', 12.95, 'Sushi', 1, 1, 0, 'Sushi Mura', '6485 Oak Street', 'V6M 2W7', 'Canada');
+VALUES ('Salmon Sashimi 5pcs', 12.95, 'sushi', 1, 1, 0, 'Sushi Mura', '6485 Oak Street', 'V6M 2W7', 'Canada');
 
 INSERT INTO Dish (DishName, Price, Type, isHalal, isGlutenFree, isVegetarian, FoodLocationName, Address, PostalCode, Country)
-VALUES ('Tuna Sashimi 9pcs', 21.25, 'Sushi', 1, 1, 0, 'Sushi Mura', '6485 Oak Street', 'V6M 2W7', 'Canada');
+VALUES ('Tuna Sashimi 9pcs', 21.25, 'sushi', 1, 1, 0, 'Sushi Mura', '6485 Oak Street', 'V6M 2W7', 'Canada');
 
 INSERT INTO Dish (DishName, Price, Type, isHalal, isGlutenFree, isVegetarian, FoodLocationName, Address, PostalCode, Country)
-VALUES ('Salmon Sashimi 9pcs', 21.25, 'Sushi', 1, 1, 0, 'Sushi Mura', '6485 Oak Street', 'V6M 2W7', 'Canada');
+VALUES ('Salmon Sashimi 9pcs', 21.25, 'sushi', 1, 1, 0, 'Sushi Mura', '6485 Oak Street', 'V6M 2W7', 'Canada');
 
 COMMIT;
 
 INSERT INTO Dish (DishName, Price, Type, isHalal, isGlutenFree, isVegetarian, FoodLocationName, Address, PostalCode, Country)
-VALUES ('Lamb Shank', 25.50, 'Main Course', 0, 1, 0, 'Published on Main', '3593 Main Street', 'V5V 3N4', 'Canada');
+VALUES ('Lamb Shank', 25.50, 'main course', 0, 1, 0, 'Published on Main', '3593 Main Street', 'V5V 3N4', 'Canada');
 
 INSERT INTO Dish (DishName, Price, Type, isHalal, isGlutenFree, isVegetarian, FoodLocationName, Address, PostalCode, Country)
-VALUES ('Wagyu Beef Carpaccio', 33.00, 'Main Course', 1, 1, 0, 'Published on Main', '3593 Main Street', 'V5V 3N4', 'Canada');
+VALUES ('Wagyu Beef Carpaccio', 33.00, 'main course', 1, 1, 0, 'Published on Main', '3593 Main Street', 'V5V 3N4', 'Canada');
 
 INSERT INTO Dish (DishName, Price, Type, isHalal, isGlutenFree, isVegetarian, FoodLocationName, Address, PostalCode, Country)
-VALUES ('Roasted Farm Carrots', 25.00, 'Main Course', 1, 1, 1, 'Published on Main', '3593 Main Street', 'V5V 3N4', 'Canada');
+VALUES ('Roasted Farm Carrots', 25.00, 'main course', 1, 1, 1, 'Published on Main', '3593 Main Street', 'V5V 3N4', 'Canada');
 
 INSERT INTO Dish (DishName, Price, Type, isHalal, isGlutenFree, isVegetarian, FoodLocationName, Address, PostalCode, Country)
-VALUES ('Roasted Sunchoke Ice Cream', 15.00, 'Dessert', 0, 1, 0, 'Published on Main', '3593 Main Street', 'V5V 3N4', 'Canada');
+VALUES ('Roasted Sunchoke Ice Cream', 15.00, 'dessert', 0, 1, 0, 'Published on Main', '3593 Main Street', 'V5V 3N4', 'Canada');
 
 INSERT INTO Dish (DishName, Price, Type, isHalal, isGlutenFree, isVegetarian, FoodLocationName, Address, PostalCode, Country)
-VALUES ('Dungeness Crab', 33.00, 'Main Course', 0, 1, 0, 'Published on Main', '3593 Main Street', 'V5V 3N4', 'Canada');
+VALUES ('Dungeness Crab', 33.00, 'main course', 0, 1, 0, 'Published on Main', '3593 Main Street', 'V5V 3N4', 'Canada');
 
 COMMIT;
 
 INSERT INTO Dish (DishName, Price, Type, isHalal, isGlutenFree, isVegetarian, FoodLocationName, Address, PostalCode, Country)
-VALUES ('Big Mac', 6.99, 'Burger', 0, 0, 0, 'McDonald’s', '470 Yonge Street', 'M4Y 1X5', 'Canada');
+VALUES ('Big Mac', 6.99, 'burger', 0, 0, 0, 'McDonald’s', '470 Yonge Street', 'M4Y 1X5', 'Canada');
 
 INSERT INTO Dish (DishName, Price, Type, isHalal, isGlutenFree, isVegetarian, FoodLocationName, Address, PostalCode, Country)
-VALUES ('Baked Peach Pie', 2.99, 'Dessert', 0, 0, 0, 'McDonald’s', '470 Yonge Street', 'M4Y 1X5', 'Canada');
+VALUES ('Baked Peach Pie', 2.99, 'dessert', 0, 0, 0, 'McDonald’s', '470 Yonge Street', 'M4Y 1X5', 'Canada');
 
 INSERT INTO Dish (DishName, Price, Type, isHalal, isGlutenFree, isVegetarian, FoodLocationName, Address, PostalCode, Country)
-VALUES ('S''mores McFlurry', 2.50, 'Dessert', 0, 0, 0, 'McDonald’s', '470 Yonge Street', 'M4Y 1X5', 'Canada');
+VALUES ('S''mores McFlurry', 2.50, 'dessert', 0, 0, 0, 'McDonald’s', '470 Yonge Street', 'M4Y 1X5', 'Canada');
 
 INSERT INTO Dish (DishName, Price, Type, isHalal, isGlutenFree, isVegetarian, FoodLocationName, Address, PostalCode, Country)
-VALUES ('World Famous Fries', 1.99, 'Fries', 0, 0, 0, 'McDonald’s', '470 Yonge Street', 'M4Y 1X5', 'Canada');
+VALUES ('World Famous Fries', 1.99, 'fries', 0, 0, 0, 'McDonald’s', '470 Yonge Street', 'M4Y 1X5', 'Canada');
 
 INSERT INTO Dish (DishName, Price, Type, isHalal, isGlutenFree, isVegetarian, FoodLocationName, Address, PostalCode, Country)
-VALUES ('Coca-Cola', 1.50, 'Drink', 0, 0, 0, 'McDonald’s', '470 Yonge Street', 'M4Y 1X5', 'Canada');
+VALUES ('Coca-Cola', 1.50, 'drink', 0, 0, 0, 'McDonald’s', '470 Yonge Street', 'M4Y 1X5', 'Canada');
 
 COMMIT;
 
 INSERT INTO Dish (DishName, Price, Type, isHalal, isGlutenFree, isVegetarian, FoodLocationName, Address, PostalCode, Country)
-VALUES ('Croque Monsieur', 10.50, 'Sandwich', 0, 0, 0, 'Café de Flore', '172 Bd Saint-Germain', '75006', 'France');
+VALUES ('Croque Monsieur', 10.50, 'sandwich', 0, 0, 0, 'Café de Flore', '172 Bd Saint-Germain', '75006', 'France');
 
 INSERT INTO Dish (DishName, Price, Type, isHalal, isGlutenFree, isVegetarian, FoodLocationName, Address, PostalCode, Country)
-VALUES ('Vegetarian Salad', 20.00, 'Salad', 1, 1, 1, 'Café de Flore', '172 Bd Saint-Germain', '75006', 'France');
+VALUES ('Vegetarian Salad', 20.00, 'salad', 1, 1, 1, 'Café de Flore', '172 Bd Saint-Germain', '75006', 'France');
 
 INSERT INTO Dish (DishName, Price, Type, isHalal, isGlutenFree, isVegetarian, FoodLocationName, Address, PostalCode, Country)
-VALUES ('Flavored Milk', 4.80, 'Drink', 0, 1, 1, 'Café de Flore', '172 Bd Saint-Germain', '75006', 'France');
+VALUES ('Flavored Milk', 4.80, 'drink', 0, 1, 1, 'Café de Flore', '172 Bd Saint-Germain', '75006', 'France');
 
 INSERT INTO Dish (DishName, Price, Type, isHalal, isGlutenFree, isVegetarian, FoodLocationName, Address, PostalCode, Country)
-VALUES ('Butter brioche or Raisin bread or Chocolate bread', 4.00, 'Breakfast', 0, 1, 0, 'Café de Flore', '172 Bd Saint-Germain', '75006', 'France');
+VALUES ('Butter brioche or Raisin bread or Chocolate bread', 4.00, 'breakfast', 0, 1, 0, 'Café de Flore', '172 Bd Saint-Germain', '75006', 'France');
 
 INSERT INTO Dish (DishName, Price, Type, isHalal, isGlutenFree, isVegetarian, FoodLocationName, Address, PostalCode, Country)
-VALUES ('White Tuna Belly Fillet and Tomatoes', 20.00, 'Snack', 1, 1, 0, 'Café de Flore', '172 Bd Saint-Germain', '75006', 'France');
+VALUES ('White Tuna Belly Fillet and Tomatoes', 20.00, 'snack', 1, 1, 0, 'Café de Flore', '172 Bd Saint-Germain', '75006', 'France');
 
 COMMIT;
 
 INSERT INTO Dish (DishName, Price, Type, isHalal, isGlutenFree, isVegetarian, FoodLocationName, Address, PostalCode, Country)
-VALUES ('Aburi Salmon Oshi', 16.00, 'Sushi', 0, 1, 0, 'Miku Vancouver', '200 Granville Street #70', 'V6C 1S4', 'Canada');
+VALUES ('Aburi Salmon Oshi', 16.00, 'sushi', 0, 1, 0, 'Miku Vancouver', '200 Granville Street #70', 'V6C 1S4', 'Canada');
 
 INSERT INTO Dish (DishName, Price, Type, isHalal, isGlutenFree, isVegetarian, FoodLocationName, Address, PostalCode, Country)
-VALUES ('Minato Platter', 160.00, 'Sushi', 0, 1, 0, 'Miku Vancouver', '200 Granville Street #70', 'V6C 1S4', 'Canada');
+VALUES ('Minato Platter', 160.00, 'sushi', 0, 1, 0, 'Miku Vancouver', '200 Granville Street #70', 'V6C 1S4', 'Canada');
 
 INSERT INTO Dish (DishName, Price, Type, isHalal, isGlutenFree, isVegetarian, FoodLocationName, Address, PostalCode, Country)
-VALUES ('Kyoto Saikyo Miso Sablefish', 48.00, 'Sushi', 0, 1, 0, 'Miku Vancouver', '200 Granville Street #70', 'V6C 1S4', 'Canada');
+VALUES ('Kyoto Saikyo Miso Sablefish', 48.00, 'sushi', 0, 1, 0, 'Miku Vancouver', '200 Granville Street #70', 'V6C 1S4', 'Canada');
 
 INSERT INTO Dish (DishName, Price, Type, isHalal, isGlutenFree, isVegetarian, FoodLocationName, Address, PostalCode, Country)
-VALUES ('Wagyu Steak 5oz', 160.00, 'Sushi', 1, 1, 0, 'Miku Vancouver', '200 Granville Street #70', 'V6C 1S4', 'Canada');
+VALUES ('Wagyu Steak 5oz', 160.00, 'steak', 1, 1, 0, 'Miku Vancouver', '200 Granville Street #70', 'V6C 1S4', 'Canada');
 
 INSERT INTO Dish (DishName, Price, Type, isHalal, isGlutenFree, isVegetarian, FoodLocationName, Address, PostalCode, Country)
-VALUES ('Wagyu Steak 10oz', 320.00, 'Sushi', 1, 1, 0, 'Miku Vancouver', '200 Granville Street #70', 'V6C 1S4', 'Canada');
+VALUES ('Wagyu Steak 10oz', 320.00, 'steak', 1, 1, 0, 'Miku Vancouver', '200 Granville Street #70', 'V6C 1S4', 'Canada');
 
 COMMIT;
 
@@ -336,6 +336,9 @@ VALUES ('e70b45f1-5b25-4df7-82c3-b24bafedf2c1', 5, 5, 5, 6, '2024-10-05 16:15:00
 
 INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, DayOfWeekVisited, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID)
 VALUES ('12b671b9-3826-46ba-a9d2-dc5a2f74ad64', 4, 4, 3, 4, '2024-09-30 14:00:00', 'Miku Vancouver', '200 Granville Street #70', 'V6C 1S4', 'Canada', '88e5791d-0fd7-4721-b8f6-5aad4845f095');
+
+INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, DayOfWeekVisited, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID)
+VALUES ('d43e0f79-e09f-4bc3-ad48-c5ecead2870a', 3, 4, 3, 2, '2024-10-21 15:30:00', 'Miku Vancouver', '200 Granville Street #70', 'V6C 1S4', 'Canada', '4d7577fc-636e-40b1-ab1f-f3c12422c84a');
 
 COMMIT;
 
@@ -370,6 +373,11 @@ VALUES ('b1f1c5b9-79fb-4a6d-9a58-9b953a114481', 'Spicy Tuna Roll', 7, 'Sushi Mur
 
 INSERT INTO ReviewsDish (ReviewID, DishName, DishRating, FOODLOCATIONNAME, ADDRESS, POSTALCODE, COUNTRY)
 VALUES ('d6b9c3e1-893b-4d6c-b39a-24dbb7a0289d', 'Lamb Shank', 4, 'Published on Main', '3593 Main Street', 'V5V 3N4', 'Canada');
+INSERT INTO ReviewsDish (ReviewID, DishName, DishRating, FOODLOCATIONNAME, ADDRESS, POSTALCODE, COUNTRY)
+VALUES ('d6b9c3e1-893b-4d6c-b39a-24dbb7a0289d', 'Wagyu Beef Carpaccio', 5, 'Published on Main', '3593 Main Street', 'V5V 3N4', 'Canada');
+INSERT INTO ReviewsDish (ReviewID, DishName, DishRating, FOODLOCATIONNAME, ADDRESS, POSTALCODE, COUNTRY)
+VALUES ('d6b9c3e1-893b-4d6c-b39a-24dbb7a0289d', 'Roasted Sunchoke Ice Cream', 5, 'Published on Main', '3593 Main Street', 'V5V 3N4', 'Canada');
+
 
 INSERT INTO ReviewsDish (ReviewID, DishName, DishRating, FOODLOCATIONNAME, ADDRESS, POSTALCODE, COUNTRY)
 VALUES ('f01f6e3e-a768-4e3e-924b-7c92983f089a', 'Big Mac', 3, 'McDonald’s', '470 Yonge Street', 'M4Y 1X5', 'Canada');
@@ -379,6 +387,13 @@ VALUES ('e70b45f1-5b25-4df7-82c3-b24bafedf2c1', 'Croque Monsieur', 5, 'Café de 
 
 INSERT INTO ReviewsDish (ReviewID, DishName, DishRating, FOODLOCATIONNAME, ADDRESS, POSTALCODE, COUNTRY)
 VALUES ('12b671b9-3826-46ba-a9d2-dc5a2f74ad64', 'Aburi Salmon Oshi', 4, 'Miku Vancouver', '200 Granville Street #70', 'V6C 1S4', 'Canada');
+
+INSERT INTO ReviewsDish (ReviewID, DishName, DishRating, FOODLOCATIONNAME, ADDRESS, POSTALCODE, COUNTRY)
+VALUES ('d43e0f79-e09f-4bc3-ad48-c5ecead2870a', 'Aburi Salmon Oshi', 4, 'Miku Vancouver', '200 Granville Street #70', 'V6C 1S4', 'Canada');
+INSERT INTO ReviewsDish (ReviewID, DishName, DishRating, FOODLOCATIONNAME, ADDRESS, POSTALCODE, COUNTRY)
+VALUES ('d43e0f79-e09f-4bc3-ad48-c5ecead2870a', 'Minato Platter', 5, 'Miku Vancouver', '200 Granville Street #70', 'V6C 1S4', 'Canada');
+INSERT INTO ReviewsDish (ReviewID, DishName, DishRating, FOODLOCATIONNAME, ADDRESS, POSTALCODE, COUNTRY)
+VALUES ('d43e0f79-e09f-4bc3-ad48-c5ecead2870a', 'Wagyu Steak 5oz', 3, 'Miku Vancouver', '200 Granville Street #70', 'V6C 1S4', 'Canada');
 
 COMMIT;
 
@@ -391,6 +406,8 @@ INSERT INTO Photo (PhotoID, ImageURL, PhotoLikes, Description, PhotoTimestamp, R
 INSERT INTO Photo (PhotoID, ImageURL, PhotoLikes, Description, PhotoTimestamp, ReviewID, SummaryID) VALUES ('68e61d74-7f23-45ba-a71e-13f9b8d4c6f2', 'https://media-cdn.tripadvisor.com/media/photo-s/05/13/6f/da/cafe-de-flore.jpg' , 0, 'Close-up shot of the main dish, looks delicious.', '2024-10-13 14:45:00', 'e70b45f1-5b25-4df7-82c3-b24bafedf2c1', 'cea54cdc-68fc-42c8-8e37-03ae151b458c');
 
 INSERT INTO Photo (PhotoID, ImageURL, PhotoLikes, Description, PhotoTimestamp, ReviewID, SummaryID) VALUES ('0d4312f3-3f1b-4c9b-89f3-d7e9d7c8f1e2', 'https://images.otstatic.com/prod1/31847079/1/huge.jpg' , 0, 'Nice outdoor seating area with a view.', '2024-10-13 14:50:00', '12b671b9-3826-46ba-a9d2-dc5a2f74ad64', 'e2085150-c55c-4aea-a08f-b398c86eeb97');
+
+INSERT INTO Photo (PhotoID, ImageURL, PhotoLikes, Description, PhotoTimestamp, ReviewID, SummaryID) VALUES ('351b0d95-8ba7-4322-8d78-55c34de6fcdf', 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Sushi_platter.jpg/300px-Sushi_platter.jpg' , 0, 'Sushi platter!', '2024-10-21 15:50:00', 'd43e0f79-e09f-4bc3-ad48-c5ecead2870a', 'e2085150-c55c-4aea-a08f-b398c86eeb97');
 
 COMMIT;
 

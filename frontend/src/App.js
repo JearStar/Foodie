@@ -15,6 +15,7 @@ import UserReviews from "./components/UserReviews";
 import EditAccountDetails from "./components/EditAccountDetails";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './index.css';
+import SearchUserFoodTypePhotos from "./components/SearchUserFoodTypePhotos";
 
 function App() {
   const { user, login} = useContext(UserContext);
@@ -56,6 +57,7 @@ function App() {
                   <Route path="reviews" element={<UserReviews />}/>
                   <Route path="comments" element={<ProfileComments />}/>
                   <Route path="edit-details" element={<EditAccountDetails />}/>
+                  <Route path="photo-food-search" element={<SearchUserFoodTypePhotos />}/>
                 </Route>
                 <Route path="/profile/:userID" element={user? <Profile /> : <Navigate to="/login" />} />
                 <Route path="/location/:name/:country/:postalcode/:address" element={user ? <FoodLocation /> : <Navigate to="/login" />} />

@@ -49,6 +49,11 @@ const Profile = () => {
                             Comments
                         </Link>
                     </li>
+                    <li className="nav-item">
+                        <Link className="nav-link" to="./photo-food-search">
+                            Search User Photos
+                        </Link>
+                    </li>
                     {user.userID === userID && (
                         <li className="nav-item">
                             <Link className="nav-link" to="./edit-details">
