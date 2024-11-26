@@ -71,13 +71,15 @@ router.post('/get-foodlocation-info', async (req, res) => {
 
 router.post('/findLocs', async (req, res) => {
     try {
-        const searchKey = req.body["search"];
-        const result1 = await foodLocationService.searchLocs(searchKey);
-        const result2 = await foodLocationSummaryService.searchSummaries(searchKey);
-        if (!result1 || !result2) {
+        const query = req.body["query"];
+        console.log('SELECT * FROM FoodLocation WHERE ' + query);
+        // console.log('SELECT * FROM FoodLocationSummary WHERE ' + query);
+        const result1 = await foodLocationService.searchLocs('SELECT * FROM FoodLocation WHERE ' + query);
+        // const result2 = await foodLocationSummaryService.searchSummaries('SELECT * FROM FoodLocationSummary WHERE ' + query);
+        if (!result1 ) { // || !result2
             return res.status(400).json({ success: false, error: 'Internal database error' });
         }
-        res.json({ success: true, FoodLocations: result1, FoodLocationSummaries: result2 });
+        res.json({ success: true, FoodLocations: result1, FoodLocationSummaries: [] });
     } catch (e) {
         res.status(500).json({ success: false, error: e.message });
     }

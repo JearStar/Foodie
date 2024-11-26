@@ -60,11 +60,10 @@ async function updateFoodLocationSummaryID(name, address, postalCode, country, n
   });
 }
 
-async function searchLocs(searchKey) {
+async function searchLocs(query) {
   return await withOracleDB(async (connection) => {
     const result = await connection.execute(
-        'SELECT * FROM FoodLocation WHERE (Lower(FoodLocationName) LIKE :s)',
-        ['%'+searchKey+'%']
+        query
     );
     return result.rows;
   }).catch((e) => {

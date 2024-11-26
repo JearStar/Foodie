@@ -39,11 +39,10 @@ async function getFoodLocationSummaryInfo(foodLocationSummaryID) {
     });
 }
 
-async function searchSummaries(searchKey) {
+async function searchSummaries(query) {
   return await withOracleDB(async (connection) => {
     const result = await connection.execute(
-        'SELECT * FROM FoodLocationSummary WHERE (Lower(FoodLocationName) LIKE :s)',
-        ['%'+searchKey+'%']
+        query
     );
     return result.rows;
   }).catch((e) => {
