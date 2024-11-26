@@ -14,9 +14,9 @@ const UserProvider = ({ children }) => {
 
   useEffect(() => {
     if (user) {
-      localStorage.setItem("userData", JSON.stringify(user)); // Persist user data
+      localStorage.setItem("userData", JSON.stringify(user));
     } else {
-      localStorage.removeItem("userData"); // Clear storage on logout
+      localStorage.removeItem("userData");
     }
   }, [user]);
 

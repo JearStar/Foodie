@@ -30,4 +30,22 @@ router.put('/insert-photo', async (req, res) => {
     }
 });
 
+router.post('/get-photos-from-user-of-food-type', async (req, res) => {
+    try {
+        const result = await photoService.getPhotosFromUserOfFoodType(req.body.userID, req.body.type);
+        if (!result) {
+            return res.status(404).json({
+                success: false,
+                error: `Failed to get photos from user ${req.body.user} of food type ${req.body.type}`,
+            });
+        }
+        res.json({
+            success: true,
+            photos: result,
+        });
+    } catch (e) {
+        res.status(500).json({ success: false, error: e.message });
+    }
+});
+
 module.exports = router;

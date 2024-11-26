@@ -3,35 +3,59 @@ const { withOracleDB } = require('../../appService');
 const Service = require('../../appService');
 
 //INSERT Photo
-async function insertPhoto(
-  PhotoID,
-  Image,
-  PhotoLikes,
-  Description,
-  PhotoTimestamp,
-  ReviewID,
-  SummaryID
-) {
+async function insertPhoto(photo) {
   return await withOracleDB(async (connection) => {
     const result = await connection.execute(
-      `INSERT INTO Photo (PHOTOID, IMAGE, PHOTOLIKES, DESCRIPTION, PHOTOTIMESTAMP, REVIEWID, SUMMARYID) VALUES (:photoID, :image, :photoLikes, :description, :photoTimestamp, :reviewID, :summaryID)`,
+      `INSERT INTO Photo (PHOTOID, IMAGEURL, PHOTOLIKES, DESCRIPTION, PHOTOTIMESTAMP, REVIEWID, SUMMARYID) VALUES (:photoID, :image, :photoLikes, :description, SYSDATE, :reviewID, :summaryID)`,
       {
-        photoID: PhotoID,
-        image: Image,
-        photoLikes: PhotoLikes,
-        description: Description,
-        photoTimestamp: PhotoTimestamp,
-        reviewID: ReviewID,
-        summaryID: SummaryID,
+        photoID: photo.photoID,
+        image: photo.imageURL,
+        photoLikes: photo.photoLikes,
+        description: photo.description,
+        reviewID: photo.reviewID,
+        summaryID: photo.summaryID,
       },
       { autoCommit: true }
     );
 
     return result.rowsAffected && result.rowsAffected > 0;
-  }).catch(() => {
-    console.error('Error inserting Photo:', error);
-    return false;
-  });
+  })
+}
+
+async function getPhotosFromUserOfFoodType(userID, type){
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(
+            `SELECT DISTINCT p.PHOTOID, p.IMAGEURL, p.PHOTOLIKES, p.DESCRIPTION, p.PHOTOTIMESTAMP, p.REVIEWID, p.SUMMARYID
+             FROM DISH d, REVIEWSDISH rd, REVIEW r, PHOTO p
+             WHERE d.DISHNAME = rd.DISHNAME AND
+                 d.FOODLOCATIONNAME = rd.FOODLOCATIONNAME AND
+                 d.ADDRESS = rd.ADDRESS AND
+                 d.POSTALCODE = rd.POSTALCODE AND
+                 d.COUNTRY = rd.COUNTRY AND
+                 rd.REVIEWID = r.REVIEWID AND
+                 r.REVIEWID = p.REVIEWID AND
+                 r.USERID = :userID AND
+                 d.TYPE = :type
+            `,
+            {
+                userID: userID,
+                type: type
+            },
+            { autoCommit: true }
+        );
+
+        return result.rows.map((row) => {
+            return {
+                photoID: row[0],
+                imageURL: row[1],
+                photoLikes: row[2],
+                description: row[3],
+                photoTimestamp: row[4],
+                reviewID: row[5],
+                summaryID: row[6]
+            };
+        });
+    })
 }
 
 //DELETE Photo
@@ -75,6 +99,7 @@ async function deletePhoto(
   });
 }
 module.exports = {
-  insertPhoto,
-  deletePhoto,
+    insertPhoto,
+    deletePhoto,
+    getPhotosFromUserOfFoodType,
 };
