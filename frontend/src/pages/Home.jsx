@@ -2,6 +2,9 @@ import React, {useContext, useEffect, useState} from 'react';
 import { UserContext } from '../contexts/UserContext';
 import {Link} from "react-router-dom";
 import review from "../components/Review";
+import Popular from "../components/Popular";
+import '../index.css';
+
 
 function Home() {
   const { user } = useContext(UserContext);
@@ -235,7 +238,7 @@ function Home() {
             </button>
           </form>
         </div>
-        <button disabled={search.trim() === ''} onClick={() => {
+        <button  className="button" disabled={search.trim() === ''} onClick={() => {
           setAdvancedFilters(!advancedFilters);
           setNumReviewsBoxes([false, false, false]);
           setRatingBoxes([false, false, false, false]);
@@ -324,7 +327,10 @@ function Home() {
         <label className="form-label text-center text-light">
           {message}
         </label>
-        {displayResults()}
+        <div> {displayResults()} </div>
+
+        <Popular />
+
 
       </div>
   );

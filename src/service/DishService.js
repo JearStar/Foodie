@@ -63,11 +63,6 @@ async function getDishInfo(name, address, postalCode, country) {
 async function getDishesWithFields(name, address, postalCode, country, showPrice, showType, showIsHalal, showIsGlutenFree, showIsVegetarian) {
     return await withOracleDB(async (connection) => {
         const selectedFields = ['DISHNAME']; // Always include "DISHNAME"
-        // if (showPrice) selectedFields.push('PRICE');
-        // if (showType) selectedFields.push('TYPE');
-        // if (showIsHalal) selectedFields.push('ISHALAL');
-        // if (showIsGlutenFree) selectedFields.push('ISGLUTENFREE');
-        // if (showIsVegetarian) selectedFields.push('ISVEGETARIAN');
         if (showPrice == true) selectedFields.push('PRICE');
         if (showType == true) selectedFields.push('TYPE');
         if (showIsHalal == true) selectedFields.push('ISHALAL');

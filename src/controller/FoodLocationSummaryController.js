@@ -28,5 +28,28 @@ router.post('/get-foodlocationsummary-info', async (req, res) => {
     }
 });
 
+/*
+ENDPOINT: GET /api/foodlocationsummary/get-popular-summaries
+BODY: foodLocationSummaryID
+RETURNS ON SUCCESS: {success: boolean, data: [{ summaryID, averageRating, description }]}
+ */
+router.post('/get-popular-summaries', async (req, res) => {
+    try {
+        const result = await FLSummaryService.getTrendingSummaries();
+        if (!result) {
+            return res.status(404).json({
+                success: false,
+                error: 'Failed to get food location summary information: ' + req.body.getFoodLocationInfoWithSummaryID
+            });
+        }
+        res.json({
+            success: true,
+            data: result,
+        });
+    } catch (e) {
+        res.status(500).json({ success: false, error: e.message });
+    }
+});
+
 
 module.exports = router;
