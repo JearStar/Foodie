@@ -59,7 +59,57 @@ async function getDishInfo(name, address, postalCode, country) {
         });
     });
 }
+
+async function getDishesWithFields(name, address, postalCode, country, showPrice, showType, showIsHalal, showIsGlutenFree, showIsVegetarian) {
+    return await withOracleDB(async (connection) => {
+        const selectedFields = ['DISHNAME']; // Always include "DISHNAME"
+        // if (showPrice) selectedFields.push('PRICE');
+        // if (showType) selectedFields.push('TYPE');
+        // if (showIsHalal) selectedFields.push('ISHALAL');
+        // if (showIsGlutenFree) selectedFields.push('ISGLUTENFREE');
+        // if (showIsVegetarian) selectedFields.push('ISVEGETARIAN');
+        if (showPrice == true) selectedFields.push('PRICE');
+        if (showType == true) selectedFields.push('TYPE');
+        if (showIsHalal == true) selectedFields.push('ISHALAL');
+        if (showIsGlutenFree == true) selectedFields.push('ISGLUTENFREE');
+        if (showIsVegetarian == true) selectedFields.push('ISVEGETARIAN');
+        const selectedFieldsString = selectedFields.join(', ');
+
+        const query = `
+            SELECT ${selectedFieldsString}
+            FROM DISH
+            WHERE FOODLOCATIONNAME = :name AND ADDRESS = :address AND POSTALCODE = :postalCode AND COUNTRY = :country
+        `;
+
+        const result = await connection.execute(query, {
+            name: name,
+            address: address,
+            postalCode: postalCode,
+            country: country
+        });
+
+        if (result.rows.length === 0) {
+            return {};
+        }
+
+        return result.rows.map((row) => {
+            const dish = { dishName: row[0] };
+            let columnIndex = 1;
+
+            if (showPrice) dish.price = row[columnIndex++];
+            if (showType) dish.type = row[columnIndex++];
+            if (showIsHalal) dish.isHalal = row[columnIndex++];
+            if (showIsGlutenFree) dish.isGlutenFree = row[columnIndex++];
+            if (showIsVegetarian) dish.isVegetarian = row[columnIndex++];
+
+            return dish;
+        });
+
+    });
+}
+
 module.exports = {
   insertDish,
-    getDishInfo
+    getDishInfo,
+    getDishesWithFields
 };

@@ -139,7 +139,8 @@ function Review({ReviewID}) {
   return (
       <div className="col justify-content-center align-items-center">
         {userName !== '' ? <div>
-          <div>Day visited: {dayofWeek}, {timeStamp}</div>
+          <div>Day visited: {dayofWeek}</div>
+          <div>Time visited: {timeStamp}</div>
           <div>Overall rating: {overallRating}</div>
           <div>Service rating: {serviceRating}</div>
           <div>Wait time rating: {waitTimeRating}</div>
