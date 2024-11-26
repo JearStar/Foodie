@@ -137,6 +137,24 @@ async function getUserReviews(userID) {
     });
 }
 
+async function getUserAvgRatings(userID) {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute('SELECT AVG(OVERALLRATING), AVG(SERVICERATING), AVG(WAITTIMERATING) FROM REVIEW WHERE USERID=:userID GROUP BY USERID', {
+            userID: userID
+        });
+        if (result.rows.length === 0) {
+            return {};
+        }
+        return result.rows.map((row) => {
+            return {
+                averageOverallRating: row[0],
+                averageServiceRating: row[1],
+                averageWaitTimeRating: row[2]
+            };
+        });
+    });
+}
+
 async function getReviewIDs(name, address, postalCode, country) {
   return await withOracleDB(async (connection) => {
     const result = await connection.execute('SELECT ReviewID FROM Review WHERE FoodLocationName=:name AND Address=:address AND PostalCode=:postalCode AND Country=:country', {
@@ -162,5 +180,6 @@ module.exports = {
   getReviewIDs,
   searchRevs,
   searchDishRevs,
-    getUserReviews
+    getUserReviews,
+    getUserAvgRatings
 };

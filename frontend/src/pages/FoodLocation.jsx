@@ -232,7 +232,7 @@ const FoodLocation = () => {
                             {dishes.map((dish, index) => (
                                 <div key={index} className="dish-card">
                                     <h3>{dish.dishName}</h3>
-                                    {dish.price !== undefined ? <div>Price: {dish.price}</div> : ""}
+                                    {dish.price !== undefined ? <div>Price: {dish.price.toFixed(2)}</div> : ""}
                                     {dish.type !== undefined ? <div>Type: {dish.type}</div> : ""}
                                     {dish.isHalal !== undefined ? <div>Halal: {dish.isHalal ? "Yes" : "No"}</div> : ""}
                                     {dish.isGlutenFree !== undefined ? <div>Gluten-Free: {dish.isGlutenFree ? "Yes" : "No"}</div> : ""}

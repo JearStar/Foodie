@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import "../index.css";
 import { UserContext } from "../contexts/UserContext";
 import { Link, Outlet, useParams } from "react-router-dom";
+import ProfileRatings from "../components/ProfileRatings";
 
 const Profile = () => {
     const [userInformation, setUserInformation] = useState({});
@@ -38,6 +39,7 @@ const Profile = () => {
 
             >
                 <h1 className="mainheader">{userInformation.firstName}'s Profile</h1>
+                <ProfileRatings/>
                 <ul className="nav">
                     <li className="nav-item">
                         <Link className="nav-link" to="./reviews">

@@ -73,4 +73,30 @@ router.post('/get-review-ids', async (req, res) => {
   }
 });
 
+
+/*
+ENDPOINT: GET /api/review/get-user-avg-ratings
+BODY: userID
+RETURNS ON SUCCESS: {success: boolean, data: [{ avgOverallRating, avgServiceRating, avgWaitTimeRating, dayVisited }]}
+ */
+router.post('/get-user-avg-ratings', async (req, res) => {
+  try {
+    const result = await reviewService.getUserAvgRatings(req.body.userID);
+    if (!result) {
+      return res.status(404).json({
+        success: false,
+        error: 'Failed to get user reviews from: ' + req.body.userID,
+      });
+    }
+    res.json({
+      success: true,
+      data: result,
+    });
+  } catch (e) {
+    res.status(500).json({ success: false, error: e.message });
+  }
+});
+
+
+
 module.exports = router;
