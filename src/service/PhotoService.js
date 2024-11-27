@@ -82,7 +82,7 @@ async function getPhotosFromUserOfFoodType(userID, type){
                AND f.POSTALCODE = d.POSTALCODE
                AND f.COUNTRY = d.COUNTRY
                AND r.USERID = :userID
-               AND d.TYPE = :type`,
+               AND LOWER(d.TYPE) = :type`,
             {
                 userID: userID,
                 type: type

@@ -69,6 +69,18 @@ router.post('/get-foodlocation-info', async (req, res) => {
     }
 });
 
+router.post('/get-mcd-hall-of-fame', async (req, res) => {
+    try {
+        const result = await foodLocationService.getMcdonaldsHallOfFame(req.body.city);
+        res.json({
+            success: true,
+            users: result,
+        });
+    } catch (e) {
+        res.status(500).json({ success: false, error: e.message });
+    }
+});
+
 router.post('/findLocs', async (req, res) => {
     try {
         const query = req.body["query"];
