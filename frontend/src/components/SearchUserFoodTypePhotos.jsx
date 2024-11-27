@@ -6,6 +6,9 @@ const SearchUserFoodTypePhotos = () => {
     const [search, setSearch] = useState('');
     const { userID } = useParams();
     const [photos, setPhotos] = useState([]);
+    const [averagePhotoLikes, setAveragePhotoLikes] = useState(null);
+    const [showButton, setShowButton] = useState(true);
+
     const [displayResults, setDisplayResults] = useState(false);
 
 
@@ -28,8 +31,39 @@ const SearchUserFoodTypePhotos = () => {
             console.log("something went wrong with fetching")
         }
     }
+
+    const fetchAveragePhotoLikes = async () => {
+        try {
+            const response = await fetch('/api/photos/get-user-average-photo-likes', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ userID: userID }),
+            });
+            let res = await response.json();
+            if (response.ok) {
+                setAveragePhotoLikes(res.averagePhotoLikes);
+                setShowButton(false);
+            }
+        } catch (err) {
+            console.log("something went wrong with fetching")
+        }
+    }
     return (
         <div className="container d-flex flex-column align-items-center mt-4">
+            <div className='my-2'>
+                {showButton && (
+                    <a className="link-primary" onClick={fetchAveragePhotoLikes} style={{cursor: 'pointer'}}>
+                        Show user average photo likes
+                    </a>
+                )}
+                {averagePhotoLikes && (
+                    <div>
+                        <strong>Average Photo Likes:</strong> {averagePhotoLikes}
+                    </div>
+                )}
+            </div>
             <div className="w-50">
                 <form
                     className="d-flex"

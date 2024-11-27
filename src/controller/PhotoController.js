@@ -16,7 +16,6 @@ router.put('/insert-photo', async (req, res) => {
         const photo = new Photo(
             generateUUID(),
             req.body.imageURL,
-            0,
             req.body.description,
             req.body.photoTimestamp,
             req.body.reviewID,
@@ -122,4 +121,15 @@ router.post('/delete-like', async (req, res) => {
     }
 });
 
+router.post('/get-user-average-photo-likes', async (req, res) => {
+    try {
+        const result = await photoService.getUserAveragePhotoLikes(req.body.userID)
+        res.json({
+            success: true,
+            averagePhotoLikes: result.toFixed(1)
+        });
+    } catch (e) {
+        res.status(500).json({ success: false, error: e.message });
+    }
+});
 module.exports = router;

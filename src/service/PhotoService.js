@@ -6,11 +6,10 @@ const Service = require('../../appService');
 async function insertPhoto(photo) {
   return await withOracleDB(async (connection) => {
     const result = await connection.execute(
-      `INSERT INTO Photo (PHOTOID, IMAGEURL, PHOTOLIKES, DESCRIPTION, PHOTOTIMESTAMP, REVIEWID, SUMMARYID) VALUES (:photoID, :image, :photoLikes, :description, SYSDATE, :reviewID, :summaryID)`,
+      `INSERT INTO Photo (PHOTOID, IMAGEURL, DESCRIPTION, PHOTOTIMESTAMP, REVIEWID, SUMMARYID) VALUES (:photoID, :image, :description, SYSDATE, :reviewID, :summaryID)`,
       {
         photoID: photo.photoID,
         image: photo.imageURL,
-        photoLikes: photo.photoLikes,
         description: photo.description,
         reviewID: photo.reviewID,
         summaryID: photo.summaryID,
@@ -22,26 +21,70 @@ async function insertPhoto(photo) {
   })
 }
 
+
+async function getUserAveragePhotoLikes(userID) {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(
+            `SELECT AVG(PhotoVoteCount) AS AvgVotesPerPhoto
+             FROM (
+                      SELECT COUNT(v.VoteID) AS PhotoVoteCount
+                      FROM PHOTO p
+                               LEFT JOIN VOTE v ON p.PHOTOID = v.PHOTOID
+                               JOIN REVIEW r ON p.REVIEWID = r.REVIEWID
+                      WHERE r.USERID = :userID
+                      GROUP BY p.PHOTOID
+                  )`,
+            {
+                userID: userID
+            },
+            { autoCommit: true }
+        );
+        if (!result || result.rows.length === 0) {
+            return 0;
+        }
+        return result.rows[0][0];
+    });
+}
+
 async function getPhotosFromUserOfFoodType(userID, type){
     return await withOracleDB(async (connection) => {
         const result = await connection.execute(
-            `SELECT DISTINCT p.PHOTOID, p.IMAGEURL, p.PHOTOLIKES, p.DESCRIPTION, p.PHOTOTIMESTAMP, p.REVIEWID, p.SUMMARYID, 
-                r.FOODLOCATIONNAME, r.ADDRESS, r.POSTALCODE, r.COUNTRY, f.CITY
-             FROM DISH d, REVIEWSDISH rd, REVIEW r, PHOTO p, FOODLOCATION f
-             WHERE d.DISHNAME = rd.DISHNAME AND
-                 d.FOODLOCATIONNAME = rd.FOODLOCATIONNAME AND
-                 d.ADDRESS = rd.ADDRESS AND
-                 d.POSTALCODE = rd.POSTALCODE AND
-                 d.COUNTRY = rd.COUNTRY AND
-                 rd.REVIEWID = r.REVIEWID AND
-                 r.REVIEWID = p.REVIEWID AND
-                 f.FOODLOCATIONNAME = d.FOODLOCATIONNAME AND
-                 f.ADDRESS = d.ADDRESS AND
-                 f.POSTALCODE = d.POSTALCODE AND
-                 f.COUNTRY = d.COUNTRY AND
-                 r.USERID = :userID AND
-                 d.TYPE = :type
-            `,
+            `SELECT DISTINCT
+                 p.PHOTOID,
+                 p.IMAGEURL,
+                 p.DESCRIPTION,
+                 p.PHOTOTIMESTAMP,
+                 p.REVIEWID,
+                 p.SUMMARYID,
+                 r.FOODLOCATIONNAME,
+                 r.ADDRESS,
+                 r.POSTALCODE,
+                 r.COUNTRY,
+                 f.CITY,
+                 (SELECT COUNT(v.VoteID)
+                  FROM VOTE v
+                  WHERE v.PHOTOID = p.PHOTOID) AS PhotoLikes
+             FROM
+                 DISH d,
+                 REVIEWSDISH rd,
+                 REVIEW r,
+                 PHOTO p,
+                 FOODLOCATION f,
+                 VOTE v
+             WHERE
+                 d.DISHNAME = rd.DISHNAME
+               AND d.FOODLOCATIONNAME = rd.FOODLOCATIONNAME
+               AND d.ADDRESS = rd.ADDRESS
+               AND d.POSTALCODE = rd.POSTALCODE
+               AND d.COUNTRY = rd.COUNTRY
+               AND rd.REVIEWID = r.REVIEWID
+               AND r.REVIEWID = p.REVIEWID
+               AND f.FOODLOCATIONNAME = d.FOODLOCATIONNAME
+               AND f.ADDRESS = d.ADDRESS
+               AND f.POSTALCODE = d.POSTALCODE
+               AND f.COUNTRY = d.COUNTRY
+               AND r.USERID = :userID
+               AND d.TYPE = :type`,
             {
                 userID: userID,
                 type: type
@@ -53,16 +96,16 @@ async function getPhotosFromUserOfFoodType(userID, type){
             return {
                 photoID: row[0],
                 imageURL: row[1],
-                photoLikes: row[2],
-                description: row[3],
-                photoTimestamp: row[4],
-                reviewID: row[5],
-                summaryID: row[6],
-                foodLocationName: row[7],
-                address: row[8],
-                postalCode: row[9],
-                country: row[10],
-                city: row[11]
+                description: row[2],
+                photoTimestamp: row[3],
+                reviewID: row[4],
+                summaryID: row[5],
+                foodLocationName: row[6],
+                address: row[7],
+                postalCode: row[8],
+                country: row[9],
+                city: row[10],
+                photoLikes: row[11],
             };
         });
     })
@@ -71,21 +114,41 @@ async function getPhotosFromUserOfFoodType(userID, type){
 async function getPhotosForReview(reviewID){
     return await withOracleDB(async (connection) => {
         const result = await connection.execute(
-            `SELECT DISTINCT p.PHOTOID, p.IMAGEURL, p.PHOTOLIKES, p.DESCRIPTION, p.PHOTOTIMESTAMP, p.REVIEWID, p.SUMMARYID, 
-                r.FOODLOCATIONNAME, r.ADDRESS, r.POSTALCODE, r.COUNTRY, f.CITY
-             FROM DISH d, REVIEWSDISH rd, REVIEW r, PHOTO p, FOODLOCATION f
-             WHERE d.DISHNAME = rd.DISHNAME AND
-                 d.FOODLOCATIONNAME = rd.FOODLOCATIONNAME AND
-                 d.ADDRESS = rd.ADDRESS AND
-                 d.POSTALCODE = rd.POSTALCODE AND
-                 d.COUNTRY = rd.COUNTRY AND
-                 rd.REVIEWID = r.REVIEWID AND
-                 r.REVIEWID = p.REVIEWID AND
-                 f.FOODLOCATIONNAME = d.FOODLOCATIONNAME AND
-                 f.ADDRESS = d.ADDRESS AND
-                 f.POSTALCODE = d.POSTALCODE AND
-                 f.COUNTRY = d.COUNTRY AND
-                 r.REVIEWID = :reviewID
+            `SELECT DISTINCT
+                 p.PHOTOID,
+                 p.IMAGEURL,
+                 p.DESCRIPTION,
+                 p.PHOTOTIMESTAMP,
+                 p.REVIEWID,
+                 p.SUMMARYID,
+                 r.FOODLOCATIONNAME,
+                 r.ADDRESS,
+                 r.POSTALCODE,
+                 r.COUNTRY,
+                 f.CITY,
+                 (SELECT COUNT(v.VoteID)
+                  FROM VOTE v
+                  WHERE v.PHOTOID = p.PHOTOID) AS PhotoLikes
+             FROM
+                 DISH d,
+                 REVIEWSDISH rd,
+                 REVIEW r,
+                 PHOTO p,
+                 FOODLOCATION f,
+                 VOTE v
+             WHERE
+                 d.DISHNAME = rd.DISHNAME
+               AND d.FOODLOCATIONNAME = rd.FOODLOCATIONNAME
+               AND d.ADDRESS = rd.ADDRESS
+               AND d.POSTALCODE = rd.POSTALCODE
+               AND d.COUNTRY = rd.COUNTRY
+               AND rd.REVIEWID = r.REVIEWID
+               AND r.REVIEWID = p.REVIEWID
+               AND f.FOODLOCATIONNAME = d.FOODLOCATIONNAME
+               AND f.ADDRESS = d.ADDRESS
+               AND f.POSTALCODE = d.POSTALCODE
+               AND f.COUNTRY = d.COUNTRY
+               AND r.REVIEWID = :reviewID
             `,
             {
                 reviewID: reviewID
@@ -97,16 +160,16 @@ async function getPhotosForReview(reviewID){
             return {
                 photoID: row[0],
                 imageURL: row[1],
-                photoLikes: row[2],
-                description: row[3],
-                photoTimestamp: row[4],
-                reviewID: row[5],
-                summaryID: row[6],
-                foodLocationName: row[7],
-                address: row[8],
-                postalCode: row[9],
-                country: row[10],
-                city: row[11]
+                description: row[2],
+                photoTimestamp: row[3],
+                reviewID: row[4],
+                summaryID: row[5],
+                foodLocationName: row[6],
+                address: row[7],
+                postalCode: row[8],
+                country: row[9],
+                city: row[10],
+                photoLikes: row[11]
             };
         });
     })
@@ -156,5 +219,6 @@ module.exports = {
     insertPhoto,
     deletePhoto,
     getPhotosFromUserOfFoodType,
-    getPhotosForReview
+    getPhotosForReview,
+    getUserAveragePhotoLikes
 };

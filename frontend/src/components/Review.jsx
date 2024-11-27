@@ -172,12 +172,12 @@ function Review({ReviewID}) {
           ) : ""}
           <div>Posted by: {userName}</div>
         </div> : ""}
-        <div className="mt-4 w-100 d-flex justify-content-center">
-          {photos.length > 0 && <PhotoScroller photos={photos}/>}
-        </div>
         {topComment ? <div>
           <CommentSection comments={[topComment]} onReload={handleReload}/>
         </div> : ""}
+        <div className="mt-4 w-100 d-flex">
+          {photos.length > 0 && <PhotoScroller photos={photos}/>}
+        </div>
       </div>
   );
 }

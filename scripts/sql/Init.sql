@@ -83,7 +83,6 @@ CREATE TABLE Review (
 CREATE TABLE Photo (
     PhotoID VARCHAR(36) PRIMARY KEY,
     ImageURL VARCHAR(225) NOT NULL,
-    PhotoLikes INTEGER NOT NULL,
     Description VARCHAR(1000),
     PhotoTimestamp TIMESTAMP NOT NULL,
     ReviewID VARCHAR(36)  NOT NULL,
@@ -397,17 +396,19 @@ VALUES ('d43e0f79-e09f-4bc3-ad48-c5ecead2870a', 'Wagyu Steak 5oz', 3, 'Miku Vanc
 
 COMMIT;
 
-INSERT INTO Photo (PhotoID, ImageURL, PhotoLikes, Description, PhotoTimestamp, ReviewID, SummaryID) VALUES ('a23d5e01-9c8f-4d5c-87a9-3a27b6c8a7ab', 'https://sushi-mura.com/wp-content/uploads/2022/05/Dinner-For-Two-300x300.jpg' , 6, 'Deluxe sushi platter.', '2024-10-13 14:30:00', '5b3c2a1d-d5c4-4e9e-80cd-3e5d232df9f1', 'aa8e21cb-901b-4a8b-afcc-070a7ea2f749');
+INSERT INTO Photo (PhotoID, ImageURL, Description, PhotoTimestamp, ReviewID, SummaryID) VALUES ('a23d5e01-9c8f-4d5c-87a9-3a27b6c8a7ab', 'https://sushi-mura.com/wp-content/uploads/2022/05/Dinner-For-Two-300x300.jpg' , 'Deluxe sushi platter.', '2024-10-13 14:30:00', '5b3c2a1d-d5c4-4e9e-80cd-3e5d232df9f1', 'aa8e21cb-901b-4a8b-afcc-070a7ea2f749');
+INSERT INTO Photo (PhotoID, ImageURL, Description, PhotoTimestamp, ReviewID, SummaryID) VALUES ('a706202e-2cdd-45fe-9241-6a64834dfa2c', 'https://sushi-mura.com/wp-content/uploads/2023/02/location_oak15.jpg' , 'Restaurant exterior.', '2024-10-13 14:10:00', '5b3c2a1d-d5c4-4e9e-80cd-3e5d232df9f1', 'aa8e21cb-901b-4a8b-afcc-070a7ea2f749');
 
-INSERT INTO Photo (PhotoID, ImageURL, PhotoLikes, Description, PhotoTimestamp, ReviewID, SummaryID) VALUES ('d5e79861-4d1f-4a94-bb15-b7b75c8f8e54', 'https://www.mychals.org/wp-content/uploads/2024/01/Mychals-Cafe-2-300x300.jpg' , 0, 'Cozy and inviting ambience of the cafe.', '2024-10-13 14:35:00', 'd6b9c3e1-893b-4d6c-b39a-24dbb7a0289d', '243037b2-1999-483c-aeeb-d640291b4b93');
 
-INSERT INTO Photo (PhotoID, ImageURL, PhotoLikes, Description, PhotoTimestamp, ReviewID, SummaryID) VALUES ('f47e1c76-8b9e-4a77-89d3-2a4fb7c8e0c9', 'https://theeburgerdude.com/wp-content/uploads/2021/01/Big-Mac-1024x1024.jpg' , 0, 'Delicious classic Big Mac.', '2024-10-13 14:40:00', 'f01f6e3e-a768-4e3e-924b-7c92983f089a', '38702090-77ff-4cfd-99e8-9f0d3b6fbef7');
+INSERT INTO Photo (PhotoID, ImageURL, Description, PhotoTimestamp, ReviewID, SummaryID) VALUES ('d5e79861-4d1f-4a94-bb15-b7b75c8f8e54', 'https://www.mychals.org/wp-content/uploads/2024/01/Mychals-Cafe-2-300x300.jpg' ,'Cozy and inviting ambience of the cafe.', '2024-10-13 14:35:00', 'd6b9c3e1-893b-4d6c-b39a-24dbb7a0289d', '243037b2-1999-483c-aeeb-d640291b4b93');
 
-INSERT INTO Photo (PhotoID, ImageURL, PhotoLikes, Description, PhotoTimestamp, ReviewID, SummaryID) VALUES ('68e61d74-7f23-45ba-a71e-13f9b8d4c6f2', 'https://media-cdn.tripadvisor.com/media/photo-s/05/13/6f/da/cafe-de-flore.jpg' , 0, 'Close-up shot of the main dish, looks delicious.', '2024-10-13 14:45:00', 'e70b45f1-5b25-4df7-82c3-b24bafedf2c1', 'cea54cdc-68fc-42c8-8e37-03ae151b458c');
+INSERT INTO Photo (PhotoID, ImageURL, Description, PhotoTimestamp, ReviewID, SummaryID) VALUES ('f47e1c76-8b9e-4a77-89d3-2a4fb7c8e0c9', 'https://theeburgerdude.com/wp-content/uploads/2021/01/Big-Mac-1024x1024.jpg' ,'Delicious classic Big Mac.', '2024-10-13 14:40:00', 'f01f6e3e-a768-4e3e-924b-7c92983f089a', '38702090-77ff-4cfd-99e8-9f0d3b6fbef7');
 
-INSERT INTO Photo (PhotoID, ImageURL, PhotoLikes, Description, PhotoTimestamp, ReviewID, SummaryID) VALUES ('0d4312f3-3f1b-4c9b-89f3-d7e9d7c8f1e2', 'https://images.otstatic.com/prod1/31847079/1/huge.jpg' , 0, 'Nice outdoor seating area with a view.', '2024-10-13 14:50:00', '12b671b9-3826-46ba-a9d2-dc5a2f74ad64', 'e2085150-c55c-4aea-a08f-b398c86eeb97');
+INSERT INTO Photo (PhotoID, ImageURL, Description, PhotoTimestamp, ReviewID, SummaryID) VALUES ('68e61d74-7f23-45ba-a71e-13f9b8d4c6f2', 'https://media-cdn.tripadvisor.com/media/photo-s/05/13/6f/da/cafe-de-flore.jpg' , 'Close-up shot of the main dish, looks delicious.', '2024-10-13 14:45:00', 'e70b45f1-5b25-4df7-82c3-b24bafedf2c1', 'cea54cdc-68fc-42c8-8e37-03ae151b458c');
 
-INSERT INTO Photo (PhotoID, ImageURL, PhotoLikes, Description, PhotoTimestamp, ReviewID, SummaryID) VALUES ('351b0d95-8ba7-4322-8d78-55c34de6fcdf', 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Sushi_platter.jpg/300px-Sushi_platter.jpg' , 0, 'Sushi platter!', '2024-10-21 15:50:00', 'd43e0f79-e09f-4bc3-ad48-c5ecead2870a', 'e2085150-c55c-4aea-a08f-b398c86eeb97');
+INSERT INTO Photo (PhotoID, ImageURL, Description, PhotoTimestamp, ReviewID, SummaryID) VALUES ('0d4312f3-3f1b-4c9b-89f3-d7e9d7c8f1e2', 'https://images.otstatic.com/prod1/31847079/1/huge.jpg' , 'Nice outdoor seating area with a view.', '2024-10-13 14:50:00', '12b671b9-3826-46ba-a9d2-dc5a2f74ad64', 'e2085150-c55c-4aea-a08f-b398c86eeb97');
+
+INSERT INTO Photo (PhotoID, ImageURL, Description, PhotoTimestamp, ReviewID, SummaryID) VALUES ('351b0d95-8ba7-4322-8d78-55c34de6fcdf', 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Sushi_platter.jpg/300px-Sushi_platter.jpg' , 'Sushi platter!', '2024-10-21 15:50:00', 'd43e0f79-e09f-4bc3-ad48-c5ecead2870a', 'e2085150-c55c-4aea-a08f-b398c86eeb97');
 
 COMMIT;
 

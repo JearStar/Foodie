@@ -5,7 +5,6 @@ import { UserContext } from "../contexts/UserContext";
 
 const PhotoScroller = ({ photos }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [likes, setLikes] = useState([]);
     const [likeStatus, setLikeStatus] = useState([]);
     const { user } = useContext(UserContext);
 
@@ -15,9 +14,6 @@ const PhotoScroller = ({ photos }) => {
 
     useEffect(() => {
         const fetchLikesData = async () => {
-            const likesData = await Promise.all(photos.map(photo => fetchLikes(photo.photoID)));
-            setLikes(likesData);
-
             const likeStatusData = await Promise.all(photos.map(photo => fetchLikeStatus(photo.photoID)));
             setLikeStatus(likeStatusData);
         };
@@ -47,9 +43,7 @@ const PhotoScroller = ({ photos }) => {
             });
 
             if (response.ok) {
-                const updatedLikes = [...likes];
-                updatedLikes[index] = updatedLikes[index] + (newStatus ? 1 : -1);
-                setLikes(updatedLikes);
+                photos[index].photoLikes = photos[index].photoLikes + (newStatus ? 1 : -1);
 
                 const updatedStatus = [...likeStatus];
                 updatedStatus[index] = newStatus;
@@ -57,27 +51,6 @@ const PhotoScroller = ({ photos }) => {
             }
         } catch (err) {
             console.error("Error updating like status:", err);
-        }
-    };
-
-    const fetchLikes = async (photoID) => {
-        try {
-            const response = await fetch("/api/photos/get-photo-likes", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ photoID }),
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                return data.numLikes;
-            } else {
-                console.error(`Error fetching photo likes: ${response.status}`);
-                return 0;
-            }
-        } catch (e) {
-            console.error("Error fetching photo likes:", e);
-            return 0;
         }
     };
 
@@ -152,7 +125,7 @@ const PhotoScroller = ({ photos }) => {
                                             className={`ms-2 fs-4 ${likeStatus[index] ? "text-danger" : "text-dark"} fw-bold`}
                                             id="like-count"
                                         >
-                                            {likes[index]}
+                                            {photos[index].photoLikes}
                                         </span>
                                     </div>
                                     <p className="mb-1">
