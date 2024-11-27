@@ -103,14 +103,11 @@ router.post('/get-location-avg-score', async (req, res) => {
 router.post('/findLocs', async (req, res) => {
     try {
         const query = req.body["query"];
-        console.log('SELECT * FROM FoodLocation WHERE ' + query);
-        // console.log('SELECT * FROM FoodLocationSummary WHERE ' + query);
         const result1 = await foodLocationService.searchLocs('SELECT * FROM FoodLocation WHERE ' + query);
-        // const result2 = await foodLocationSummaryService.searchSummaries('SELECT * FROM FoodLocationSummary WHERE ' + query);
-        if (!result1 ) { // || !result2
+        if (!result1) {
             return res.status(400).json({ success: false, error: 'Internal database error' });
         }
-        res.json({ success: true, FoodLocations: result1, FoodLocationSummaries: [] });
+        res.json({ success: true, FoodLocations: result1});
     } catch (e) {
         res.status(500).json({ success: false, error: e.message });
     }

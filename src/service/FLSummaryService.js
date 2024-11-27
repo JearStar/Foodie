@@ -64,10 +64,11 @@ async function getTrendingSummaries() {
 }
 
 
-async function searchSummaries(query) {
+async function searchSummaries(name, address, postal, country) {
   return await withOracleDB(async (connection) => {
     const result = await connection.execute(
-        query
+        'SELECT * FROM FoodLocationSummary WHERE FoodLocationName=:n AND Address=:a AND PostalCode=:p AND Country=:c',
+        [name, address, postal, country]
     );
     return result.rows;
   }).catch((e) => {
@@ -78,6 +79,6 @@ async function searchSummaries(query) {
 module.exports = {
   insertFLSummary,
   searchSummaries,
-    getFoodLocationSummaryInfo,
-    getTrendingSummaries
+  getFoodLocationSummaryInfo,
+  getTrendingSummaries
 };
