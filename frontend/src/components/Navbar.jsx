@@ -30,7 +30,7 @@ const Navbar = () => {
                   </li>
                   <li className="nav-item">
                       <Link className="button" to="/mcdonalds-hall-of-fame">
-                          McDonald's Leaderboard
+                          McDonald's Hall of Fame
                       </Link>
                   </li>
                   <li className="nav-item">
