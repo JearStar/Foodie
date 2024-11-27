@@ -1,7 +1,5 @@
 const { withOracleDB } = require('../../appService');
 
-const Service = require('../../appService');
-
 //INSERT Photo
 async function insertPhoto(photo) {
   return await withOracleDB(async (connection) => {
@@ -188,14 +186,7 @@ async function deletePhoto(
   return await withOracleDB(async (connection) => {
     try {
       const result = await connection.execute(
-        `DELETE FROM Photo 
-                 WHERE PhotoID = :removePhotoID
-                 AND Image = :removeImage
-                 AND PhotoLikes = :removePhotoLikes
-                 AND Description = :removeDescription
-                 AND PhotoTimestamp = :removeTimestamp
-                 AND ReviewID = :removeReviewID
-                 AND SummaryID = :removeSummaryID`,
+        `DELETE FROM Photo WHERE PhotoID = :removePhotoID`,
         {
           removePhotoID: removePhotoID,
           removeImage: removeImage,
