@@ -87,8 +87,8 @@ CREATE TABLE Photo (
     PhotoTimestamp TIMESTAMP NOT NULL,
     ReviewID VARCHAR(36)  NOT NULL,
     SummaryID VARCHAR(36) ,
-    FOREIGN KEY (SummaryID) REFERENCES FoodLocationSummary ON DELETE CASCADE,
-    FOREIGN KEY (ReviewID) REFERENCES Review ON DELETE CASCADE
+    CONSTRAINT fk_photo_reference_foodlocationsummary FOREIGN KEY (SummaryID) REFERENCES FoodLocationSummary ON DELETE CASCADE,
+    CONSTRAINT fk_photo_reference_review FOREIGN KEY (ReviewID) REFERENCES Review ON DELETE CASCADE
 );
 
 CREATE TABLE Vote (
@@ -115,7 +115,7 @@ CREATE TABLE Dish (
     PostalCode VARCHAR(10),
     Country VARCHAR(50),
     CONSTRAINT check_booleans CHECK (isHalal IN (0, 1) AND isGlutenFree IN (0, 1) AND isVegetarian IN (0, 1)),
-    CONSTRAINT dish_reference_foodlocation FOREIGN KEY (FoodLocationName, Address, Country, PostalCode) REFERENCES FoodLocation (FoodLocationName, Address, Country, PostalCode) ON DELETE CASCADE,
+    CONSTRAINT fk_dish_reference_foodlocation FOREIGN KEY (FoodLocationName, Address, Country, PostalCode) REFERENCES FoodLocation (FoodLocationName, Address, Country, PostalCode) ON DELETE CASCADE,
     PRIMARY KEY (DishName, FoodLocationName, Address, Country, PostalCode)
 );
 
@@ -125,9 +125,9 @@ CREATE TABLE LimitedTimeDish (
     Address VARCHAR(150),
     PostalCode VARCHAR(10),
     Country VARCHAR(50),
-    StartDate DATE NOT NULL,
-    EndDate DATE NOT NULL,
-    FOREIGN KEY (DishName, FoodLocationName, Address, PostalCode, Country) REFERENCES Dish,
+    StartDate TIMESTAMP NOT NULL,
+    EndDate TIMESTAMP NOT NULL,
+    CONSTRAINT fk_limitedtimedish_reference_dish FOREIGN KEY (DishName, FoodLocationName, Address, PostalCode, Country) REFERENCES Dish (DishName, FoodLocationName, Address, PostalCode, Country),
     PRIMARY KEY (DishName, FoodLocationName, Address, PostalCode, Country)
 );
 
@@ -274,13 +274,13 @@ INSERT INTO Dish (DishName, Price, Type, isHalal, isGlutenFree, isVegetarian, Fo
 VALUES ('Baked Peach Pie', 2.99, 'dessert', 0, 0, 0, 'McDonald''s', '470 Yonge Street', 'M4Y 1X5', 'Canada');
 
 INSERT INTO Dish (DishName, Price, Type, isHalal, isGlutenFree, isVegetarian, FoodLocationName, Address, PostalCode, Country)
-VALUES ('S''mores McFlurry', 2.50, 'dessert', 0, 0, 0, 'McDonald''s', '470 Yonge Street', 'M4Y 1X5', 'Canada');
+VALUES ('S''mores McFlurry', 2.50, 'dessert', 0, 1, 0, 'McDonald''s', '470 Yonge Street', 'M4Y 1X5', 'Canada');
 
 INSERT INTO Dish (DishName, Price, Type, isHalal, isGlutenFree, isVegetarian, FoodLocationName, Address, PostalCode, Country)
 VALUES ('World Famous Fries', 1.99, 'fries', 0, 0, 0, 'McDonald''s', '470 Yonge Street', 'M4Y 1X5', 'Canada');
 
 INSERT INTO Dish (DishName, Price, Type, isHalal, isGlutenFree, isVegetarian, FoodLocationName, Address, PostalCode, Country)
-VALUES ('Coca-Cola', 1.50, 'drink', 0, 0, 0, 'McDonald''s', '470 Yonge Street', 'M4Y 1X5', 'Canada');
+VALUES ('Coca-Cola', 1.50, 'drink', 0, 1, 0, 'McDonald''s', '470 Yonge Street', 'M4Y 1X5', 'Canada');
 
 COMMIT;
 
@@ -317,6 +317,24 @@ INSERT INTO Dish (DishName, Price, Type, isHalal, isGlutenFree, isVegetarian, Fo
 VALUES ('Wagyu Steak 10oz', 320.00, 'steak', 1, 1, 0, 'Miku Vancouver', '200 Granville Street #70', 'V6C 1S4', 'Canada');
 
 COMMIT;
+
+INSERT INTO Dish (DishName, Price, Type, isHalal, isGlutenFree, isVegetarian, FoodLocationName, Address, PostalCode, Country)
+VALUES ('Shaka Shaka Fries', 2.99, 'fries', 0, 0, 0, 'McDonald''s', '470 Yonge Street', 'M4Y 1X5', 'Canada');
+INSERT INTO Dish (DishName, Price, Type, isHalal, isGlutenFree, isVegetarian, FoodLocationName, Address, PostalCode, Country)
+VALUES ('Teritama Burger', 6.99, 'burger', 0, 0, 0, 'McDonald''s', '470 Yonge Street', 'M4Y 1X5', 'Canada');
+INSERT INTO Dish (DishName, Price, Type, isHalal, isGlutenFree, isVegetarian, FoodLocationName, Address, PostalCode, Country)
+VALUES ('Chocobanana McFlurry', 6.99, 'dessert', 0, 1, 1, 'McDonald''s', '470 Yonge Street', 'M4Y 1X5', 'Canada');
+INSERT INTO Dish (DishName, Price, Type, isHalal, isGlutenFree, isVegetarian, FoodLocationName, Address, PostalCode, Country)
+VALUES ('Edamame and Corn', 6.99, 'burger', 1, 1, 1, 'McDonald''s', '470 Yonge Street', 'M4Y 1X5', 'Canada');
+
+INSERT INTO LIMITEDTIMEDISH (DishName, FoodLocationName, Address, PostalCode, Country, StartDate, EndDate)
+VALUES ('Shaka Shaka Fries','McDonald''s', '470 Yonge Street', 'M4Y 1X5', 'Canada', '2024-10-01 12:30:00', '2025-01-01 00:00:00');
+INSERT INTO LIMITEDTIMEDISH (DishName, FoodLocationName, Address, PostalCode, Country, StartDate, EndDate)
+VALUES ('Teritama Burger','McDonald''s', '470 Yonge Street', 'M4Y 1X5', 'Canada', '2024-11-05 12:30:00', '2024-12-20 00:00:00');
+INSERT INTO LIMITEDTIMEDISH (DishName, FoodLocationName, Address, PostalCode, Country, StartDate, EndDate)
+VALUES ('Chocobanana McFlurry','McDonald''s', '470 Yonge Street', 'M4Y 1X5', 'Canada', '2024-10-01 12:30:00', '2025-03-05 12:30:00');
+INSERT INTO LIMITEDTIMEDISH (DishName, FoodLocationName, Address, PostalCode, Country, StartDate, EndDate)
+VALUES ('Edamame and Corn','McDonald''s', '470 Yonge Street', 'M4Y 1X5', 'Canada', '2024-11-01 12:30:00', '2024-12-06 15:30:00');
 
 INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, DayOfWeekVisited, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID)
 VALUES ('5b3c2a1d-d5c4-4e9e-80cd-3e5d232df9f1', 5, 4, 3, 5, '2024-10-01 12:30:00', 'Sushi Mura', '6485 Oak Street', 'V6M 2W7', 'Canada', '4d7577fc-636e-40b1-ab1f-f3c12422c84a');

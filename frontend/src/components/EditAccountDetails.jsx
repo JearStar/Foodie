@@ -55,14 +55,11 @@ const EditAccountDetails = () => {
                     password: oldPassword
                 }),
             });
-            response = await response.json();
+            const result = await response.json();
+            console.log(result.ok)
+            console.log(result.success)
+            return !(!response.ok || !result.success);
 
-            if (!response.ok || !response.success) {
-                alert("Old password is incorrect");
-                return false;
-            }
-
-            return true;
 
         } catch (e) {
             console.error('Error retrieving user information:', e);
@@ -130,7 +127,7 @@ const EditAccountDetails = () => {
             return
         }
 
-        if (await checkOldPassword()) {
+        if (!(await checkOldPassword())) {
             alert("Old password incorrect")
             return
         }
@@ -150,7 +147,7 @@ const EditAccountDetails = () => {
         setRetypeNewPassword("")
         setUpdatePassword(false)
         if (await changePassword()) {
-            alert("Password changed to " + newPassword);
+            alert("Password changed to successfully");
         } else {
             alert("Failed to change password");
         }

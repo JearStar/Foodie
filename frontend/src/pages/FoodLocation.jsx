@@ -1,14 +1,15 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import '../index.css';
-import { useParams } from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import Review from "../components/Review";
+import {UserContext} from "../contexts/UserContext";
+import {ADMIN_UUID} from "../Helper";
 
 
 const FoodLocation = () => {
+    const {user} = useContext(UserContext);
     const [foodLocationInformation, setFoodLocationInformation] = useState({});
     const [foodLocationSummaryInformation, setFoodLocationSummaryInformation] = useState({});
-    // const [dishesInformation, setDishesInformation] = useState([]);
-    // const [viewDishes, setViewDishes] = useState(false);
     const [viewReviews, setViewReviews] = useState(false);
     const [reviewIDs, setReviewIDs] = useState([]);
     const [locationAvgScore, setLocationAvgScore] = useState(0);
@@ -19,6 +20,7 @@ const FoodLocation = () => {
     const [showIsGlutenFree, setShowIsGlutenFree] = useState(false);
     const [showIsVegetarian, setShowIsVegetarian] = useState(false);
     const [dishes, setDishes] = useState([]);
+    const [limitedTimeDishes, setLimitedTimeDishes] = useState([]);
 
 
 
@@ -174,13 +176,54 @@ const FoodLocation = () => {
                 return false;
             }
             console.log('Information retrieved successfully:', result);
-            setDishes(result.data);
+            const dishes = result.data;
+            if (typeof dishes === "object") {
+                setDishes(dishes);
+                let limitedTimeArr = Array(0);
+                for (const dish of dishes) {
+                    let limitedTime = await getLimitedTime(dish);
+                    limitedTimeArr.push(limitedTime);
+                }
+                setLimitedTimeDishes(limitedTimeArr);
+                console.log(limitedTimeArr);
+            }
+
             return true;
         } catch (e) {
             console.error('Error retrieving user information:', e);
             return false;
         }
     };
+
+    const getLimitedTime = async (dish) => {
+        try {
+            console.log(dish);
+            const response = await fetch('/api/dish/get-lt-dish', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    dishName: dish["dishName"],
+                    flName: dish["flName"],
+                    address: dish["address"],
+                    postalCode: dish["postalCode"],
+                    country: dish["country"],
+                }),
+            });
+
+            const result = await response.json();
+            if (!response.ok || !result.success) {
+                console.error(`Error retrieving dish information: ${response.status} ${response.statusText}`);
+                return false;
+            }
+            console.log('Information retrieved successfully:', result.data);
+            return result.data;
+        } catch (e) {
+            console.error('Error retrieving user information:', e);
+            return false;
+        }
+    }
 
     const handleSubmitDishFields = async (e) => {
         e.preventDefault()
@@ -196,6 +239,10 @@ const FoodLocation = () => {
 
     return (
         <div className="app">
+            {user.userID === ADMIN_UUID &&
+                <Link className="button" to={`/location/${routeParams.name}/${routeParams.country}/${routeParams.postalcode}/${routeParams.address}/add-dish`}>
+                Add Dish
+            </Link>}
             <h1 className="mainheader">
                 {foodLocationInformation.name}
             </h1>
@@ -265,6 +312,20 @@ const FoodLocation = () => {
                                     {dish.isHalal !== undefined ? <div>Halal: {dish.isHalal ? "Yes" : "No"}</div> : ""}
                                     {dish.isGlutenFree !== undefined ? <div>Gluten-Free: {dish.isGlutenFree ? "Yes" : "No"}</div> : ""}
                                     {dish.isVegetarian !== undefined ? <div>Vegetarian: {dish.isVegetarian ? "Yes" : "No"}</div> : ""}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
+                {limitedTimeDishes.length > 0 && (
+                    <div>
+                        <h2>Limited Time Dishes</h2>
+                        <div className="lt-dishes-list">
+                            {dishes.map((ltDish, index) => (
+                                <div key={index} className="dish-card">
+                                    <h3>{ltDish[0]}</h3>
+                                    {ltDish[5] !== undefined ? <div>Start Date: {ltDish[5]}</div> : ""}
+                                    {ltDish[6] !== undefined ? <div>End Date: {ltDish[6]}</div> : ""}
                                 </div>
                             ))}
                         </div>
