@@ -60,9 +60,22 @@ async function getDishInfo(name, address, postalCode, country) {
     });
 }
 
+async function getLTDish(dishName, flName, address, postalCode, country) {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute('SELECT * FROM LimitedTimeDish WHERE DishName=:dishName AND FoodLocationName=:flName AND Address=:address AND PostalCode=:postalCode AND Country=:country',
+            {dishName: dishName, flName: flName, address: address, postalCode: postalCode, country: country}
+        );
+        if (result.rows.length === 0) {
+            return [];
+        }
+        return result.rows;
+    });
+}
+
 async function getDishesWithFields(name, address, postalCode, country, showPrice, showType, showIsHalal, showIsGlutenFree, showIsVegetarian) {
     return await withOracleDB(async (connection) => {
-        const selectedFields = ['DISHNAME']; // Always include "DISHNAME"
+        const selectedFields = ['DISHNAME', 'FoodLocationName', 'Address', 'PostalCode', 'Country'];
+        // Always include "DISHNAME"
         if (showPrice == true) selectedFields.push('PRICE');
         if (showType == true) selectedFields.push('TYPE');
         if (showIsHalal == true) selectedFields.push('ISHALAL');
@@ -88,8 +101,8 @@ async function getDishesWithFields(name, address, postalCode, country, showPrice
         }
 
         return result.rows.map((row) => {
-            const dish = { dishName: row[0] };
-            let columnIndex = 1;
+            const dish = { dishName: row[0], flName: row[1], address: row[2], postalCode: row[3], country: row[4] };
+            let columnIndex = 5;
 
             if (showPrice) dish.price = row[columnIndex++];
             if (showType) dish.type = row[columnIndex++];
@@ -106,5 +119,6 @@ async function getDishesWithFields(name, address, postalCode, country, showPrice
 module.exports = {
   insertDish,
     getDishInfo,
+    getLTDish,
     getDishesWithFields
 };
