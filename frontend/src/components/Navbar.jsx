@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../contexts/UserContext';
+import {ADMIN_UUID} from "../Helper";
 
 const Navbar = () => {
   const { user, logout } = useContext(UserContext);
-  const ADMIN_UUID = '7309d25b-1e98-4a82-ba00-8b412b1c7e2e';
   return (
     <nav className="navbar navbar-expand-lg navbar-light">
       <div className="container-fluid">

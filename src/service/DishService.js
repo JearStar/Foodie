@@ -2,32 +2,21 @@ const Service = require('../../appService');
 const {withOracleDB} = require("../../appService");
 
 //INSERT Dish
-async function insertDish(
-  DishName,
-  Price,
-  Type,
-  isHalal,
-  isGlutenFree,
-  isVegetarian,
-  FoodLocationName,
-  Address,
-  PostalCode,
-  Country
-) {
+async function insertDish(dish){
   return await Service.withOracleDB(async (connection) => {
     const result = await connection.execute(
       `INSERT INTO Dish (DishName, Price, Type, isHalal, isGlutenFree, isVegetarian, FoodLocationName, Address, PostalCode, Country) VALUES (:DishName, :Price, :Type, :isHalal, :isGlutenFree, :isVegetarian, :FoodLocationName, :Address, :PostalCode, :Country)`,
       {
-        DishName: DishName,
-        Price: Price,
-        Type: Type,
-        isHalal: isHalal,
-        isGlutenFree: isGlutenFree,
-        isVegetarian: isVegetarian,
-        FoodLocationName: FoodLocationName,
-        Address: Address,
-        PostalCode: PostalCode,
-        Country: Country,
+        DishName: dish.dishName,
+        Price: dish.price,
+        Type: dish.type,
+        isHalal: dish.isHalal,
+        isGlutenFree: dish.isGlutenFree,
+        isVegetarian: dish.isVegetarian,
+        FoodLocationName: dish.foodLocationName,
+        Address: dish.address,
+        PostalCode: dish.postalCode,
+        Country: dish.country,
       },
       { autoCommit: true }
     );
@@ -63,11 +52,11 @@ async function getDishInfo(name, address, postalCode, country) {
 async function getDishesWithFields(name, address, postalCode, country, showPrice, showType, showIsHalal, showIsGlutenFree, showIsVegetarian) {
     return await withOracleDB(async (connection) => {
         const selectedFields = ['DISHNAME']; // Always include "DISHNAME"
-        if (showPrice == true) selectedFields.push('PRICE');
-        if (showType == true) selectedFields.push('TYPE');
-        if (showIsHalal == true) selectedFields.push('ISHALAL');
-        if (showIsGlutenFree == true) selectedFields.push('ISGLUTENFREE');
-        if (showIsVegetarian == true) selectedFields.push('ISVEGETARIAN');
+        if (showPrice === true) selectedFields.push('PRICE');
+        if (showType === true) selectedFields.push('TYPE');
+        if (showIsHalal === true) selectedFields.push('ISHALAL');
+        if (showIsGlutenFree === true) selectedFields.push('ISGLUTENFREE');
+        if (showIsVegetarian === true) selectedFields.push('ISVEGETARIAN');
         const selectedFieldsString = selectedFields.join(', ');
 
         const query = `

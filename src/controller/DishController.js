@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const dishService = require('../service/DishService');
+const limitedTimeDishService = require('../service/LTDishService');
+const LimitedTimeDish = require('../model/LimitedTimeDish');
 const Dish = require('../model/Dish');
 const {withOracleDB} = require("../../appService");
 
@@ -51,5 +53,34 @@ router.post('/get-dishes-with-fields', async (req, res) => {
     }
 });
 
+router.post('/add-dishes', async (req, res) => {
+    try {
+        for (const dish of req.body.dishes) {
+            const result = await dishService.insertDish(new Dish(dish.dishName, dish.price, dish.type, dish.isHalal, dish.isGlutenFree, dish.isVegetarian, req.body.foodLocationName, req.body.address, req.body.postalCode, req.body.country));
+            if (!result) {
+                return res.status(404).json({
+                    success: false,
+                    error: `Failed to insert dish: ${dish.dishName}`,
+                });
+            }
+        }
+        if (req.body.limitedTimeDishes.length !== 0) {
+            for (const limitedTimeDish of req.body.limitedTimeDishes) {
+                const result = await limitedTimeDishService.insertLTDish(new LimitedTimeDish(limitedTimeDish.dishName, req.body.foodLocationName, req.body.address, req.body.postalCode, req.body.country, limitedTimeDish.startDateTime, limitedTimeDish.endDateTime));
+                if (!result) {
+                    return res.status(404).json({
+                        success: false,
+                        error: `Failed to insert limited time dish: ${limitedTimeDish.dishName}`,
+                    });
+                }
+            }
+        }
+        res.json({
+            success: true,
+        });
+    } catch (e) {
+        res.status(500).json({ success: false, error: e.message });
+    }
+});
 
 module.exports = router;

@@ -17,10 +17,11 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import './index.css';
 import SearchUserFoodTypePhotos from "./components/SearchUserFoodTypePhotos";
 import McDonaldsHallOfFame from "./pages/McDonaldsHallOfFame";
+import AddDish from "./pages/AddDish";
+import {ADMIN_UUID} from "./Helper";
 
 function App() {
   const { user, login} = useContext(UserContext);
-  const ADMIN_UUID = '7309d25b-1e98-4a82-ba00-8b412b1c7e2e';
   const handleButtonClick = async () => {
     try {
       const response = await fetch('/api/run-init-script-sql', {
@@ -62,7 +63,8 @@ function App() {
                 </Route>
                 <Route path="/profile/:userID" element={user? <Profile /> : <Navigate to="/login" />} />
                 <Route path="/mcdonalds-hall-of-fame" element={user? <McDonaldsHallOfFame /> : <Navigate to="/login" />} />
-                <Route path="/location/:name/:country/:postalcode/:address" element={user ? <FoodLocation /> : <Navigate to="/login" />} />
+                <Route path="/location/:name/:country/:postalcode/:address" element={user ? <FoodLocation /> : <Navigate to="/login" />}/>
+                <Route path="/location/:name/:country/:postalcode/:address/add-dish" element={(user && user.userID === ADMIN_UUID)? <AddDish /> : <Navigate to="/location/:name/:country/:postalcode/:address"/>}/>
                 <Route path="/" element={<Navigate to="/login" />} />
                 <Route path="*" element={<Navigate to={user ? '/home' : '/login'} />} />
               </Routes>

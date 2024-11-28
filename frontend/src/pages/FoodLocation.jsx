@@ -1,10 +1,13 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import '../index.css';
-import { useParams } from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import Review from "../components/Review";
+import {UserContext} from "../contexts/UserContext";
+import {ADMIN_UUID} from "../Helper";
 
 
 const FoodLocation = () => {
+    const {user} = useContext(UserContext);
     const [foodLocationInformation, setFoodLocationInformation] = useState({});
     const [foodLocationSummaryInformation, setFoodLocationSummaryInformation] = useState({});
     // const [dishesInformation, setDishesInformation] = useState([]);
@@ -196,6 +199,10 @@ const FoodLocation = () => {
 
     return (
         <div className="app">
+            {user.userID === ADMIN_UUID &&
+                <Link className="button" to={`/location/${routeParams.name}/${routeParams.country}/${routeParams.postalcode}/${routeParams.address}/add-dish`}>
+                Add Dish
+            </Link>}
             <h1 className="mainheader">
                 {foodLocationInformation.name}
             </h1>
