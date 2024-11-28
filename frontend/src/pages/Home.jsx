@@ -3,6 +3,8 @@ import { UserContext } from '../contexts/UserContext';
 import {Link} from "react-router-dom";
 import review from "../components/Review";
 import Popular from "../components/Popular";
+import HighlyRated from "../components/HighlyRated";
+
 import '../index.css';
 
 
@@ -330,7 +332,7 @@ function Home() {
         <div> {displayResults()} </div>
 
         <Popular />
-
+        <HighlyRated />
 
       </div>
   );

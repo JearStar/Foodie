@@ -30,8 +30,8 @@ router.post('/get-foodlocationsummary-info', async (req, res) => {
 
 /*
 ENDPOINT: GET /api/foodlocationsummary/get-popular-summaries
-BODY: foodLocationSummaryID
-RETURNS ON SUCCESS: {success: boolean, data: [{ summaryID, averageRating, description }]}
+BODY: none
+RETURNS ON SUCCESS: {success: boolean, data: [{ foodLocationName, address, postalCode, country, averageRating, reviewCount }]}
  */
 router.post('/get-popular-summaries', async (req, res) => {
     try {
@@ -39,7 +39,31 @@ router.post('/get-popular-summaries', async (req, res) => {
         if (!result) {
             return res.status(404).json({
                 success: false,
-                error: 'Failed to get food location summary information: ' + req.body.getFoodLocationInfoWithSummaryID
+                error: 'Failed to get popular food location summary information'
+            });
+        }
+        res.json({
+            success: true,
+            data: result,
+        });
+    } catch (e) {
+        res.status(500).json({ success: false, error: e.message });
+    }
+});
+
+
+/*
+ENDPOINT: GET /api/foodlocationsummary/get-highly-rated-summaries
+BODY: none
+RETURNS ON SUCCESS: {success: boolean, data: [{ foodLocationName, address, postalCode, country, averageRating, reviewCount }]}
+ */
+router.post('/get-highly-rated-summaries', async (req, res) => {
+    try {
+        const result = await FLSummaryService.getHighlyReviewedSummaries();
+        if (!result) {
+            return res.status(404).json({
+                success: false,
+                error: 'Failed to get popular food location summary information'
             });
         }
         res.json({
