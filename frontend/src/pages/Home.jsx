@@ -3,6 +3,8 @@ import { UserContext } from '../contexts/UserContext';
 import {Link} from "react-router-dom";
 import review from "../components/Review";
 import Popular from "../components/Popular";
+import HighlyRated from "../components/HighlyRated";
+
 import '../index.css';
 
 
@@ -143,7 +145,7 @@ function Home() {
   // FYI, this returns the full FoodLocation and FoodLocationSummary for each search result.
   const sendSearch = async (e) => {
     e.preventDefault();
-    setAdvancedFilters(!advancedFilters);
+    setAdvancedFilters(false);
     setNumReviewsBoxes([false, false, false]);
     setRatingBoxes([false, false, false, false]);
     setCountryBoxes([false, false, false, false, '']);
@@ -164,7 +166,7 @@ function Home() {
       }
       const foodLocations = res["FoodLocations"];
       if (typeof foodLocations === "object") {
-        setSearchLocs(foodLocations);   // placeholder
+        setSearchLocs(foodLocations);
         let summariesArr = Array(foodLocations.length);
         let counter = 0;
         for (const result of foodLocations) {
@@ -172,7 +174,7 @@ function Home() {
           counter ++;
         }
         setSearchSummaries(summariesArr);
-      }
+      } //hi
 
       if (foodLocations.length === 0) {
         setMessage("No results found.");
@@ -217,12 +219,13 @@ function Home() {
     if (searchLocs === []) {
       return dispArray;
     } else {
-      for (const result of searchLocs) {
+      for (const result of searchSummaries) {
         dispArray.push(
             <div className="row mb-3">
-              <Link  to={`/location/${result[0]}/${result[3]}/${result[2]}/${result[1]}`} >
-                View {result[0]}, {result[1]}, {result[6]}, {result[3]}
+              <Link  to={`/location/${result[3]}/${result[6]}/${result[5]}/${result[4]}`} >
+                View {result[3]}, {result[4]}, {result[5]}, {result[6]}
               </Link>
+              {result[2]}
             </div>
         );
       }
@@ -355,7 +358,7 @@ function Home() {
         <div> {displayResults()} </div>
 
         <Popular />
-
+        <HighlyRated />
 
       </div>
   );

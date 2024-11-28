@@ -63,6 +63,28 @@ async function getTrendingSummaries() {
     });
 }
 
+async function getHighlyReviewedSummaries() {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(
+            'SELECT r.FOODLOCATIONNAME, r.ADDRESS, r.POSTALCODE, r.COUNTRY FROM FOODLOCATIONSUMMARY s, REVIEW r WHERE s.FOODLOCATIONNAME = r.FOODLOCATIONNAME AND s.ADDRESS = r.ADDRESS AND s.POSTALCODE = r.POSTALCODE AND s.COUNTRY = r.COUNTRY GROUP BY r.FOODLOCATIONNAME, r.ADDRESS, r.POSTALCODE, r.COUNTRY HAVING COUNT(*) > (SELECT AVG(review_count) FROM (SELECT COUNT(*) AS review_count FROM FOODLOCATIONSUMMARY s, REVIEW r WHERE s.FOODLOCATIONNAME = r.FOODLOCATIONNAME AND s.ADDRESS = r.ADDRESS AND s.POSTALCODE = r.POSTALCODE AND s.COUNTRY = r.COUNTRY GROUP BY r.FOODLOCATIONNAME, r.ADDRESS, r.POSTALCODE, r.COUNTRY))',
+            {}
+        );
+
+        if (result.rows.length === 0) {
+            return {};
+        }
+
+        return result.rows.map((row) => {
+            return {
+                foodLocationName: row[0],
+                address: row[1],
+                postalCode: row[2],
+                country: row[3]
+            };
+        });
+    });
+}
+
 
 async function searchSummaries(name, address, postal, country) {
   return await withOracleDB(async (connection) => {
@@ -79,6 +101,8 @@ async function searchSummaries(name, address, postal, country) {
 module.exports = {
   insertFLSummary,
   searchSummaries,
-  getFoodLocationSummaryInfo,
-  getTrendingSummaries
+    getFoodLocationSummaryInfo,
+    getTrendingSummaries,
+    getHighlyReviewedSummaries
+
 };
