@@ -174,7 +174,7 @@ function Home() {
           counter ++;
         }
         setSearchSummaries(summariesArr);
-      }
+      } //hi
 
       if (foodLocations.length === 0) {
         setMessage("No results found.");
