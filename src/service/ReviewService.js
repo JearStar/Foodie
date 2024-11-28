@@ -112,6 +112,28 @@ async function searchDishRevs(searchKey) {
   });
 }
 
+async function getLocationAverageScore(foodLocationName, address, postalCode, country) {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(
+            `SELECT AVG(DISTINCT r.OVERALLRATING) FROM REVIEW r 
+                                     WHERE r.FOODLOCATIONNAME=:foodLocationName AND 
+                                           R.ADDRESS=:address AND 
+                                           POSTALCODE=:postalCode AND 
+                                           COUNTRY=:country`,
+            {
+                foodLocationName: foodLocationName,
+                address: address,
+                postalCode: postalCode,
+                country: country
+            }
+        );
+        if (result.rows.length === 0) {
+            return 0
+        }
+        return result.rows[0][0]
+    })
+}
+
 async function getUserReviews(userID) {
     return await withOracleDB(async (connection) => {
         const result = await connection.execute('SELECT * FROM REVIEW WHERE USERID=:userID', {
@@ -175,11 +197,12 @@ async function getReviewIDs(name, address, postalCode, country) {
 }
 
 module.exports = {
-  insertReview,
-  deleteReview,
-  getReviewIDs,
-  searchRevs,
-  searchDishRevs,
+    insertReview,
+    deleteReview,
+    getReviewIDs,
+    searchRevs,
+    searchDishRevs,
     getUserReviews,
-    getUserAvgRatings
+    getUserAvgRatings,
+    getLocationAverageScore
 };

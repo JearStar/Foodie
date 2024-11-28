@@ -99,10 +99,42 @@ async function getFoodLocationInfo(name, address, postalCode, country) {
     });
 }
 
+async function getMcdonaldsHallOfFame(city) {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(
+            `SELECT u.USERID, u.FIRSTNAME, u.LASTNAME
+             FROM APPUSER u
+                 JOIN REVIEW r ON u.USERID = r.USERID
+                 JOIN FOODLOCATION f ON r.FOODLOCATIONNAME = f.FOODLOCATIONNAME
+                                            AND r.ADDRESS = f.ADDRESS
+                                            AND r.POSTALCODE = f.POSTALCODE
+                                            AND r.COUNTRY = f.COUNTRY
+             WHERE f.FOODLOCATIONNAME = 'McDonald''s' AND LOWER(f.CITY)=:city
+             GROUP BY u.USERID, u.FIRSTNAME, u.LASTNAME
+             HAVING COUNT(*) =
+                    (SELECT COUNT(*)
+                     FROM FOODLOCATION
+                     WHERE FOODLOCATIONNAME = 'McDonald''s' AND LOWER(CITY)=:city)`,
+            {
+                city: city
+            });
+        if (result.rows.length === 0) {
+            return [];
+        }
+        return result.rows.map((row) => {
+            return {
+                userID: row[0],
+                firstName: row[1],
+                lastName: row[2]
+            };
+        });
+    });
+}
 module.exports = {
-  insertFoodLocation,
-  updateFoodLocationSummaryID,
-  searchLocs,
-    getFoodLocationInfo
+    insertFoodLocation,
+    updateFoodLocationSummaryID,
+    searchLocs,
+    getFoodLocationInfo,
+    getMcdonaldsHallOfFame
 
 };

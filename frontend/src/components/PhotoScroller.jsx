@@ -5,7 +5,6 @@ import { UserContext } from "../contexts/UserContext";
 
 const PhotoScroller = ({ photos }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [likes, setLikes] = useState([]);
     const [likeStatus, setLikeStatus] = useState([]);
     const { user } = useContext(UserContext);
 
@@ -15,9 +14,6 @@ const PhotoScroller = ({ photos }) => {
 
     useEffect(() => {
         const fetchLikesData = async () => {
-            const likesData = await Promise.all(photos.map(photo => fetchLikes(photo.photoID)));
-            setLikes(likesData);
-
             const likeStatusData = await Promise.all(photos.map(photo => fetchLikeStatus(photo.photoID)));
             setLikeStatus(likeStatusData);
         };
@@ -47,9 +43,7 @@ const PhotoScroller = ({ photos }) => {
             });
 
             if (response.ok) {
-                const updatedLikes = [...likes];
-                updatedLikes[index] = updatedLikes[index] + (newStatus ? 1 : -1);
-                setLikes(updatedLikes);
+                photos[index].photoLikes = photos[index].photoLikes + (newStatus ? 1 : -1);
 
                 const updatedStatus = [...likeStatus];
                 updatedStatus[index] = newStatus;
@@ -57,27 +51,6 @@ const PhotoScroller = ({ photos }) => {
             }
         } catch (err) {
             console.error("Error updating like status:", err);
-        }
-    };
-
-    const fetchLikes = async (photoID) => {
-        try {
-            const response = await fetch("/api/photos/get-photo-likes", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ photoID }),
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                return data.numLikes;
-            } else {
-                console.error(`Error fetching photo likes: ${response.status}`);
-                return 0;
-            }
-        } catch (e) {
-            console.error("Error fetching photo likes:", e);
-            return 0;
         }
     };
 
@@ -103,6 +76,7 @@ const PhotoScroller = ({ photos }) => {
                 <button
                     className="btn carrot-btn me-2"
                     onClick={goLeft}
+                    disabled={photos.length <= 1}
                 >
                     &#8249;
                 </button>
@@ -110,8 +84,8 @@ const PhotoScroller = ({ photos }) => {
                     className="d-flex overflow-hidden"
                     style={{
                         width: "80%",
-                        height: "400px",
                         position: "relative",
+                        height: "auto",
                     }}
                 >
                     <div
@@ -119,6 +93,7 @@ const PhotoScroller = ({ photos }) => {
                         style={{
                             transform: `translateX(-${currentIndex * 100}%)`,
                             transition: "transform 0.3s ease-in-out",
+                            height: "auto",
                         }}
                     >
                         {photos.map((photo, index) => (
@@ -134,40 +109,50 @@ const PhotoScroller = ({ photos }) => {
                                     src={photo.imageURL}
                                     alt={`Photo ${index + 1}`}
                                     style={{
-                                        maxWidth: "100%",
-                                        maxHeight: "60%",
+                                        width: "100%",
+                                        maxWidth: "400px",
+                                        height: "auto",
+                                        objectFit: "contain",
                                         borderRadius: "10px",
                                     }}
                                 />
-                                <div className="mt-2">
-                                    <div className="d-flex justify-content-center align-items-center">
-                                        <button
-                                            className={`btn p-0 ${likeStatus[index] ? "text-danger" : "text-muted"}`}
-                                            onClick={() => handleLike(photo.photoID, index)}
-                                            style={{fontSize: "1.5rem", background: "none", border: "none"}}
-                                        >
-                                            <i className={`bi ${likeStatus[index] ? "bi-heart-fill" : "bi-heart"}`}></i>
-                                        </button>
-                                        <span
-                                            className={`ms-2 fs-4 ${likeStatus[index] ? "text-danger" : "text-dark"} fw-bold`}
-                                            id="like-count"
-                                        >
-                                            {likes[index]}
-                                        </span>
+                                <div className="mt-2" style={{
+                                    width: "100%",
+                                    maxHeight: "200px",
+                                    overflowY: "auto",
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    padding: '10px',
+                                }}>
+                                    <div style={{textAlign: "left", padding: "10px"}}>
+                                        <div className="d-flex justify-content-center align-items-center">
+                                            <button
+                                                className={`btn p-0 ${likeStatus[index] ? "text-danger" : "text-muted"}`}
+                                                onClick={() => handleLike(photo.photoID, index)}
+                                                style={{fontSize: "1.5rem", background: "none", border: "none"}}
+                                            >
+                                                <i className={`bi ${likeStatus[index] ? "bi-heart-fill" : "bi-heart"}`}></i>
+                                            </button>
+                                            <span
+                                                className={`ms-2 fs-4 ${likeStatus[index] ? "text-danger" : "text-dark"} fw-bold`}
+                                                id="like-count"
+                                            >
+                                        {photos[index].photoLikes}
+                                    </span>
+                                        </div>
+                                        <p className="mb-1" style={{wordWrap: "break-word"}}>
+                                            <strong>Description:</strong> {photo.description}
+                                        </p>
+                                        <p className="mb-1" style={{wordWrap: "break-word"}}>
+                                            <strong>Timestamp:</strong> {formatISODate(photo.photoTimestamp)}
+                                        </p>
+                                        <p className="mb-1" style={{wordWrap: "break-word"}}>
+                                            <strong>{photo.foodLocationName}</strong>
+                                        </p>
+                                        <p className="mb-1" style={{wordWrap: "break-word"}}>
+                                            <strong>{`${photo.address}, ${photo.city}, ${photo.country}`}</strong>
+                                        </p>
                                     </div>
-                                    <p className="mb-1">
-                                        <strong>Description:</strong> {photo.description}
-                                    </p>
-                                    <p className="mb-1">
-                                        <strong>Timestamp:</strong> {formatISODate(photo.photoTimestamp)}
-                                    </p>
-                                    <p className="mb-1">
-                                        <strong>{photo.foodLocationName}</strong>
-                                    </p>
-                                    <p className="mb-1">
-                                        <strong>{`${photo.address}, ${photo.city}, ${photo.country}`}</strong>
-                                    </p>
-
                                 </div>
                             </div>
                         ))}
@@ -176,6 +161,7 @@ const PhotoScroller = ({ photos }) => {
                 <button
                     className="btn carrot-btn ms-2"
                     onClick={goRight}
+                    disabled={photos.length <= 1}
                 >
                     &#8250;
                 </button>

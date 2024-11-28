@@ -83,7 +83,6 @@ CREATE TABLE Review (
 CREATE TABLE Photo (
     PhotoID VARCHAR(36) PRIMARY KEY,
     ImageURL VARCHAR(225) NOT NULL,
-    PhotoLikes INTEGER NOT NULL,
     Description VARCHAR(1000),
     PhotoTimestamp TIMESTAMP NOT NULL,
     ReviewID VARCHAR(36)  NOT NULL,
@@ -203,7 +202,7 @@ INSERT INTO FoodLocation(FoodLocationName, TotalScore, NumReviews, Address, City
 VALUES ('Published on Main', 4, 1, '3593 Main Street', 'Vancouver', 'V5V 3N4', 'Canada', 'Mediterranean', NULL);
 
 INSERT INTO FoodLocation(FoodLocationName, TotalScore, NumReviews, Address, City, PostalCode, Country, Genre, FoodLocationSummaryID)
-VALUES ('McDonald’s', 3, 1, '470 Yonge Street', 'Toronto', 'M4Y 1X5', 'Canada', 'American', NULL);
+VALUES ('McDonald''s', 3, 1, '470 Yonge Street', 'Toronto', 'M4Y 1X5', 'Canada', 'American', NULL);
 
 INSERT INTO FoodLocation(FoodLocationName, TotalScore, NumReviews, Address, City, PostalCode, Country, Genre, FoodLocationSummaryID)
 VALUES ('Café de Flore', 5, 1, '172 Bd Saint-Germain', 'Paris', '75006', 'France', 'French', NULL);
@@ -218,7 +217,7 @@ INSERT INTO FoodLocationSummary (SummaryID, AverageRating, Description, FoodLoca
 VALUES ('243037b2-1999-483c-aeeb-d640291b4b93', 4.0, 'Known for its Mediterranean-inspired dishes with a modern twist.', 'Published on Main', '3593 Main Street', 'V5V 3N4', 'Canada');
 
 INSERT INTO FoodLocationSummary (SummaryID, AverageRating, Description, FoodLocationName, Address, PostalCode, Country)
-VALUES ('38702090-77ff-4cfd-99e8-9f0d3b6fbef7', 3.0, 'A fast-food staple offering classic American burgers and fries.', 'McDonald’s', '470 Yonge Street', 'M4Y 1X5', 'Canada');
+VALUES ('38702090-77ff-4cfd-99e8-9f0d3b6fbef7', 3.0, 'A fast-food staple offering classic American burgers and fries.', 'McDonald''s', '470 Yonge Street', 'M4Y 1X5', 'Canada');
 
 INSERT INTO FoodLocationSummary (SummaryID, AverageRating, Description, FoodLocationName, Address, PostalCode, Country)
 VALUES ('cea54cdc-68fc-42c8-8e37-03ae151b458c', 5.0, 'A historic café in the heart of Paris, serving traditional French cuisine.', 'Café de Flore', '172 Bd Saint-Germain', '75006', 'France');
@@ -228,7 +227,7 @@ VALUES ('e2085150-c55c-4aea-a08f-b398c86eeb97', 4.0, 'A highly rated Japanese re
 
 UPDATE FoodLocation SET FoodLocationSummaryID = 'aa8e21cb-901b-4a8b-afcc-070a7ea2f749' WHERE FoodLocationName = 'Sushi Mura' AND Address = '6485 Oak Street' AND PostalCode = 'V6M 2W7' AND COUNTRY = 'Canada';
 UPDATE FoodLocation SET FoodLocationSummaryID = '243037b2-1999-483c-aeeb-d640291b4b93' WHERE FoodLocationName = 'Published on Main' AND Address = '3593 Main Street' AND PostalCode = 'V5V 3N4' AND COUNTRY = 'Canada';
-UPDATE FoodLocation SET FoodLocationSummaryID = '38702090-77ff-4cfd-99e8-9f0d3b6fbef7' WHERE FoodLocationName = 'McDonald’s' AND Address = '470 Yonge Street' AND PostalCode = 'M4Y 1X5' AND COUNTRY = 'Canada';
+UPDATE FoodLocation SET FoodLocationSummaryID = '38702090-77ff-4cfd-99e8-9f0d3b6fbef7' WHERE FoodLocationName = 'McDonald''s' AND Address = '470 Yonge Street' AND PostalCode = 'M4Y 1X5' AND COUNTRY = 'Canada';
 UPDATE FoodLocation SET FoodLocationSummaryID = 'cea54cdc-68fc-42c8-8e37-03ae151b458c' WHERE FoodLocationName = 'Café de Flore' AND Address = '172 Bd Saint-Germain' AND PostalCode = '75006' AND COUNTRY = 'France';
 UPDATE FoodLocation SET FoodLocationSummaryID = 'e2085150-c55c-4aea-a08f-b398c86eeb97' WHERE FoodLocationName = 'Miku Vancouver' AND Address = '200 Granville Street #70' AND PostalCode = 'V6C 1S4' AND COUNTRY = 'Canada';
 
@@ -269,19 +268,19 @@ VALUES ('Dungeness Crab', 33.00, 'main course', 0, 1, 0, 'Published on Main', '3
 COMMIT;
 
 INSERT INTO Dish (DishName, Price, Type, isHalal, isGlutenFree, isVegetarian, FoodLocationName, Address, PostalCode, Country)
-VALUES ('Big Mac', 6.99, 'burger', 0, 0, 0, 'McDonald’s', '470 Yonge Street', 'M4Y 1X5', 'Canada');
+VALUES ('Big Mac', 6.99, 'burger', 0, 0, 0, 'McDonald''s', '470 Yonge Street', 'M4Y 1X5', 'Canada');
 
 INSERT INTO Dish (DishName, Price, Type, isHalal, isGlutenFree, isVegetarian, FoodLocationName, Address, PostalCode, Country)
-VALUES ('Baked Peach Pie', 2.99, 'dessert', 0, 0, 0, 'McDonald’s', '470 Yonge Street', 'M4Y 1X5', 'Canada');
+VALUES ('Baked Peach Pie', 2.99, 'dessert', 0, 0, 0, 'McDonald''s', '470 Yonge Street', 'M4Y 1X5', 'Canada');
 
 INSERT INTO Dish (DishName, Price, Type, isHalal, isGlutenFree, isVegetarian, FoodLocationName, Address, PostalCode, Country)
-VALUES ('S''mores McFlurry', 2.50, 'dessert', 0, 0, 0, 'McDonald’s', '470 Yonge Street', 'M4Y 1X5', 'Canada');
+VALUES ('S''mores McFlurry', 2.50, 'dessert', 0, 0, 0, 'McDonald''s', '470 Yonge Street', 'M4Y 1X5', 'Canada');
 
 INSERT INTO Dish (DishName, Price, Type, isHalal, isGlutenFree, isVegetarian, FoodLocationName, Address, PostalCode, Country)
-VALUES ('World Famous Fries', 1.99, 'fries', 0, 0, 0, 'McDonald’s', '470 Yonge Street', 'M4Y 1X5', 'Canada');
+VALUES ('World Famous Fries', 1.99, 'fries', 0, 0, 0, 'McDonald''s', '470 Yonge Street', 'M4Y 1X5', 'Canada');
 
 INSERT INTO Dish (DishName, Price, Type, isHalal, isGlutenFree, isVegetarian, FoodLocationName, Address, PostalCode, Country)
-VALUES ('Coca-Cola', 1.50, 'drink', 0, 0, 0, 'McDonald’s', '470 Yonge Street', 'M4Y 1X5', 'Canada');
+VALUES ('Coca-Cola', 1.50, 'drink', 0, 0, 0, 'McDonald''s', '470 Yonge Street', 'M4Y 1X5', 'Canada');
 
 COMMIT;
 
@@ -329,7 +328,7 @@ INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, DayO
 VALUES ('d6b9c3e1-893b-4d6c-b39a-24dbb7a0289d', 4, 5, 4, 3, '2024-09-28 19:45:00', 'Published on Main', '3593 Main Street', 'V5V 3N4', 'Canada', 'b6751637-b434-419e-ae0d-1a0c7c405053');
 
 INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, DayOfWeekVisited, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID)
-VALUES ('f01f6e3e-a768-4e3e-924b-7c92983f089a', 3, 3, 2, 2, '2024-09-25 10:00:00', 'McDonald’s', '470 Yonge Street', 'M4Y 1X5', 'Canada', '5aba12e6-a3b0-4d19-a078-6f9f41a81eec');
+VALUES ('f01f6e3e-a768-4e3e-924b-7c92983f089a', 3, 3, 2, 2, '2024-09-25 10:00:00', 'McDonald''s', '470 Yonge Street', 'M4Y 1X5', 'Canada', '5aba12e6-a3b0-4d19-a078-6f9f41a81eec');
 
 INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, DayOfWeekVisited, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID)
 VALUES ('e70b45f1-5b25-4df7-82c3-b24bafedf2c1', 5, 5, 5, 6, '2024-10-05 16:15:00', 'Café de Flore', '172 Bd Saint-Germain', '75006', 'France', 'b6751637-b434-419e-ae0d-1a0c7c405053');
@@ -380,7 +379,7 @@ VALUES ('d6b9c3e1-893b-4d6c-b39a-24dbb7a0289d', 'Roasted Sunchoke Ice Cream', 5,
 
 
 INSERT INTO ReviewsDish (ReviewID, DishName, DishRating, FOODLOCATIONNAME, ADDRESS, POSTALCODE, COUNTRY)
-VALUES ('f01f6e3e-a768-4e3e-924b-7c92983f089a', 'Big Mac', 3, 'McDonald’s', '470 Yonge Street', 'M4Y 1X5', 'Canada');
+VALUES ('f01f6e3e-a768-4e3e-924b-7c92983f089a', 'Big Mac', 3, 'McDonald''s', '470 Yonge Street', 'M4Y 1X5', 'Canada');
 
 INSERT INTO ReviewsDish (ReviewID, DishName, DishRating, FOODLOCATIONNAME, ADDRESS, POSTALCODE, COUNTRY)
 VALUES ('e70b45f1-5b25-4df7-82c3-b24bafedf2c1', 'Croque Monsieur', 5, 'Café de Flore', '172 Bd Saint-Germain', '75006', 'France');
@@ -397,17 +396,19 @@ VALUES ('d43e0f79-e09f-4bc3-ad48-c5ecead2870a', 'Wagyu Steak 5oz', 3, 'Miku Vanc
 
 COMMIT;
 
-INSERT INTO Photo (PhotoID, ImageURL, PhotoLikes, Description, PhotoTimestamp, ReviewID, SummaryID) VALUES ('a23d5e01-9c8f-4d5c-87a9-3a27b6c8a7ab', 'https://sushi-mura.com/wp-content/uploads/2022/05/Dinner-For-Two-300x300.jpg' , 6, 'Deluxe sushi platter.', '2024-10-13 14:30:00', '5b3c2a1d-d5c4-4e9e-80cd-3e5d232df9f1', 'aa8e21cb-901b-4a8b-afcc-070a7ea2f749');
+INSERT INTO Photo (PhotoID, ImageURL, Description, PhotoTimestamp, ReviewID, SummaryID) VALUES ('a23d5e01-9c8f-4d5c-87a9-3a27b6c8a7ab', 'https://sushi-mura.com/wp-content/uploads/2022/05/Dinner-For-Two-300x300.jpg' , 'Deluxe sushi platter.', '2024-10-13 14:30:00', '5b3c2a1d-d5c4-4e9e-80cd-3e5d232df9f1', 'aa8e21cb-901b-4a8b-afcc-070a7ea2f749');
+INSERT INTO Photo (PhotoID, ImageURL, Description, PhotoTimestamp, ReviewID, SummaryID) VALUES ('a706202e-2cdd-45fe-9241-6a64834dfa2c', 'https://sushi-mura.com/wp-content/uploads/2023/02/location_oak15.jpg' , 'Restaurant exterior.', '2024-10-13 14:10:00', '5b3c2a1d-d5c4-4e9e-80cd-3e5d232df9f1', 'aa8e21cb-901b-4a8b-afcc-070a7ea2f749');
 
-INSERT INTO Photo (PhotoID, ImageURL, PhotoLikes, Description, PhotoTimestamp, ReviewID, SummaryID) VALUES ('d5e79861-4d1f-4a94-bb15-b7b75c8f8e54', 'https://www.mychals.org/wp-content/uploads/2024/01/Mychals-Cafe-2-300x300.jpg' , 0, 'Cozy and inviting ambience of the cafe.', '2024-10-13 14:35:00', 'd6b9c3e1-893b-4d6c-b39a-24dbb7a0289d', '243037b2-1999-483c-aeeb-d640291b4b93');
 
-INSERT INTO Photo (PhotoID, ImageURL, PhotoLikes, Description, PhotoTimestamp, ReviewID, SummaryID) VALUES ('f47e1c76-8b9e-4a77-89d3-2a4fb7c8e0c9', 'https://theeburgerdude.com/wp-content/uploads/2021/01/Big-Mac-1024x1024.jpg' , 0, 'Delicious classic Big Mac.', '2024-10-13 14:40:00', 'f01f6e3e-a768-4e3e-924b-7c92983f089a', '38702090-77ff-4cfd-99e8-9f0d3b6fbef7');
+INSERT INTO Photo (PhotoID, ImageURL, Description, PhotoTimestamp, ReviewID, SummaryID) VALUES ('d5e79861-4d1f-4a94-bb15-b7b75c8f8e54', 'https://www.mychals.org/wp-content/uploads/2024/01/Mychals-Cafe-2-300x300.jpg' ,'Cozy and inviting ambience of the cafe.', '2024-10-13 14:35:00', 'd6b9c3e1-893b-4d6c-b39a-24dbb7a0289d', '243037b2-1999-483c-aeeb-d640291b4b93');
 
-INSERT INTO Photo (PhotoID, ImageURL, PhotoLikes, Description, PhotoTimestamp, ReviewID, SummaryID) VALUES ('68e61d74-7f23-45ba-a71e-13f9b8d4c6f2', 'https://media-cdn.tripadvisor.com/media/photo-s/05/13/6f/da/cafe-de-flore.jpg' , 0, 'Close-up shot of the main dish, looks delicious.', '2024-10-13 14:45:00', 'e70b45f1-5b25-4df7-82c3-b24bafedf2c1', 'cea54cdc-68fc-42c8-8e37-03ae151b458c');
+INSERT INTO Photo (PhotoID, ImageURL, Description, PhotoTimestamp, ReviewID, SummaryID) VALUES ('f47e1c76-8b9e-4a77-89d3-2a4fb7c8e0c9', 'https://theeburgerdude.com/wp-content/uploads/2021/01/Big-Mac-1024x1024.jpg' ,'Delicious classic Big Mac.', '2024-10-13 14:40:00', 'f01f6e3e-a768-4e3e-924b-7c92983f089a', '38702090-77ff-4cfd-99e8-9f0d3b6fbef7');
 
-INSERT INTO Photo (PhotoID, ImageURL, PhotoLikes, Description, PhotoTimestamp, ReviewID, SummaryID) VALUES ('0d4312f3-3f1b-4c9b-89f3-d7e9d7c8f1e2', 'https://images.otstatic.com/prod1/31847079/1/huge.jpg' , 0, 'Nice outdoor seating area with a view.', '2024-10-13 14:50:00', '12b671b9-3826-46ba-a9d2-dc5a2f74ad64', 'e2085150-c55c-4aea-a08f-b398c86eeb97');
+INSERT INTO Photo (PhotoID, ImageURL, Description, PhotoTimestamp, ReviewID, SummaryID) VALUES ('68e61d74-7f23-45ba-a71e-13f9b8d4c6f2', 'https://media-cdn.tripadvisor.com/media/photo-s/05/13/6f/da/cafe-de-flore.jpg' , 'Close-up shot of the main dish, looks delicious.', '2024-10-13 14:45:00', 'e70b45f1-5b25-4df7-82c3-b24bafedf2c1', 'cea54cdc-68fc-42c8-8e37-03ae151b458c');
 
-INSERT INTO Photo (PhotoID, ImageURL, PhotoLikes, Description, PhotoTimestamp, ReviewID, SummaryID) VALUES ('351b0d95-8ba7-4322-8d78-55c34de6fcdf', 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Sushi_platter.jpg/300px-Sushi_platter.jpg' , 0, 'Sushi platter!', '2024-10-21 15:50:00', 'd43e0f79-e09f-4bc3-ad48-c5ecead2870a', 'e2085150-c55c-4aea-a08f-b398c86eeb97');
+INSERT INTO Photo (PhotoID, ImageURL, Description, PhotoTimestamp, ReviewID, SummaryID) VALUES ('0d4312f3-3f1b-4c9b-89f3-d7e9d7c8f1e2', 'https://images.otstatic.com/prod1/31847079/1/huge.jpg' , 'Nice outdoor seating area with a view.', '2024-10-13 14:50:00', '12b671b9-3826-46ba-a9d2-dc5a2f74ad64', 'e2085150-c55c-4aea-a08f-b398c86eeb97');
+
+INSERT INTO Photo (PhotoID, ImageURL, Description, PhotoTimestamp, ReviewID, SummaryID) VALUES ('351b0d95-8ba7-4322-8d78-55c34de6fcdf', 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Sushi_platter.jpg/300px-Sushi_platter.jpg' , 'Sushi platter!', '2024-10-21 15:50:00', 'd43e0f79-e09f-4bc3-ad48-c5ecead2870a', 'e2085150-c55c-4aea-a08f-b398c86eeb97');
 
 COMMIT;
 

@@ -151,7 +151,6 @@ function Home() {
     setCountryBoxes([false, false, false, false, '']);
     try {
       let queryWhere = constructQueryWhere();
-      console.log(queryWhere);
       const response = await fetch('/api/foodlocation/findLocs', {
         method: 'POST',
         headers: {
@@ -168,11 +167,13 @@ function Home() {
       const foodLocations = res["FoodLocations"];
       if (typeof foodLocations === "object") {
         setSearchLocs(foodLocations);   // placeholder
-      }
-
-      const foodLocationSummaries = res["FoodLocationSummaries"];
-      if (typeof foodLocationSummaries === "object") {
-        setSearchSummaries(foodLocationSummaries);   // placeholder
+        let summariesArr = Array(foodLocations.length);
+        let counter = 0;
+        for (const result of foodLocations) {
+          summariesArr[counter] = await getFLSummary(result);
+          counter ++;
+        }
+        setSearchSummaries(summariesArr);
       }
 
       if (foodLocations.length === 0) {
@@ -187,6 +188,30 @@ function Home() {
       return null;
     }
   };
+
+  const getFLSummary = async (foodLocationObj) => {
+    const response = await fetch('/api/foodlocationsummary/get-foodlocationsummary-obj', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        flName: foodLocationObj[0],
+        address: foodLocationObj[1],
+        postalCode: foodLocationObj[2],
+        country: foodLocationObj[3]}),
+    });
+    let res = await response.json();
+    const summary = res["data"];
+    if (typeof summary === "object") {
+      return summary[0];
+    }
+
+    if (!response.ok) {
+      setError(res.error);
+      return null;
+    }
+  }
 
   // To display a dynamic number of results, I figure something like this would work nice.
   const displayResults = () => {

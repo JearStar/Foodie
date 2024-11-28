@@ -10,8 +10,8 @@ const CommentSection = ({comments, onReload}) => {
 
     return (
         <section>
-            <div className="container my-5 py-5 text-body">
-                <div className="row d-flex justify-content-center">
+            <div className="container my-5 text-body">
+                <div className="row d-flex">
                     <div className="col-md-11 col-lg-9 col-xl-7">
                         {commentList.map((comment) => (
                             <CommentCard

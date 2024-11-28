@@ -6,6 +6,7 @@ const foodLocationSummaryService = require('../service/FLSummaryService');
 const FoodLocation = require('../model/FoodLocation');
 const FoodLocationSummary = require('../model/FoodLocationSummary');
 const { generateUUID } = require('../Helper');
+const reviewService = require("../service/ReviewService");
 
 /*
 ENDPOINT: POST /api/users/create-location
@@ -69,17 +70,44 @@ router.post('/get-foodlocation-info', async (req, res) => {
     }
 });
 
+router.post('/get-mcd-hall-of-fame', async (req, res) => {
+    try {
+        const result = await foodLocationService.getMcdonaldsHallOfFame(req.body.city);
+        res.json({
+            success: true,
+            users: result,
+        });
+    } catch (e) {
+        res.status(500).json({ success: false, error: e.message });
+    }
+});
+
+router.post('/get-location-avg-score', async (req, res) => {
+    try {
+        const result = await reviewService.getLocationAverageScore(req.body.name, req.body.address, req.body.postalCode, req.body.country);
+        if (!result) {
+            return res.status(404).json({
+                success: false,
+                error: `Failed to get restaurant average score: ${req.body.name} ${req.body.address} ${req.body.postalCode} ${req.body.country}`,
+            });
+        }
+        res.json({
+            success: true,
+            avgScore: result.toFixed(1),
+        });
+    } catch (e) {
+        res.status(500).json({ success: false, error: e.message });
+    }
+});
+
 router.post('/findLocs', async (req, res) => {
     try {
         const query = req.body["query"];
-        console.log('SELECT * FROM FoodLocation WHERE ' + query);
-        // console.log('SELECT * FROM FoodLocationSummary WHERE ' + query);
         const result1 = await foodLocationService.searchLocs('SELECT * FROM FoodLocation WHERE ' + query);
-        // const result2 = await foodLocationSummaryService.searchSummaries('SELECT * FROM FoodLocationSummary WHERE ' + query);
-        if (!result1 ) { // || !result2
+        if (!result1) {
             return res.status(400).json({ success: false, error: 'Internal database error' });
         }
-        res.json({ success: true, FoodLocations: result1, FoodLocationSummaries: [] });
+        res.json({ success: true, FoodLocations: result1});
     } catch (e) {
         res.status(500).json({ success: false, error: e.message });
     }

@@ -11,6 +11,7 @@ const FoodLocation = () => {
     // const [viewDishes, setViewDishes] = useState(false);
     const [viewReviews, setViewReviews] = useState(false);
     const [reviewIDs, setReviewIDs] = useState([]);
+    const [locationAvgScore, setLocationAvgScore] = useState(0);
 
     const [showPrice, setShowPrice] = useState(false);
     const [showType, setShowType] = useState(false);
@@ -31,9 +32,36 @@ const FoodLocation = () => {
             .catch((error) => {
                 console.error('Error fetching food location info:', error);
             });
+        fetchLocationAvgScore()
         fetchReviewIDs();
     }, []);
 
+    const fetchLocationAvgScore = async () => {
+        try {
+            const response = await fetch('/api/foodlocation/get-location-avg-score', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: routeParams.name,
+                    address: routeParams.address,
+                    postalCode: routeParams.postalcode,
+                    country: routeParams.country
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error(`Error: ${response.status} ${response.statusText}`);
+            }
+
+            const result = await response.json();
+            setLocationAvgScore(result.avgScore)
+
+        } catch (e) {
+            console.error('Error retrieving food location information:', e);
+        }
+    };
 
     const fetchFoodlocationInformation = async () => {
         try {
@@ -181,7 +209,7 @@ const FoodLocation = () => {
                 {foodLocationInformation.numReviews} reviews
             </div>
             <div>
-                Rating: {foodLocationSummaryInformation.averageRating}
+                Rating: {locationAvgScore}
             </div>
             <div>
                 <form onSubmit={handleSubmitDishFields}>

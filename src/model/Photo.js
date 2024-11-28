@@ -2,7 +2,6 @@ class Photo {
   constructor(photoID, imageURL, photoLikes, description, photoTimestamp, reviewID, summaryID) {
     this._photoID = photoID;
     this._imageURL = imageURL;
-    this._photoLikes = photoLikes;
     this._description = description;
     this._photoTimestamp = photoTimestamp;
     this._reviewID = reviewID;
@@ -22,14 +21,6 @@ class Photo {
 
   set imageURL(value) {
     this._imageURL = value;
-  }
-
-  get photoLikes() {
-    return this._photoLikes;
-  }
-
-  set photoLikes(value) {
-    this._photoLikes = value;
   }
 
   get description() {

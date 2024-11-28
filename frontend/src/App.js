@@ -16,6 +16,7 @@ import EditAccountDetails from "./components/EditAccountDetails";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './index.css';
 import SearchUserFoodTypePhotos from "./components/SearchUserFoodTypePhotos";
+import McDonaldsHallOfFame from "./pages/McDonaldsHallOfFame";
 
 function App() {
   const { user, login} = useContext(UserContext);
@@ -60,6 +61,7 @@ function App() {
                   <Route path="photo-food-search" element={<SearchUserFoodTypePhotos />}/>
                 </Route>
                 <Route path="/profile/:userID" element={user? <Profile /> : <Navigate to="/login" />} />
+                <Route path="/mcdonalds-hall-of-fame" element={user? <McDonaldsHallOfFame /> : <Navigate to="/login" />} />
                 <Route path="/location/:name/:country/:postalcode/:address" element={user ? <FoodLocation /> : <Navigate to="/login" />} />
                 <Route path="/" element={<Navigate to="/login" />} />
                 <Route path="*" element={<Navigate to={user ? '/home' : '/login'} />} />
