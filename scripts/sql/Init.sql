@@ -413,7 +413,7 @@ VALUES ('c6a88a9f-5a28-1531-be68-4954ab39a484', 'Tell us more? What was okay? Wh
 
 INSERT INTO UserComment (CommentID, Content, CommentTimestamp, ReviewID, ParentCommentID, UserID)
 VALUES ('4ae8489b-3462-41a4-4b2e-7e5d5b924bfb', 'I like turtles', '2024-09-25 16:00:05', '98c2a1f3-b1d4-4a61-83b9-7699e3b43af5', NULL, '45483f02-a838-4ff1-839e-d9ab83f6f46c');
-///////
+
 INSERT INTO UserComment (CommentID, Content, CommentTimestamp, ReviewID, ParentCommentID, UserID)
 VALUES ('ac8b2075-3532-45a3-9783-6d892c23c0b1', 'Agreed, theyre delicious.', '2024-09-25 16:25:31', NULL, '4ae8489b-3462-41a4-4b2e-7e5d5b924bfb', 'b6751637-b434-419e-ae0d-1a0c7c405053');
 
