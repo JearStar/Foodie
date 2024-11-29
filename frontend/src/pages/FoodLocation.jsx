@@ -240,129 +240,183 @@ const FoodLocation = () => {
     }
 
     return (
-        <div className="app">
-            {user.userID === ADMIN_UUID &&
-                <Link className="button"
-                      to={`/location/${routeParams.name}/${routeParams.country}/${routeParams.postalcode}/${routeParams.address}/add-dish`}>
-                    Add Dish
-                </Link>}
-            <h1 className="mainheader">
-                {foodLocationInformation.name}
-            </h1>
-            <div>
-                {foodLocationInformation.address} {foodLocationInformation.city} {foodLocationInformation.country} {foodLocationInformation.genre}
+        <div className="container mt-4">
+            <div className="d-flex justify-content-center">
+                {user.userID === ADMIN_UUID && (
+                    <Link
+                        className="btn carrot-btn mb-3"
+                        to={`/location/${routeParams.name}/${routeParams.country}/${routeParams.postalcode}/${routeParams.address}/add-dish`}
+                    >
+                        Add Dish
+                    </Link>
+                )}
             </div>
-            <div>
-                {foodLocationSummaryInformation.description}
+            <h1 className="display-4 text-center mb-4">{foodLocationInformation.name}</h1>
+            <div className="text-muted text-center mb-3">
+                {foodLocationInformation.address}, {foodLocationInformation.city}, {foodLocationInformation.country} - {foodLocationInformation.genre}
             </div>
-            <div>
-                {foodLocationInformation.numReviews} reviews
+
+            <div className="d-flex justify-content-center mb-3">
+                <div>
+                    <p className="lead mb-4">{foodLocationSummaryInformation.description}</p>
+                </div>
             </div>
-            <div>
-                Rating: {locationAvgScore}
+            <div className="d-flex justify-content-center mb-3">
+                <div>
+                    <strong>{foodLocationInformation.numReviews}</strong> reviews
+                </div>
             </div>
-            <div className="mt-4 w-50 d-flex">
+
+            <div className="d-flex justify-content-center mb-4">
+                <div>
+                    <strong>Rating:</strong> {locationAvgScore}
+                </div>
+            </div>
+
+            <div className="mt-4 mb-4">
                 {foodLocationPhotos.length > 0 && <PhotoScroller photos={foodLocationPhotos}/>}
             </div>
-            <div>
-                <form onSubmit={handleSubmitDishFields}>
+
+            <form className="mb-5" onSubmit={handleSubmitDishFields}>
+                <div className="form-check">
                     <input
                         type="checkbox"
+                        className="form-check-input"
                         onChange={() => setShowPrice(!showPrice)}
                         checked={showPrice}
+                        id="showPrice"
                     />
-                    Show price
-
+                    <label className="form-check-label" htmlFor="showPrice">
+                        Show price
+                    </label>
+                </div>
+                <div className="form-check">
                     <input
                         type="checkbox"
+                        className="form-check-input"
                         onChange={() => setShowType(!showType)}
                         checked={showType}
+                        id="showType"
                     />
-                    Show type
-
+                    <label className="form-check-label" htmlFor="showType">
+                        Show type
+                    </label>
+                </div>
+                <div className="form-check">
                     <input
                         type="checkbox"
+                        className="form-check-input"
                         onChange={() => setShowIsHalal(!showIsHalal)}
                         checked={showIsHalal}
+                        id="showIsHalal"
                     />
-                    Show is halal
-
+                    <label className="form-check-label" htmlFor="showIsHalal">
+                        Show is halal
+                    </label>
+                </div>
+                <div className="form-check">
                     <input
                         type="checkbox"
+                        className="form-check-input"
                         onChange={() => setShowIsGlutenFree(!showIsGlutenFree)}
                         checked={showIsGlutenFree}
+                        id="showIsGlutenFree"
                     />
-                    Show is gluten free
-
+                    <label className="form-check-label" htmlFor="showIsGlutenFree">
+                        Show is gluten free
+                    </label>
+                </div>
+                <div className="form-check">
                     <input
                         type="checkbox"
+                        className="form-check-input"
                         onChange={() => setShowIsVegetarian(!showIsVegetarian)}
                         checked={showIsVegetarian}
+                        id="showIsVegetarian"
                     />
-                    Show is vegetarian
+                    <label className="form-check-label" htmlFor="showIsVegetarian">
+                        Show is vegetarian
+                    </label>
+                </div>
+                <button type="submit" className="btn carrot-btn mt-3">
+                    Show dishes
+                </button>
+            </form>
 
-                    <button type="submit" className="button">
-                        Show dishes
-                    </button>
-                </form>
+            {dishes.length > 0 && (
+                <div>
+                    <h2>Dishes</h2>
+                    <div className="row">
+                        {dishes.map((dish, index) => (
+                            <div key={index} className="col-md-4 mb-3">
+                                <div className="card">
+                                    <div className="card-body">
+                                        <h5 className="card-title">{dish.dishName}</h5>
+                                        {dish.price !== undefined && <p>Price: {dish.price.toFixed(2)}</p>}
+                                        {dish.type !== undefined && <p>Type: {dish.type}</p>}
+                                        {dish.isHalal !== undefined && (
+                                            <p>Halal: {dish.isHalal ? "Yes" : "No"}</p>
+                                        )}
+                                        {dish.isGlutenFree !== undefined && (
+                                            <p>Gluten-Free: {dish.isGlutenFree ? "Yes" : "No"}</p>
+                                        )}
+                                        {dish.isVegetarian !== undefined && (
+                                            <p>Vegetarian: {dish.isVegetarian ? "Yes" : "No"}</p>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
 
-                {dishes.length > 0 && (
-                    <div>
-                        <h2>Dishes</h2>
-                        <div className="dishes-list">
-                            {dishes.map((dish, index) => (
-                                <div key={index} className="dish-card">
-                                    <h3>{dish.dishName}</h3>
-                                    {dish.price !== undefined ? <div>Price: {dish.price.toFixed(2)}</div> : ""}
-                                    {dish.type !== undefined ? <div>Type: {dish.type}</div> : ""}
-                                    {dish.isHalal !== undefined ? <div>Halal: {dish.isHalal ? "Yes" : "No"}</div> : ""}
-                                    {dish.isGlutenFree !== undefined ?
-                                        <div>Gluten-Free: {dish.isGlutenFree ? "Yes" : "No"}</div> : ""}
-                                    {dish.isVegetarian !== undefined ?
-                                        <div>Vegetarian: {dish.isVegetarian ? "Yes" : "No"}</div> : ""}
+            {limitedTimeDishes.length > 0 && (
+                <div>
+                    <h2>Limited Time Dishes</h2>
+                    <div className="row">
+                        {limitedTimeDishes.map((ltDish, index) => (
+                            <div key={index} className="col-md-4 mb-3">
+                                <div className="card">
+                                    <div className="card-body">
+                                        <h5 className="card-title">{ltDish.dishName}</h5>
+                                        <p>Start Date: {formatISODate(ltDish.startDate)}</p>
+                                        <p>End Date: {formatISODate(ltDish.endDate)}</p>
+                                    </div>
                                 </div>
-                            ))}
-                        </div>
+                            </div>
+                        ))}
                     </div>
-                )}
-                {limitedTimeDishes.length > 0 && (
-                    <div>
-                        <h2>Limited Time Dishes</h2>
-                        <div className="lt-dishes-list">
-                            {limitedTimeDishes.map((ltDish, index) => (
-                                <div key={index} className="dish-card">
-                                    <h3>{ltDish.dishName}</h3>
-                                    <div>Start Date: {formatISODate(ltDish.startDate)}</div>
-                                    <div>End Date: {formatISODate(ltDish.endDate)}</div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                )}
-            </div>
-            <div>
-                <button className="button" onClick={() => setViewReviews(!viewReviews)}>
+                </div>
+            )}
+
+            <div className="mt-4">
+                <button className="btn carrot-btn" onClick={() => setViewReviews(!viewReviews)}>
                     {!viewReviews ? "View All Reviews" : "Close"}
                 </button>
 
-                {viewReviews ? <div>
-                    <h2>Reviews</h2>
-                    <Link className="button"
-                          to={`/location/${routeParams.name}/${routeParams.country}/${routeParams.postalcode}/${routeParams.address}/add-review`}>
-                        Add Your Review
-                    </Link>
-                    <div className="reviews-list">
-                        {reviewIDs.length > 0 ? (
-                            reviewIDs.map((review, index) => (
-                                <div key={index} className="review-card">
-                                    <Review ReviewID={review.id}/>
-                                </div>
-                            ))
-                        ) : (
-                            <p>No reviews available to display.</p>
-                        )}
+                {viewReviews && (
+                    <div className="mt-4">
+                        <h2>Reviews</h2>
+                        <Link
+                            className="btn carrot-btn mb-3"
+                            to={`/location/${routeParams.name}/${routeParams.country}/${routeParams.postalcode}/${routeParams.address}/add-review`}
+                        >
+                            Add Your Review
+                        </Link>
+                        <div className="reviews-list">
+                            {reviewIDs.length > 0 ? (
+                                reviewIDs.map((review, index) => (
+                                    <div key={index} className="review-card mb-3">
+                                        <Review ReviewID={review.id}/>
+                                    </div>
+                                ))
+                            ) : (
+                                <p>No reviews available to display.</p>
+                            )}
+                        </div>
                     </div>
-                </div> : ""}
+                )}
             </div>
         </div>
     )
