@@ -132,6 +132,7 @@ async function getMcdonaldsHallOfFame(city) {
 }
 
 async function updateReviewCount(name, address, postalCode, country, numReviews) {
+    console.log(`${name} ${address} ${postalCode} ${country} ${numReviews}`);
     return await withOracleDB(async (connection) => {
         const result = await connection.execute(
             `UPDATE FOODLOCATION SET NUMREVIEWS=:numReviews WHERE FoodLocationName=:name AND Address=:address AND PostalCode=:postalCode AND Country=:country`,
@@ -141,8 +142,10 @@ async function updateReviewCount(name, address, postalCode, country, numReviews)
                 postalCode: postalCode,
                 country: country,
                 numReviews: numReviews
-            }
+            },
+            { autoCommit: true }
         );
+        console.log(result.rowsAffected && result.rowsAffected > 0)
         return result.rowsAffected && result.rowsAffected > 0;
     });
 }

@@ -133,7 +133,8 @@ async function updateReviewCount(userID, numReviews) {
         {
           userID: userID,
           numReviews: numReviews
-        }
+        },
+        { autoCommit: true }
     );
     return result.rowsAffected && result.rowsAffected > 0;
   });

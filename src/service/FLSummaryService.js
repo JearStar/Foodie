@@ -118,7 +118,8 @@ async function updateAverageScore(summaryID, updatedAverageScore) {
             {
                 summaryID: summaryID,
                 score: updatedAverageScore
-            }
+            },
+            { autoCommit: true }
         );
         return result.rowsAffected && result.rowsAffected > 0;
     });

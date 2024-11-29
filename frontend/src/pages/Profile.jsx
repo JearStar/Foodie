@@ -38,8 +38,13 @@ const Profile = () => {
             <div
 
             >
-                <h1 className="mainheader">{userInformation.firstName}'s Profile</h1>
+                <div className="d-flex justify-content-center">
+                    <h1 className="mainheader">{userInformation.firstName}'s Profile</h1>
+                </div>
                 <ProfileRatings/>
+                <div className="d-flex justify-content-center">
+
+
                 <ul className="nav">
                     <li className="nav-item">
                         <Link className="nav-link" to="./reviews">
@@ -64,6 +69,7 @@ const Profile = () => {
                         </li>
                     )}
                 </ul>
+                </div>
             </div>
 
             <div

@@ -1,16 +1,12 @@
-import React, {useContext, useEffect, useState} from "react";
-import '../index.css';
-import {Link, useParams} from "react-router-dom";
-import Review from "./Review";
-
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
+import "../index.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const ProfileRatings = () => {
     const [avgRatings, setAvgRatings] = useState({});
     const [showRatings, setShowRatings] = useState(false);
-
     const { userID } = useParams();
-
-
 
     async function fetchUserRatings() {
         try {
@@ -19,9 +15,7 @@ const ProfileRatings = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    userID: userID
-                }),
+                body: JSON.stringify({ userID }),
             });
 
             if (!response.ok) {
@@ -38,30 +32,47 @@ const ProfileRatings = () => {
     }
 
     const toggleRatingsVisibility = () => {
-            fetchUserRatings();
-
+        fetchUserRatings();
         setShowRatings(!showRatings);
     };
 
     return (
-        <div>
+        <div className="container py-1">
+            <div className="text-center">
+                <button
+                    className={`btn carrot-btn mb-4`}
+                    onClick={toggleRatingsVisibility}
+                >
+                    {showRatings ? "Close" : "Show User's Average Ratings"}
+                </button>
+            </div>
 
-
-            <button className="button" onClick={toggleRatingsVisibility}>
-                {showRatings ? "Close" : "Show User's Average Ratings"}
-            </button>
-
-            {showRatings && avgRatings && (
-                <div>
-                    <h2>User Ratings</h2>
-                    <p><strong>Average Overall Rating:</strong> {avgRatings.averageOverallRating}</p>
-                    <p><strong>Average Service Rating:</strong> {avgRatings.averageServiceRating}</p>
-                    <p><strong>Average Wait Time Rating:</strong> {avgRatings.averageWaitTimeRating}</p>
+            {showRatings && (
+                <div className="card mx-auto shadow-lg" style={{ maxWidth: "500px" }}>
+                    <div className="card-body">
+                        <h2 className="card-title text-center mb-4">User Ratings</h2>
+                        {avgRatings ? (
+                            <>
+                                <p className="card-text">
+                                    <strong>Average Overall Rating:</strong>{" "}
+                                    {Number(avgRatings.averageOverallRating).toFixed(1)}
+                                </p>
+                                <p className="card-text">
+                                    <strong>Average Service Rating:</strong>{" "}
+                                    {Number(avgRatings.averageServiceRating).toFixed(1)}
+                                </p>
+                                <p className="card-text">
+                                    <strong>Average Wait Time Rating:</strong>{" "}
+                                    {Number(avgRatings.averageWaitTimeRating).toFixed(1)}
+                                </p>
+                            </>
+                        ) : (
+                            <p className="text-muted text-center">
+                                No ratings available. Press the button to fetch ratings.
+                            </p>
+                        )}
+                    </div>
                 </div>
-            )}
-
-            {showRatings && !avgRatings && (
-                <p>No ratings available. Press the button to fetch ratings.</p>
             )}
         </div>
     );

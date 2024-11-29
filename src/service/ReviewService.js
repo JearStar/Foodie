@@ -3,7 +3,6 @@ const Service = require('../../appService');
 
 //INSERT Review
 async function insertReview(review) {
-    console.log(review.reviewID);
   return await Service.withOracleDB(async (connection) => {
     const result = await connection.execute(
       `INSERT INTO Review (REVIEWID, OVERALLRATING, SERVICERATING, WAITTIMERATING, REVIEWTIMESTAMP, FOODLOCATIONNAME, ADDRESS, POSTALCODE, COUNTRY, USERID) 
