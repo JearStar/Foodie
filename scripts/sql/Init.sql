@@ -399,6 +399,27 @@ VALUES ('ac8b1f75-4321-45a3-9783-6d89ab23c0b1', 'I paid so much for some doodoo 
 INSERT INTO UserComment (CommentID, Content, CommentTimestamp, ReviewID, ParentCommentID, UserID)
 VALUES ('fe8b3e22-fc7d-4a1e-b36a-b7e2487c3c75', 'It was okay. Not great, not terrible.', '2024-10-13 14:50:00', 'dbff5e43-67b4-44e2-b78d-5331a3c33fa5', NULL, '88e5791d-0fd7-4721-b8f6-5aad4845f095');
 
+
+
+INSERT INTO UserComment (CommentID, Content, CommentTimestamp, ReviewID, ParentCommentID, UserID)
+VALUES ('27b2d51f-4b98-6c20-a631-f3a6b6f1f5b3','I asked the server for her number and she underwent metamorphosis.', '2024-10-20 10:17:00', 'e20123dc-b70c-4fa8-b27b-604e3f2c7498', NULL, '3c8b4731-3483-4a78-b63a-c5f72c8d51c2');
+
+INSERT INTO UserComment (CommentID, Content, CommentTimestamp, ReviewID, ParentCommentID, UserID)
+VALUES ('ac2325e2-2e64-4a62-bbd1-c1d5d174d9f7', 'HUH????????', '2024-10-20 11:17:00', NULL, '27b2d51f-4b98-6c20-a631-f3a6b6f1f5b3', '5aba12e6-a3b0-4d19-a078-6f9f41a81eec');
+
+INSERT INTO UserComment (CommentID, Content, CommentTimestamp, ReviewID, ParentCommentID, UserID)
+VALUES ('c6a88a9f-5a28-1531-be68-4954ab39a484', 'Tell us more? What was okay? What was bad? Whats the meaning of life?', '2024-10-13 16:46:00', NULL, 'fe8b3e22-fc7d-4a1e-b36a-b7e2487c3c75', '4d7577fc-636e-40b1-ab1f-f3c12422c84a');
+
+INSERT INTO UserComment (CommentID, Content, CommentTimestamp, ReviewID, ParentCommentID, UserID)
+VALUES ('4ae8489b-3462-41a4-4b2e-7e5d5b924bfb', 'I like turtles', '2024-09-25 16:00:05', '98c2a1f3-b1d4-4a61-83b9-7699e3b43af5', NULL, '45483f02-a838-4ff1-839e-d9ab83f6f46c');
+
+INSERT INTO UserComment (CommentID, Content, CommentTimestamp, ReviewID, ParentCommentID, UserID)
+VALUES ('ac8b2075-3532-45a3-9783-6d892c23c0b1', 'Agreed, theyre delicious.', '2024-09-25 16:25:31', NULL, '4ae8489b-3462-41a4-4b2e-7e5d5b924bfb', 'b6751637-b434-419e-ae0d-1a0c7c405053');
+
+INSERT INTO UserComment (CommentID, Content, CommentTimestamp, ReviewID, ParentCommentID, UserID)
+VALUES ('67483e22-fc7d-4a1e-b36a-b7e6c78c3c75', 'What does it taste more like? Doodoo or donkey?', '2024-10-13 14:50:00', NULL, 'ac8b1f75-4321-45a3-9783-6d89ab23c0b1', '45483f02-a838-4ff1-839e-d9ab83f6f46c');
+
+
 COMMIT;
 
 INSERT INTO ReviewsDish (ReviewID, DishName, DishRating, FOODLOCATIONNAME, ADDRESS, POSTALCODE, COUNTRY)
