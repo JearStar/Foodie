@@ -27,7 +27,7 @@ async function insertDish(dish){
 
 async function getDishInfo(name, address, postalCode, country) {
     return await withOracleDB(async (connection) => {
-        const result = await connection.execute('SELECT * FROM DISH WHERE FOODLOCATIONNAME=:name AND ADDRESS=:address AND POSTALCODE=:postalCode AND COUNTRY=:country', {
+        const result = await connection.execute('SELECT * FROM DISH WHERE FOODLOCATIONNAME=:name AND ADDRESS=:address AND POSTALCODE=:postalCode AND COUNTRY=:country ORDER BY DISHNAME', {
             name: name,
             address: address,
             postalCode: postalCode,
@@ -49,15 +49,21 @@ async function getDishInfo(name, address, postalCode, country) {
     });
 }
 
-async function getLTDish(dishName, flName, address, postalCode, country) {
+async function getLTDishes(flName, address, postalCode, country) {
     return await withOracleDB(async (connection) => {
-        const result = await connection.execute('SELECT * FROM LimitedTimeDish WHERE DishName=:dishName AND FoodLocationName=:flName AND Address=:address AND PostalCode=:postalCode AND Country=:country',
-            {dishName: dishName, flName: flName, address: address, postalCode: postalCode, country: country}
+        const result = await connection.execute('SELECT DISHNAME, STARTDATE, ENDDATE FROM LimitedTimeDish WHERE FoodLocationName=:flName AND Address=:address AND PostalCode=:postalCode AND Country=:country ORDER BY DISHNAME',
+            {flName: flName, address: address, postalCode: postalCode, country: country}
         );
         if (result.rows.length === 0) {
             return [];
         }
-        return result.rows;
+        return result.rows.map((row) => {
+            return {
+                dishName: row[0],
+                startDate: row[1],
+                endDate: row[2]
+            };
+        });
     });
 }
 
@@ -76,6 +82,7 @@ async function getDishesWithFields(name, address, postalCode, country, showPrice
             SELECT ${selectedFieldsString}
             FROM DISH
             WHERE FOODLOCATIONNAME = :name AND ADDRESS = :address AND POSTALCODE = :postalCode AND COUNTRY = :country
+            ORDER BY DISHNAME
         `;
 
         const result = await connection.execute(query, {
@@ -86,7 +93,7 @@ async function getDishesWithFields(name, address, postalCode, country, showPrice
         });
 
         if (result.rows.length === 0) {
-            return {};
+            return null;
         }
 
         return result.rows.map((row) => {
@@ -108,6 +115,6 @@ async function getDishesWithFields(name, address, postalCode, country, showPrice
 module.exports = {
   insertDish,
     getDishInfo,
-    getLTDish,
+    getLTDishes,
     getDishesWithFields
 };

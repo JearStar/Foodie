@@ -19,6 +19,7 @@ import SearchUserFoodTypePhotos from "./components/SearchUserFoodTypePhotos";
 import McDonaldsHallOfFame from "./pages/McDonaldsHallOfFame";
 import AddDish from "./pages/AddDish";
 import {ADMIN_UUID} from "./Helper";
+import AddReview from "./pages/AddReview";
 
 function App() {
   const { user, login} = useContext(UserContext);
@@ -65,6 +66,7 @@ function App() {
                 <Route path="/mcdonalds-hall-of-fame" element={user? <McDonaldsHallOfFame /> : <Navigate to="/login" />} />
                 <Route path="/location/:name/:country/:postalcode/:address" element={user ? <FoodLocation /> : <Navigate to="/login" />}/>
                 <Route path="/location/:name/:country/:postalcode/:address/add-dish" element={(user && user.userID === ADMIN_UUID)? <AddDish /> : <Navigate to="/location/:name/:country/:postalcode/:address"/>}/>
+                <Route path="/location/:name/:country/:postalcode/:address/add-review" element={user ? <AddReview /> : <Navigate to="/location/:name/:country/:postalcode/:address"/>}/>
                 <Route path="/" element={<Navigate to="/login" />} />
                 <Route path="*" element={<Navigate to={user ? '/home' : '/login'} />} />
               </Routes>

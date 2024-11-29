@@ -130,11 +130,27 @@ async function getMcdonaldsHallOfFame(city) {
         });
     });
 }
+
+async function updateReviewCount(name, address, postalCode, country, numReviews) {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(
+            `UPDATE FOODLOCATION SET NUMREVIEWS=:numReviews WHERE FoodLocationName=:name AND Address=:address AND PostalCode=:postalCode AND Country=:country`,
+            {
+                name: name,
+                address: address,
+                postalCode: postalCode,
+                country: country,
+                numReviews: numReviews
+            }
+        );
+        return result.rowsAffected && result.rowsAffected > 0;
+    });
+}
 module.exports = {
     insertFoodLocation,
     updateFoodLocationSummaryID,
     searchLocs,
     getFoodLocationInfo,
-    getMcdonaldsHallOfFame
-
+    getMcdonaldsHallOfFame,
+    updateReviewCount
 };

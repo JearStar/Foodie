@@ -3,7 +3,8 @@ import '../index.css';
 import {Link, useParams} from "react-router-dom";
 import Review from "../components/Review";
 import {UserContext} from "../contexts/UserContext";
-import {ADMIN_UUID} from "../Helper";
+import {ADMIN_UUID, formatISODate} from "../Helper";
+import PhotoScroller from "../components/PhotoScroller";
 
 
 const FoodLocation = () => {
@@ -21,8 +22,7 @@ const FoodLocation = () => {
     const [showIsVegetarian, setShowIsVegetarian] = useState(false);
     const [dishes, setDishes] = useState([]);
     const [limitedTimeDishes, setLimitedTimeDishes] = useState([]);
-
-
+    const [foodLocationPhotos, setFoodLocationPhotos] = useState([]);
 
     const routeParams = useParams();
 
@@ -85,7 +85,6 @@ const FoodLocation = () => {
             }
 
             const result = await response.json();
-            console.log('Information retrieved successfully:', result);
             setFoodLocationInformation(result.data[0]);
             return result.data[0].foodLocationSummaryID
 
@@ -112,8 +111,25 @@ const FoodLocation = () => {
             }
 
             const result = await response.json();
-            console.log('Information retrieved successfully:', result);
             setFoodLocationSummaryInformation(result.data[0]);
+
+            const photosResponse = await fetch('/api/photos/get-foodlocationsummary-photos', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    summaryID: id,
+                }),
+            });
+
+            if (!photosResponse.ok) {
+                throw new Error(`Error getting photos: ${response.status} ${response.statusText}`);
+            }
+
+            const photosResult = await photosResponse.json();
+            setFoodLocationPhotos(photosResult.photos);
+
         } catch (e) {
             console.error('Error retrieving food location information:', e);
         }
@@ -143,7 +159,6 @@ const FoodLocation = () => {
             if (typeof reviewIDs === "object") {
                 setReviewIDs(reviewIDs);
             }
-            console.log('Information retrieved successfully:', result.data);
         } catch (e) {
             console.error('Error retrieving review information:', e);
         }
@@ -175,19 +190,8 @@ const FoodLocation = () => {
                 console.error(`Error retrieving dish information: ${response.status} ${response.statusText}`);
                 return false;
             }
-            console.log('Information retrieved successfully:', result);
-            const dishes = result.data;
-            if (typeof dishes === "object") {
-                setDishes(dishes);
-                let limitedTimeArr = Array(0);
-                for (const dish of dishes) {
-                    let limitedTime = await getLimitedTime(dish);
-                    limitedTimeArr.push(limitedTime);
-                }
-                setLimitedTimeDishes(limitedTimeArr);
-                console.log(limitedTimeArr);
-            }
 
+            setDishes(result.data);
             return true;
         } catch (e) {
             console.error('Error retrieving user information:', e);
@@ -195,30 +199,30 @@ const FoodLocation = () => {
         }
     };
 
-    const getLimitedTime = async (dish) => {
+    const getLimitedTime = async () => {
         try {
-            console.log(dish);
-            const response = await fetch('/api/dish/get-lt-dish', {
+            const ltResponse = await fetch('/api/dish/get-lt-dish', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    dishName: dish["dishName"],
-                    flName: dish["flName"],
-                    address: dish["address"],
-                    postalCode: dish["postalCode"],
-                    country: dish["country"],
+                    flName: routeParams.name,
+                    address: routeParams.address,
+                    postalCode: routeParams.postalcode,
+                    country: routeParams.country
                 }),
             });
 
-            const result = await response.json();
-            if (!response.ok || !result.success) {
-                console.error(`Error retrieving dish information: ${response.status} ${response.statusText}`);
+            const result = await ltResponse.json();
+            if (!ltResponse.ok || !result.success) {
+                console.error(`Error retrieving dish information: ${ltResponse.status} ${ltResponse.statusText}`);
                 return false;
             }
-            console.log('Information retrieved successfully:', result.data);
-            return result.data;
+            setLimitedTimeDishes(result.data);
+            console.log(limitedTimeDishes);
+            console.log(limitedTimeDishes);
+            return true;
         } catch (e) {
             console.error('Error retrieving user information:', e);
             return false;
@@ -227,22 +231,21 @@ const FoodLocation = () => {
 
     const handleSubmitDishFields = async (e) => {
         e.preventDefault()
+        const dishesFetched = await fetchDishesWithFields();
+        const ltFetched = await getLimitedTime();
 
-        if (await fetchDishesWithFields()) {
-
-            // alert("Success");
-        } else {
-            alert("Dishes cannot be shown now");
+        if (!dishesFetched || !ltFetched) {
+            alert("Unable to fetch dishes or limited time dishes.");
         }
-
     }
 
     return (
         <div className="app">
             {user.userID === ADMIN_UUID &&
-                <Link className="button" to={`/location/${routeParams.name}/${routeParams.country}/${routeParams.postalcode}/${routeParams.address}/add-dish`}>
-                Add Dish
-            </Link>}
+                <Link className="button"
+                      to={`/location/${routeParams.name}/${routeParams.country}/${routeParams.postalcode}/${routeParams.address}/add-dish`}>
+                    Add Dish
+                </Link>}
             <h1 className="mainheader">
                 {foodLocationInformation.name}
             </h1>
@@ -257,6 +260,9 @@ const FoodLocation = () => {
             </div>
             <div>
                 Rating: {locationAvgScore}
+            </div>
+            <div className="mt-4 w-50 d-flex">
+                {foodLocationPhotos.length > 0 && <PhotoScroller photos={foodLocationPhotos}/>}
             </div>
             <div>
                 <form onSubmit={handleSubmitDishFields}>
@@ -310,8 +316,10 @@ const FoodLocation = () => {
                                     {dish.price !== undefined ? <div>Price: {dish.price.toFixed(2)}</div> : ""}
                                     {dish.type !== undefined ? <div>Type: {dish.type}</div> : ""}
                                     {dish.isHalal !== undefined ? <div>Halal: {dish.isHalal ? "Yes" : "No"}</div> : ""}
-                                    {dish.isGlutenFree !== undefined ? <div>Gluten-Free: {dish.isGlutenFree ? "Yes" : "No"}</div> : ""}
-                                    {dish.isVegetarian !== undefined ? <div>Vegetarian: {dish.isVegetarian ? "Yes" : "No"}</div> : ""}
+                                    {dish.isGlutenFree !== undefined ?
+                                        <div>Gluten-Free: {dish.isGlutenFree ? "Yes" : "No"}</div> : ""}
+                                    {dish.isVegetarian !== undefined ?
+                                        <div>Vegetarian: {dish.isVegetarian ? "Yes" : "No"}</div> : ""}
                                 </div>
                             ))}
                         </div>
@@ -321,11 +329,11 @@ const FoodLocation = () => {
                     <div>
                         <h2>Limited Time Dishes</h2>
                         <div className="lt-dishes-list">
-                            {dishes.map((ltDish, index) => (
+                            {limitedTimeDishes.map((ltDish, index) => (
                                 <div key={index} className="dish-card">
-                                    <h3>{ltDish[0]}</h3>
-                                    {ltDish[5] !== undefined ? <div>Start Date: {ltDish[5]}</div> : ""}
-                                    {ltDish[6] !== undefined ? <div>End Date: {ltDish[6]}</div> : ""}
+                                    <h3>{ltDish.dishName}</h3>
+                                    <div>Start Date: {formatISODate(ltDish.startDate)}</div>
+                                    <div>End Date: {formatISODate(ltDish.endDate)}</div>
                                 </div>
                             ))}
                         </div>
@@ -339,6 +347,10 @@ const FoodLocation = () => {
 
                 {viewReviews ? <div>
                     <h2>Reviews</h2>
+                    <Link className="button"
+                          to={`/location/${routeParams.name}/${routeParams.country}/${routeParams.postalcode}/${routeParams.address}/add-review`}>
+                        Add Your Review
+                    </Link>
                     <div className="reviews-list">
                         {reviewIDs.length > 0 ? (
                             reviewIDs.map((review, index) => (

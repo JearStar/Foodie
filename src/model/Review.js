@@ -1,10 +1,88 @@
 class Review {
+  get reviewID() {
+    return this._reviewID;
+  }
+
+  set reviewID(value) {
+    this._reviewID = value;
+  }
+
+  get overallRating() {
+    return this._overallRating;
+  }
+
+  set overallRating(value) {
+    this._overallRating = value;
+  }
+
+  get serviceRating() {
+    return this._serviceRating;
+  }
+
+  set serviceRating(value) {
+    this._serviceRating = value;
+  }
+
+  get waitTimeRating() {
+    return this._waitTimeRating;
+  }
+
+  set waitTimeRating(value) {
+    this._waitTimeRating = value;
+  }
+
+  get reviewTimeStamp() {
+    return this._reviewTimeStamp;
+  }
+
+  set reviewTimeStamp(value) {
+    this._reviewTimeStamp = value;
+  }
+
+  get foodLocationName() {
+    return this._foodLocationName;
+  }
+
+  set foodLocationName(value) {
+    this._foodLocationName = value;
+  }
+
+  get address() {
+    return this._address;
+  }
+
+  set address(value) {
+    this._address = value;
+  }
+
+  get postalCode() {
+    return this._postalCode;
+  }
+
+  set postalCode(value) {
+    this._postalCode = value;
+  }
+
+  get country() {
+    return this._country;
+  }
+
+  set country(value) {
+    this._country = value;
+  }
+
+  get userID() {
+    return this._userID;
+  }
+
+  set userID(value) {
+    this._userID = value;
+  }
   constructor(
     reviewID,
     overallRating,
     serviceRating,
     waitTimeRating,
-    dayOfWeekVisited,
     reviewTimeStamp,
     foodLocationName,
     address,
@@ -16,101 +94,12 @@ class Review {
     this._overallRating = overallRating;
     this._serviceRating = serviceRating;
     this._waitTimeRating = waitTimeRating;
-    this._dayOfWeekVisited = dayOfWeekVisited;
     this._reviewTimeStamp = reviewTimeStamp;
     this._foodLocationName = foodLocationName;
     this._address = address;
     this._postalCode = postalCode;
     this._country = country;
     this._userID = userID;
-  }
-
-  // Getter and Setter for reviewID
-  get getReviewID() {
-    return this._reviewID;
-  }
-  set setReviewID(value) {
-    this._reviewID = value;
-  }
-
-  // Getter and Setter for overallRating
-  get getOverallRating() {
-    return this._overallRating;
-  }
-  set setOverallRating(value) {
-    this._overallRating = value;
-  }
-
-  // Getter and Setter for serviceRating
-  get getServiceRating() {
-    return this._serviceRating;
-  }
-  set setServiceRating(value) {
-    this._serviceRating = value;
-  }
-
-  // Getter and Setter for waitTimeRating
-  get getWaitTimeRating() {
-    return this._waitTimeRating;
-  }
-  set setWaitTimeRating(value) {
-    this._waitTimeRating = value;
-  }
-
-  // Getter and Setter for dayOfWeekVisited
-  get getDayOfWeekVisited() {
-    return this._dayOfWeekVisited;
-  }
-  set setDayOfWeekVisited(value) {
-    this._dayOfWeekVisited = value;
-  }
-
-  // Getter and Setter for reviewTimeStamp
-  get getReviewTimeStamp() {
-    return this._reviewTimeStamp;
-  }
-  set setReviewTimeStamp(value) {
-    this._reviewTimeStamp = value;
-  }
-
-  // Getter and Setter for foodLocationName
-  get getFoodLocationName() {
-    return this._foodLocationName;
-  }
-  set setFoodLocationName(value) {
-    this._foodLocationName = value;
-  }
-
-  // Getter and Setter for address
-  get getAddress() {
-    return this._address;
-  }
-  set setAddress(value) {
-    this._address = value;
-  }
-
-  // Getter and Setter for postalCode
-  get getPostalCode() {
-    return this._postalCode;
-  }
-  set setPostalCode(value) {
-    this._postalCode = value;
-  }
-
-  // Getter and Setter for country
-  get getCountry() {
-    return this._country;
-  }
-  set setCountry(value) {
-    this._country = value;
-  }
-
-  // Getter and Setter for userID
-  get getUserID() {
-    return this._userID;
-  }
-  set setUserID(value) {
-    this._userID = value;
   }
 }
 module.exports = Review;

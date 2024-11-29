@@ -98,11 +98,38 @@ async function searchSummaries(name, address, postal, country) {
   });
 }
 
+async function getSummaryID(name, address, postal, country) {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(
+            'SELECT SUMMARYID FROM FoodLocationSummary WHERE FoodLocationName=:n AND Address=:a AND PostalCode=:p AND Country=:c',
+            [name, address, postal, country]
+        );
+        if (result.rows.length === 0) {
+            return null;
+        }
+        return result.rows[0][0];
+    })
+}
+
+async function updateAverageScore(summaryID, updatedAverageScore) {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(
+            `UPDATE FOODLOCATIONSUMMARY SET AVERAGERATING=:score WHERE SUMMARYID=:summaryID`,
+            {
+                summaryID: summaryID,
+                score: updatedAverageScore
+            }
+        );
+        return result.rowsAffected && result.rowsAffected > 0;
+    });
+}
+
 module.exports = {
-  insertFLSummary,
-  searchSummaries,
+    insertFLSummary,
+    searchSummaries,
     getFoodLocationSummaryInfo,
     getTrendingSummaries,
-    getHighlyReviewedSummaries
-
+    getHighlyReviewedSummaries,
+    getSummaryID,
+    updateAverageScore
 };

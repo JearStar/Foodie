@@ -1,4 +1,59 @@
 class ReviewsDish {
+  get reviewID() {
+    return this._reviewID;
+  }
+
+  set reviewID(value) {
+    this._reviewID = value;
+  }
+
+  get dishName() {
+    return this._dishName;
+  }
+
+  set dishName(value) {
+    this._dishName = value;
+  }
+
+  get dishRating() {
+    return this._dishRating;
+  }
+
+  set dishRating(value) {
+    this._dishRating = value;
+  }
+
+  get foodLocationName() {
+    return this._foodLocationName;
+  }
+
+  set foodLocationName(value) {
+    this._foodLocationName = value;
+  }
+
+  get address() {
+    return this._address;
+  }
+
+  set address(value) {
+    this._address = value;
+  }
+
+  get postalCode() {
+    return this._postalCode;
+  }
+
+  set postalCode(value) {
+    this._postalCode = value;
+  }
+
+  get country() {
+    return this._country;
+  }
+
+  set country(value) {
+    this._country = value;
+  }
   constructor(reviewID, dishName, dishRating, foodLocationName, address, postalCode, country) {
     this._reviewID = reviewID;
     this._dishName = dishName;
@@ -9,64 +64,5 @@ class ReviewsDish {
     this._country = country;
   }
 
-  // Getter and Setter for reviewID
-  get getReviewID() {
-    return this._reviewID;
-  }
-  set setReviewID(value) {
-    this._reviewID = value;
-  }
-
-  // Getter and Setter for dishName
-  get getDishName() {
-    return this._dishName;
-  }
-  set setDishName(value) {
-    this._dishName = value;
-  }
-
-  // Getter and Setter for dishRating
-  get getDishRating() {
-    return this._dishRating;
-  }
-  set setDishRating(value) {
-    if (value < 1 || value > 5) {
-      console.log('Dish rating must be between 1 and 5.');
-    } else {
-      this._dishRating = value;
-    }
-  }
-
-  // Getter and Setter for foodLocationName
-  get getFoodLocationName() {
-    return this._foodLocationName;
-  }
-  set setFoodLocationName(value) {
-    this._foodLocationName = value;
-  }
-
-  // Getter and Setter for address
-  get getAddress() {
-    return this._address;
-  }
-  set setAddress(value) {
-    this._address = value;
-  }
-
-  // Getter and Setter for postalCode
-  get getPostalCode() {
-    return this._postalCode;
-  }
-  set setPostalCode(value) {
-    this._postalCode = value;
-  }
-
-  // Getter and Setter for country
-  get getCountry() {
-    return this._country;
-  }
-  set setCountry(value) {
-    this._country = value;
-  }
 }
 module.exports = ReviewsDish;

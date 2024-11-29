@@ -132,4 +132,22 @@ router.post('/get-user-average-photo-likes', async (req, res) => {
         res.status(500).json({ success: false, error: e.message });
     }
 });
+
+router.post('/get-foodlocationsummary-photos', async (req, res) => {
+    try {
+        const result = await photoService.getPhotosForSummary(req.body.summaryID);
+        if (!result) {
+            return res.status(404).json({
+                success: false,
+                error: `Failed to get photos from summary ${req.body.summaryID}`,
+            });
+        }
+        res.json({
+            success: true,
+            photos: result,
+        });
+    } catch (e) {
+        res.status(500).json({ success: false, error: e.message });
+    }
+});
 module.exports = router;

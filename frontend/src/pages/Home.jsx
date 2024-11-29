@@ -19,14 +19,6 @@ function Home() {
   const [searchSummaries, setSearchSummaries] = useState([]);
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
-  //
-  // useEffect(() => {
-  //   document.body.style.overflow = 'hidden';
-  //
-  //   return () => {
-  //     document.body.style.overflow = '';
-  //   };
-  // }, []);
 
   const processReviewsConds = () => {
     let reviewsConds = 'AND ( ';

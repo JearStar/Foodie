@@ -69,7 +69,6 @@ CREATE TABLE Review (
     OverallRating SMALLINT NOT NULL,
     ServiceRating SMALLINT NOT NULL,
     WaitTimeRating SMALLINT NOT NULL,
-    DayOfWeekVisited SMALLINT NOT NULL,
     ReviewTimeStamp TIMESTAMP NOT NULL,
     FoodLocationName VARCHAR(50) NOT NULL,
     Address VARCHAR(150) NOT NULL,
@@ -336,48 +335,48 @@ VALUES ('Chocobanana McFlurry','McDonald''s', '470 Yonge Street', 'M4Y 1X5', 'Ca
 INSERT INTO LIMITEDTIMEDISH (DishName, FoodLocationName, Address, PostalCode, Country, StartDate, EndDate)
 VALUES ('Edamame and Corn','McDonald''s', '470 Yonge Street', 'M4Y 1X5', 'Canada', '2024-11-01 12:30:00', '2024-12-06 15:30:00');
 
-INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, DayOfWeekVisited, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID)
-VALUES ('5b3c2a1d-d5c4-4e9e-80cd-3e5d232df9f1', 5, 4, 3, 5, '2024-10-01 12:30:00', 'Sushi Mura', '6485 Oak Street', 'V6M 2W7', 'Canada', '4d7577fc-636e-40b1-ab1f-f3c12422c84a');
+INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID)
+VALUES ('5b3c2a1d-d5c4-4e9e-80cd-3e5d232df9f1', 5, 4, 3, '2024-10-01 12:30:00', 'Sushi Mura', '6485 Oak Street', 'V6M 2W7', 'Canada', '4d7577fc-636e-40b1-ab1f-f3c12422c84a');
 
-INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, DayOfWeekVisited, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID)
-VALUES ('b1f1c5b9-79fb-4a6d-9a58-9b953a114481', 4, 4, 3, 5, '2024-10-01 12:31:00', 'Sushi Mura', '6485 Oak Street', 'V6M 2W7', 'Canada', 'fb6a2c9e-9e6b-4b83-8f5f-77c0d4990b9b');
+INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID)
+VALUES ('b1f1c5b9-79fb-4a6d-9a58-9b953a114481', 4, 4, 3, '2024-10-01 12:31:00', 'Sushi Mura', '6485 Oak Street', 'V6M 2W7', 'Canada', 'fb6a2c9e-9e6b-4b83-8f5f-77c0d4990b9b');
 
-INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, DayOfWeekVisited, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID)
-VALUES ('d6b9c3e1-893b-4d6c-b39a-24dbb7a0289d', 4, 5, 4, 3, '2024-09-28 19:45:00', 'Published on Main', '3593 Main Street', 'V5V 3N4', 'Canada', 'b6751637-b434-419e-ae0d-1a0c7c405053');
+INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID)
+VALUES ('d6b9c3e1-893b-4d6c-b39a-24dbb7a0289d', 4, 5, 4, '2024-09-28 19:45:00', 'Published on Main', '3593 Main Street', 'V5V 3N4', 'Canada', 'b6751637-b434-419e-ae0d-1a0c7c405053');
 
-INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, DayOfWeekVisited, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID)
-VALUES ('f01f6e3e-a768-4e3e-924b-7c92983f089a', 3, 3, 2, 2, '2024-09-25 10:00:00', 'McDonald''s', '470 Yonge Street', 'M4Y 1X5', 'Canada', '5aba12e6-a3b0-4d19-a078-6f9f41a81eec');
+INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID)
+VALUES ('f01f6e3e-a768-4e3e-924b-7c92983f089a', 3, 3, 2, '2024-09-25 10:00:00', 'McDonald''s', '470 Yonge Street', 'M4Y 1X5', 'Canada', '5aba12e6-a3b0-4d19-a078-6f9f41a81eec');
 
-INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, DayOfWeekVisited, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID)
-VALUES ('e70b45f1-5b25-4df7-82c3-b24bafedf2c1', 5, 5, 5, 6, '2024-10-05 16:15:00', 'Café de Flore', '172 Bd Saint-Germain', '75006', 'France', 'b6751637-b434-419e-ae0d-1a0c7c405053');
+INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID)
+VALUES ('e70b45f1-5b25-4df7-82c3-b24bafedf2c1', 5, 5, 5, '2024-10-05 16:15:00', 'Café de Flore', '172 Bd Saint-Germain', '75006', 'France', 'b6751637-b434-419e-ae0d-1a0c7c405053');
 
-INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, DayOfWeekVisited, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID)
-VALUES ('12b671b9-3826-46ba-a9d2-dc5a2f74ad64', 4, 4, 3, 4, '2024-09-30 14:00:00', 'Miku Vancouver', '200 Granville Street #70', 'V6C 1S4', 'Canada', '88e5791d-0fd7-4721-b8f6-5aad4845f095');
+INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID)
+VALUES ('12b671b9-3826-46ba-a9d2-dc5a2f74ad64', 4, 4, 3, '2024-09-30 14:00:00', 'Miku Vancouver', '200 Granville Street #70', 'V6C 1S4', 'Canada', '88e5791d-0fd7-4721-b8f6-5aad4845f095');
 
-INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, DayOfWeekVisited, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID)
-VALUES ('d43e0f79-e09f-4bc3-ad48-c5ecead2870a', 3, 4, 3, 2, '2024-10-21 15:30:00', 'Miku Vancouver', '200 Granville Street #70', 'V6C 1S4', 'Canada', '4d7577fc-636e-40b1-ab1f-f3c12422c84a');
+INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID)
+VALUES ('d43e0f79-e09f-4bc3-ad48-c5ecead2870a', 3, 4, 3, '2024-10-21 15:30:00', 'Miku Vancouver', '200 Granville Street #70', 'V6C 1S4', 'Canada', '4d7577fc-636e-40b1-ab1f-f3c12422c84a');
 
 --
-INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, DayOfWeekVisited, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID)
-VALUES ('f12a48b5-3cb0-44cd-9eb9-a604ac8b8d2a', 4, 4, 5, 6, '2024-10-02 13:45:00', 'Sushi Mura', '6485 Oak Street', 'V6M 2W7', 'Canada', '1c62e735-5f83-4cd9-94b0-cb49cf4b92c3');
+INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID)
+VALUES ('f12a48b5-3cb0-44cd-9eb9-a604ac8b8d2a', 4, 4, 5, '2024-10-02 13:45:00', 'Sushi Mura', '6485 Oak Street', 'V6M 2W7', 'Canada', '1c62e735-5f83-4cd9-94b0-cb49cf4b92c3');
 
-INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, DayOfWeekVisited, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID)
-VALUES ('c9a4d12f-8749-442e-a5d8-0a39648e0b1d', 5, 5, 4, 7, '2024-10-07 18:15:00', 'Published on Main', '3593 Main Street', 'V5V 3N4', 'Canada', 'b6e2a413-df97-4bfb-9b88-e5a0d4345b43');
+INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID)
+VALUES ('c9a4d12f-8749-442e-a5d8-0a39648e0b1d', 5, 5, 4, '2024-10-07 18:15:00', 'Published on Main', '3593 Main Street', 'V5V 3N4', 'Canada', 'b6e2a413-df97-4bfb-9b88-e5a0d4345b43');
 
-INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, DayOfWeekVisited, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID)
-VALUES ('a8b40e93-3241-476f-809e-0e6f859e3d5b', 3, 3, 2, 1, '2024-09-24 11:20:00', 'McDonald''s', '470 Yonge Street', 'M4Y 1X5', 'Canada', '92ad6d5e-b2ab-4e19-9099-bc6fb6f8c245');
+INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID)
+VALUES ('a8b40e93-3241-476f-809e-0e6f859e3d5b', 3, 3, 2, '2024-09-24 11:20:00', 'McDonald''s', '470 Yonge Street', 'M4Y 1X5', 'Canada', '92ad6d5e-b2ab-4e19-9099-bc6fb6f8c245');
 
-INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, DayOfWeekVisited, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID)
-VALUES ('d0c54f1b-7db8-495e-9fb8-60f09a16c6de', 5, 5, 5, 6, '2024-10-14 19:00:00', 'Café de Flore', '172 Bd Saint-Germain', '75006', 'France', '8141ad7b-e670-44ff-bc3b-d9ea6de3eacf');
+INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID)
+VALUES ('d0c54f1b-7db8-495e-9fb8-60f09a16c6de', 5, 5, 5, '2024-10-14 19:00:00', 'Café de Flore', '172 Bd Saint-Germain', '75006', 'France', '8141ad7b-e670-44ff-bc3b-d9ea6de3eacf');
 
-INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, DayOfWeekVisited, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID)
-VALUES ('35f0cd78-941c-4d29-806b-00a41247b328', 4, 4, 3, 4, '2024-09-30 14:30:00', 'Miku Vancouver', '200 Granville Street #70', 'V6C 1S4', 'Canada', 'af943d85-91e5-4089-b20f-8923d4949b2d');
+INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID)
+VALUES ('35f0cd78-941c-4d29-806b-00a41247b328', 4, 4, 3, '2024-09-30 14:30:00', 'Miku Vancouver', '200 Granville Street #70', 'V6C 1S4', 'Canada', 'af943d85-91e5-4089-b20f-8923d4949b2d');
 
-INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, DayOfWeekVisited, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID)
-VALUES ('e20123dc-b70c-4fa8-b27b-604e3f2c7498', 3, 3, 4, 3, '2024-10-20 10:15:00', 'Sushi Mura', '6485 Oak Street', 'V6M 2W7', 'Canada', '3c8b4731-3483-4a78-b63a-c5f72c8d51c2');
+INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID)
+VALUES ('e20123dc-b70c-4fa8-b27b-604e3f2c7498', 3, 3, 4, '2024-10-20 10:15:00', 'Sushi Mura', '6485 Oak Street', 'V6M 2W7', 'Canada', '3c8b4731-3483-4a78-b63a-c5f72c8d51c2');
 
-INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, DayOfWeekVisited, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID)
-VALUES ('98c2a1f3-b1d4-4a61-83b9-7699e3b43af5', 4, 4, 3, 5, '2024-09-25 16:00:00', 'Published on Main', '3593 Main Street', 'V5V 3N4', 'Canada', '45483f02-a838-4ff1-839e-d9ab83f6f46c');
+INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID)
+VALUES ('98c2a1f3-b1d4-4a61-83b9-7699e3b43af5', 4, 4, 3, '2024-09-25 16:00:00', 'Published on Main', '3593 Main Street', 'V5V 3N4', 'Canada', '45483f02-a838-4ff1-839e-d9ab83f6f46c');
 
 
 COMMIT;

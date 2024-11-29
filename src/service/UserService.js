@@ -126,6 +126,19 @@ async function authenticateUser(email, password) {
   });
 }
 
+async function updateReviewCount(userID, numReviews) {
+  return await withOracleDB(async (connection) => {
+    const result = await connection.execute(
+        `UPDATE APPUSER SET NUMREVIEWS=:numReviews WHERE USERID=:userID`,
+        {
+          userID: userID,
+          numReviews: numReviews
+        }
+    );
+    return result.rowsAffected && result.rowsAffected > 0;
+  });
+}
+
 
 module.exports = {
   insertUser,
@@ -135,4 +148,5 @@ module.exports = {
   getUserInfoWithID,
   authenticateUser,
   deleteAccount,
+  updateReviewCount,
 };

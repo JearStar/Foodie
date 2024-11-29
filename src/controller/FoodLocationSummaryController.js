@@ -97,5 +97,23 @@ router.post('/get-highly-rated-summaries', async (req, res) => {
     }
 });
 
+router.post('/get-summary-id', async (req, res) => {
+    try {
+        const result = await FLSummaryService.getSummaryID(req.body.name, req.body.address, req.body.postalCode, req.body.country);
+        if (!result) {
+            return res.status(404).json({
+                success: false,
+                error: 'Failed to get popular food location summary id'
+            });
+        }
+        res.json({
+            success: true,
+            summaryID: result,
+        });
+    } catch (e) {
+        res.status(500).json({ success: false, error: e.message });
+    }
+});
+
 
 module.exports = router;

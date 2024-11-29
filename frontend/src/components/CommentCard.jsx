@@ -1,6 +1,7 @@
 import React, {useContext, useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import {UserContext} from "../contexts/UserContext";
+import {formatISODate} from "../Helper";
 
 const CommentCard = ({
                          commentID,
@@ -174,7 +175,7 @@ const CommentCard = ({
                                 {`${firstName} ${lastName}`}
                             </Link>
                         </h5>
-                        <p className="small">{commentTimestamp}</p>
+                        <p className="small">{formatISODate(commentTimestamp)}</p>
                         <p>{content}</p>
 
                         <div className="d-flex justify-content-between align-items-center">
@@ -218,6 +219,7 @@ const CommentCard = ({
                                     value={replyContent}
                                     onChange={(e) => setReplyContent(e.target.value)}
                                     rows="3"
+                                    maxLength='999'
                                     placeholder="Write your reply..."
                                 ></textarea>
                                 <div className="mt-2">

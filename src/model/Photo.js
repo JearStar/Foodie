@@ -1,12 +1,4 @@
 class Photo {
-  constructor(photoID, imageURL, photoLikes, description, photoTimestamp, reviewID, summaryID) {
-    this._photoID = photoID;
-    this._imageURL = imageURL;
-    this._description = description;
-    this._photoTimestamp = photoTimestamp;
-    this._reviewID = reviewID;
-    this._summaryID = summaryID;
-  }
   get photoID() {
     return this._photoID;
   }
@@ -21,6 +13,14 @@ class Photo {
 
   set imageURL(value) {
     this._imageURL = value;
+  }
+
+  get photoLikes() {
+    return this._photoLikes;
+  }
+
+  set photoLikes(value) {
+    this._photoLikes = value;
   }
 
   get description() {
@@ -53,6 +53,15 @@ class Photo {
 
   set summaryID(value) {
     this._summaryID = value;
+  }
+  constructor(photoID, imageURL, photoLikes, description, photoTimestamp, reviewID, summaryID) {
+    this._photoID = photoID;
+    this._imageURL = imageURL;
+    this._description = description;
+    this._photoTimestamp = photoTimestamp;
+    this._reviewID = reviewID;
+    this._summaryID = summaryID;
+    this._photoLikes = photoLikes;
   }
 }
 module.exports = Photo;

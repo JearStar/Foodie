@@ -173,6 +173,70 @@ async function getPhotosForReview(reviewID){
     })
 }
 
+async function getPhotosForSummary(summaryID){
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(
+            `SELECT DISTINCT
+                    p.PHOTOID,
+                    p.IMAGEURL,
+                    p.DESCRIPTION,
+                    p.PHOTOTIMESTAMP,
+                    p.REVIEWID,
+                    p.SUMMARYID,
+                    r.FOODLOCATIONNAME,
+                    r.ADDRESS,
+                    r.POSTALCODE,
+                    r.COUNTRY,
+                    f.CITY,
+                    (SELECT COUNT(v.VoteID)
+                     FROM VOTE v
+                     WHERE v.PHOTOID = p.PHOTOID) AS PhotoLikes
+                FROM
+                    DISH d,
+                    REVIEWSDISH rd,
+                    REVIEW r,
+                    PHOTO p,
+                    FOODLOCATION f,
+                    VOTE v
+                WHERE
+                    d.DISHNAME = rd.DISHNAME
+                  AND d.FOODLOCATIONNAME = rd.FOODLOCATIONNAME
+                  AND d.ADDRESS = rd.ADDRESS
+                  AND d.POSTALCODE = rd.POSTALCODE
+                  AND d.COUNTRY = rd.COUNTRY
+                  AND rd.REVIEWID = r.REVIEWID
+                  AND r.REVIEWID = p.REVIEWID
+                  AND f.FOODLOCATIONNAME = d.FOODLOCATIONNAME
+                  AND f.ADDRESS = d.ADDRESS
+                  AND f.POSTALCODE = d.POSTALCODE
+                  AND f.COUNTRY = d.COUNTRY
+                  AND p.SUMMARYID = :summaryID
+            `,
+            {
+                summaryID: summaryID
+            },
+            { autoCommit: true }
+        );
+
+        return result.rows.map((row) => {
+            return {
+                photoID: row[0],
+                imageURL: row[1],
+                description: row[2],
+                photoTimestamp: row[3],
+                reviewID: row[4],
+                summaryID: row[5],
+                foodLocationName: row[6],
+                address: row[7],
+                postalCode: row[8],
+                country: row[9],
+                city: row[10],
+                photoLikes: row[11]
+            };
+        });
+    })
+}
+
 //DELETE Photo
 async function deletePhoto(
   removePhotoID,
@@ -211,5 +275,6 @@ module.exports = {
     deletePhoto,
     getPhotosFromUserOfFoodType,
     getPhotosForReview,
-    getUserAveragePhotoLikes
+    getUserAveragePhotoLikes,
+    getPhotosForSummary
 };

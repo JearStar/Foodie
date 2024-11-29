@@ -2,34 +2,22 @@ const { withOracleDB } = require('../../appService');
 const Service = require('../../appService');
 
 //INSERT Review
-async function insertReview(
-  ReviewID,
-  OverallRating,
-  ServiceRating,
-  WaitTimeRating,
-  DayOfWeekVisited,
-  ReviewTimestamp,
-  FoodLocationName,
-  Address,
-  PostalCode,
-  Country,
-  UserID
-) {
+async function insertReview(review) {
+    console.log(review.reviewID);
   return await Service.withOracleDB(async (connection) => {
     const result = await connection.execute(
-      `INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, DayOfWeekVisited, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID) VALUES (:ReviewID, :OverallRating, :ServiceRating, :WaitTimeRating, :DayOfWeekVisited, :ReviewTimestamp, :FoodLocationName, :Address, :PostalCode, :Country, :UserID)`,
+      `INSERT INTO Review (REVIEWID, OVERALLRATING, SERVICERATING, WAITTIMERATING, REVIEWTIMESTAMP, FOODLOCATIONNAME, ADDRESS, POSTALCODE, COUNTRY, USERID) 
+VALUES (:ReviewID, :OverallRating, :ServiceRating, :WaitTimeRating, SYSDATE, :FoodLocationName, :Address, :PostalCode, :Country, :UserID)`,
       {
-        ReviewID,
-        OverallRating,
-        ServiceRating,
-        WaitTimeRating,
-        DayOfWeekVisited,
-        ReviewTimestamp,
-        FoodLocationName,
-        Address,
-        PostalCode,
-        Country,
-        UserID,
+        ReviewID: review.reviewID,
+        OverallRating: review.overallRating,
+        ServiceRating: review.serviceRating,
+        WaitTimeRating: review.waitTimeRating,
+        FoodLocationName: review.foodLocationName,
+        Address: review.address,
+        PostalCode: review.postalCode,
+        Country: review.country,
+        UserID: review.userID,
       },
       { autoCommit: true }
     );
@@ -62,7 +50,6 @@ async function deleteReview(
                  AND OverallRating = :removeOverallRating
                  AND ServiceRating = :removeServiceRating
                  AND WaitTimeRating = :removeWaitTimeRating
-                 AND DayOfWeekVisited = :removeDayOfWeekVisited
                  AND ReviewTimestamp = :removeReviewTimestamp
                  AND FoodLocationName = :removeFoodLocationName
                  AND Address = :removeAddress 
@@ -74,7 +61,6 @@ async function deleteReview(
         removeOverallRating,
         removeServiceRating,
         removeWaitTimeRating,
-        removeDayOfWeekVisited,
         removeReviewTimestamp,
         removeFoodLocationName,
         removeAddress,
@@ -94,10 +80,21 @@ async function searchRevs(searchKey) {
         'SELECT * FROM Review WHERE ReviewID=:id',
         [searchKey]
     );
-    return result.rows;
-  }).catch((e) => {
-    Promise.reject(e.message);
-  });
+    return result.rows.map(row => {
+        return {
+            reviewID: row[0],
+            overallRating: row[1],
+            serviceRating: row[2],
+            waitTimeRating: row[3],
+            reviewTimestamp: row[4],
+            foodLocationName: row[5],
+            address: row[6],
+            postalCode: row[7],
+            country: row[8],
+            userID: row[9]
+        }
+    })
+  })
 }
 
 async function searchDishRevs(searchKey) {
@@ -196,6 +193,38 @@ async function getReviewIDs(name, address, postalCode, country) {
   });
 }
 
+async function getNumReviews(userID) {
+    console.log(userID)
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(`SELECT COUNT(*) FROM REVIEW WHERE USERID=:userID`,
+            {
+                userID: userID
+            }
+        );
+        if (result.rows.length === 0) {
+            return '';
+        }
+        return result.rows[0][0];
+    });
+}
+
+async function getNumReviewsForFoodLocation(name, address, postalCode, country) {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(`SELECT COUNT(*) FROM REVIEW WHERE FoodLocationName=:name AND Address=:address AND PostalCode=:postalCode AND Country=:country`,
+            {
+                name: name,
+                address: address,
+                postalCode: postalCode,
+                country: country
+            }
+        );
+        if (result.rows.length === 0) {
+            return '';
+        }
+        return result.rows[0][0];
+    });
+}
+
 module.exports = {
     insertReview,
     deleteReview,
@@ -204,5 +233,7 @@ module.exports = {
     searchDishRevs,
     getUserReviews,
     getUserAvgRatings,
-    getLocationAverageScore
+    getLocationAverageScore,
+    getNumReviews,
+    getNumReviewsForFoodLocation
 };

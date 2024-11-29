@@ -39,6 +39,11 @@ function AddDish() {
         ]);
     };
 
+    const handleDeleteClick = (index) => {
+        const updatedDishes = dishes.filter((_, i) => i !== index);
+        setDishes(updatedDishes);
+    };
+
     const handleInputChange = (index, field, value) => {
         const updatedDishes = [...dishes];
         updatedDishes[index][field] = value;
@@ -206,6 +211,14 @@ function AddDish() {
                                         />
                                     </div>
                                 )}
+
+                                <button
+                                    type="button"
+                                    className="btn btn-danger mt-2"
+                                    onClick={() => handleDeleteClick(index)}
+                                >
+                                    Delete Dish
+                                </button>
                             </div>
                         ))}
 

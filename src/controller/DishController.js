@@ -55,13 +55,7 @@ router.post('/get-dishes-with-fields', async (req, res) => {
 
 router.post('/get-lt-dish', async (req, res) => {
     try {
-        const result = await dishService.getLTDish(req.body.dishName, req.body.flName, req.body.address, req.body.postalCode, req.body.country);
-        if (!result) {
-            return res.status(404).json({
-                success: false,
-                error: 'Failed to get dishes matching food location: ' + req.body.dishName + req.body.flName + req.body.address + req.body.postalCode + req.body.country,
-            });
-        }
+        const result = await dishService.getLTDishes(req.body.flName, req.body.address, req.body.postalCode, req.body.country);
         res.json({
             success: true,
             data: result,
