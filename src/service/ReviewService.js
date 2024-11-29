@@ -80,7 +80,7 @@ async function searchDishRevs(searchKey) {
 async function getLocationAverageScore(foodLocationName, address, postalCode, country) {
     return await withOracleDB(async (connection) => {
         const result = await connection.execute(
-            `SELECT AVG(DISTINCT r.OVERALLRATING) FROM REVIEW r 
+            `SELECT AVG(r.OVERALLRATING) FROM REVIEW r 
                                      WHERE r.FOODLOCATIONNAME=:foodLocationName AND 
                                            R.ADDRESS=:address AND 
                                            POSTALCODE=:postalCode AND 
