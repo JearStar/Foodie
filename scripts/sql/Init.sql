@@ -195,34 +195,34 @@ COMMIT;
 
 
 INSERT INTO FoodLocation(FoodLocationName, TotalScore, NumReviews, Address, City, PostalCode, Country, Genre, FoodLocationSummaryID)
-VALUES ('Sushi Mura', 9,2, '6485 Oak Street', 'Vancouver', 'V6M 2W7', 'Canada', 'Japanese', NULL);
+VALUES ('Sushi Mura', 9,4, '6485 Oak Street', 'Vancouver', 'V6M 2W7', 'Canada', 'Japanese', NULL);
 
 INSERT INTO FoodLocation(FoodLocationName, TotalScore, NumReviews, Address, City, PostalCode, Country, Genre, FoodLocationSummaryID)
-VALUES ('Published on Main', 4, 1, '3593 Main Street', 'Vancouver', 'V5V 3N4', 'Canada', 'Mediterranean', NULL);
+VALUES ('Published on Main', 4, 3, '3593 Main Street', 'Vancouver', 'V5V 3N4', 'Canada', 'Mediterranean', NULL);
 
 INSERT INTO FoodLocation(FoodLocationName, TotalScore, NumReviews, Address, City, PostalCode, Country, Genre, FoodLocationSummaryID)
-VALUES ('McDonald''s', 3, 1, '470 Yonge Street', 'Toronto', 'M4Y 1X5', 'Canada', 'American', NULL);
+VALUES ('McDonald''s', 3, 2, '470 Yonge Street', 'Toronto', 'M4Y 1X5', 'Canada', 'American', NULL);
 
 INSERT INTO FoodLocation(FoodLocationName, TotalScore, NumReviews, Address, City, PostalCode, Country, Genre, FoodLocationSummaryID)
-VALUES ('Café de Flore', 5, 1, '172 Bd Saint-Germain', 'Paris', '75006', 'France', 'French', NULL);
+VALUES ('Café de Flore', 5, 2, '172 Bd Saint-Germain', 'Paris', '75006', 'France', 'French', NULL);
 
 INSERT INTO FoodLocation(FoodLocationName, TotalScore, NumReviews, Address, City, PostalCode, Country, Genre, FoodLocationSummaryID)
-VALUES ('Miku Vancouver', 4, 1, '200 Granville Street 70', 'Vancouver', 'V6C 1S4', 'Canada', 'Japanese', NULL);
+VALUES ('Miku Vancouver', 4, 3, '200 Granville Street 70', 'Vancouver', 'V6C 1S4', 'Canada', 'Japanese', NULL);
 
 INSERT INTO FoodLocationSummary (SummaryID, AverageRating, Description, FoodLocationName, Address, PostalCode, Country)
-VALUES ('aa8e21cb-901b-4a8b-afcc-070a7ea2f749', 4.5, 'A popular spot for authentic Japanese sushi and friendly service.', 'Sushi Mura', '6485 Oak Street', 'V6M 2W7', 'Canada');
+VALUES ('aa8e21cb-901b-4a8b-afcc-070a7ea2f749', 0, 'A popular spot for authentic Japanese sushi and friendly service.', 'Sushi Mura', '6485 Oak Street', 'V6M 2W7', 'Canada');
 
 INSERT INTO FoodLocationSummary (SummaryID, AverageRating, Description, FoodLocationName, Address, PostalCode, Country)
-VALUES ('243037b2-1999-483c-aeeb-d640291b4b93', 4.0, 'Known for its Mediterranean-inspired dishes with a modern twist.', 'Published on Main', '3593 Main Street', 'V5V 3N4', 'Canada');
+VALUES ('243037b2-1999-483c-aeeb-d640291b4b93', 0, 'Known for its Mediterranean-inspired dishes with a modern twist.', 'Published on Main', '3593 Main Street', 'V5V 3N4', 'Canada');
 
 INSERT INTO FoodLocationSummary (SummaryID, AverageRating, Description, FoodLocationName, Address, PostalCode, Country)
-VALUES ('38702090-77ff-4cfd-99e8-9f0d3b6fbef7', 3.0, 'A fast-food staple offering classic American burgers and fries.', 'McDonald''s', '470 Yonge Street', 'M4Y 1X5', 'Canada');
+VALUES ('38702090-77ff-4cfd-99e8-9f0d3b6fbef7', 0, 'A fast-food staple offering classic American burgers and fries.', 'McDonald''s', '470 Yonge Street', 'M4Y 1X5', 'Canada');
 
 INSERT INTO FoodLocationSummary (SummaryID, AverageRating, Description, FoodLocationName, Address, PostalCode, Country)
-VALUES ('cea54cdc-68fc-42c8-8e37-03ae151b458c', 5.0, 'A historic café in the heart of Paris, serving traditional French cuisine.', 'Café de Flore', '172 Bd Saint-Germain', '75006', 'France');
+VALUES ('cea54cdc-68fc-42c8-8e37-03ae151b458c', 0, 'A historic café in the heart of Paris, serving traditional French cuisine.', 'Café de Flore', '172 Bd Saint-Germain', '75006', 'France');
 
 INSERT INTO FoodLocationSummary (SummaryID, AverageRating, Description, FoodLocationName, Address, PostalCode, Country)
-VALUES ('e2085150-c55c-4aea-a08f-b398c86eeb97', 4.0, 'A highly rated Japanese restaurant with exquisite flavors and vibrant atmosphere.', 'Miku Vancouver', '200 Granville Street 70', 'V6C 1S4', 'Canada');
+VALUES ('e2085150-c55c-4aea-a08f-b398c86eeb97', 0, 'A highly rated Japanese restaurant with exquisite flavors and vibrant atmosphere.', 'Miku Vancouver', '200 Granville Street 70', 'V6C 1S4', 'Canada');
 
 UPDATE FoodLocation SET FoodLocationSummaryID = 'aa8e21cb-901b-4a8b-afcc-070a7ea2f749' WHERE FoodLocationName = 'Sushi Mura' AND Address = '6485 Oak Street' AND PostalCode = 'V6M 2W7' AND COUNTRY = 'Canada';
 UPDATE FoodLocation SET FoodLocationSummaryID = '243037b2-1999-483c-aeeb-d640291b4b93' WHERE FoodLocationName = 'Published on Main' AND Address = '3593 Main Street' AND PostalCode = 'V5V 3N4' AND COUNTRY = 'Canada';
