@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import {UserContext} from "../contexts/UserContext";
-import {formatISODate} from "../Helper";
+import {ADMIN_UUID, formatISODate} from "../Helper";
 
 const CommentCard = ({
                          commentID,
@@ -190,7 +190,7 @@ const CommentCard = ({
                                 <span className={`ms-2 fs-4 ${likeStatus ? "text-danger" : "text-dark"} fw-bold`}
                                       id="like-count">{likes}</span>
                             </div>
-                            {user.userID === userID && <button
+                            {(user.userID === userID || user.userID === ADMIN_UUID) && <button
                                 className="btn p-0 position-absolute top-0 end-0 m-2 text-muted"
                                 style={{
                                     fontSize: "1.5rem",

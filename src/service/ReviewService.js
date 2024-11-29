@@ -29,44 +29,12 @@ VALUES (:ReviewID, :OverallRating, :ServiceRating, :WaitTimeRating, SYSDATE, :Fo
   });
 }
 
-//DELETE DISH
-async function deleteReview(
-  removeReviewID,
-  removeOverallRating,
-  removeServiceRating,
-  removeWaitTimeRating,
-  removeDayOfWeekVisited,
-  removeReviewTimestamp,
-  removeFoodLocationName,
-  removeAddress,
-  removePostalCode,
-  removeCountry,
-  removeUserID
-) {
+async function deleteReview(reviewID) {
   return await withOracleDB(async (connection) => {
     const result = await connection.execute(
-      `DELETE FROM Review 
-                 WHERE ReviewID = :removeReviewID
-                 AND OverallRating = :removeOverallRating
-                 AND ServiceRating = :removeServiceRating
-                 AND WaitTimeRating = :removeWaitTimeRating
-                 AND ReviewTimestamp = :removeReviewTimestamp
-                 AND FoodLocationName = :removeFoodLocationName
-                 AND Address = :removeAddress 
-                 AND PostalCode = :removePostalCode 
-                 AND Country = :removeCountry
-                 AND UserID = :removeUserID`,
+      `DELETE FROM Review WHERE ReviewID = :reviewID`,
       {
-        removeReviewID,
-        removeOverallRating,
-        removeServiceRating,
-        removeWaitTimeRating,
-        removeReviewTimestamp,
-        removeFoodLocationName,
-        removeAddress,
-        removePostalCode,
-        removeCountry,
-        removeUserID,
+        reviewID: reviewID
       },
       { autoCommit: true }
     );

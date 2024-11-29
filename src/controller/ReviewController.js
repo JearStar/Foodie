@@ -68,6 +68,18 @@ router.post('/getDishReviews', async (req, res) => {
   }
 });
 
+router.post('/delete-review', async (req, res) => {
+  try {
+    const result = await reviewService.deleteReview(req.body.reviewID);
+    if (!result) {
+      return res.status(400).json({ success: false, error: 'Internal database error' });
+    }
+    res.json({ success: true });
+  } catch (e) {
+    res.status(500).json({ success: false, error: e.message });
+  }
+});
+
 
 /*
 ENDPOINT: GET /api/review/get-user-reviews

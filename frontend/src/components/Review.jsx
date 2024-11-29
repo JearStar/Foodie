@@ -3,7 +3,7 @@ import { UserContext } from "../contexts/UserContext";
 import { Link } from "react-router-dom";
 import CommentSection from "./CommentSection";
 import PhotoScroller from "./PhotoScroller";
-import { formatISODate } from "../Helper";
+import {ADMIN_UUID, formatISODate} from "../Helper";
 
 function Review({ ReviewID }) {
   const { user } = useContext(UserContext);
@@ -26,8 +26,8 @@ function Review({ ReviewID }) {
 
   const handleDeleteReview = async () => {
     try {
-      const response = await fetch(`/api/review/deleteReview`, {
-        method: "DELETE",
+      const response = await fetch(`/api/review/delete-review`, {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
@@ -187,12 +187,15 @@ function Review({ ReviewID }) {
                     {userName}
                   </Link>
                 </h5>
+                {(user.userID === userID || user.userID === ADMIN_UUID) &&
+
                 <button
                     className="btn btn-danger btn-sm"
                     onClick={handleDeleteReview}
                 >
                   <i className="bi bi-trash"></i> Delete
                 </button>
+                }
               </div>
               <div className="card-body">
                 <p className="mb-2 text-muted">
