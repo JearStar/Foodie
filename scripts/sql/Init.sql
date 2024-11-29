@@ -207,7 +207,7 @@ INSERT INTO FoodLocation(FoodLocationName, TotalScore, NumReviews, Address, City
 VALUES ('Café de Flore', 5, 1, '172 Bd Saint-Germain', 'Paris', '75006', 'France', 'French', NULL);
 
 INSERT INTO FoodLocation(FoodLocationName, TotalScore, NumReviews, Address, City, PostalCode, Country, Genre, FoodLocationSummaryID)
-VALUES ('Miku Vancouver', 4, 1, '200 Granville Street #70', 'Vancouver', 'V6C 1S4', 'Canada', 'Japanese', NULL);
+VALUES ('Miku Vancouver', 4, 1, '200 Granville Street 70', 'Vancouver', 'V6C 1S4', 'Canada', 'Japanese', NULL);
 
 INSERT INTO FoodLocationSummary (SummaryID, AverageRating, Description, FoodLocationName, Address, PostalCode, Country)
 VALUES ('aa8e21cb-901b-4a8b-afcc-070a7ea2f749', 4.5, 'A popular spot for authentic Japanese sushi and friendly service.', 'Sushi Mura', '6485 Oak Street', 'V6M 2W7', 'Canada');
@@ -222,13 +222,13 @@ INSERT INTO FoodLocationSummary (SummaryID, AverageRating, Description, FoodLoca
 VALUES ('cea54cdc-68fc-42c8-8e37-03ae151b458c', 5.0, 'A historic café in the heart of Paris, serving traditional French cuisine.', 'Café de Flore', '172 Bd Saint-Germain', '75006', 'France');
 
 INSERT INTO FoodLocationSummary (SummaryID, AverageRating, Description, FoodLocationName, Address, PostalCode, Country)
-VALUES ('e2085150-c55c-4aea-a08f-b398c86eeb97', 4.0, 'A highly rated Japanese restaurant with exquisite flavors and vibrant atmosphere.', 'Miku Vancouver', '200 Granville Street #70', 'V6C 1S4', 'Canada');
+VALUES ('e2085150-c55c-4aea-a08f-b398c86eeb97', 4.0, 'A highly rated Japanese restaurant with exquisite flavors and vibrant atmosphere.', 'Miku Vancouver', '200 Granville Street 70', 'V6C 1S4', 'Canada');
 
 UPDATE FoodLocation SET FoodLocationSummaryID = 'aa8e21cb-901b-4a8b-afcc-070a7ea2f749' WHERE FoodLocationName = 'Sushi Mura' AND Address = '6485 Oak Street' AND PostalCode = 'V6M 2W7' AND COUNTRY = 'Canada';
 UPDATE FoodLocation SET FoodLocationSummaryID = '243037b2-1999-483c-aeeb-d640291b4b93' WHERE FoodLocationName = 'Published on Main' AND Address = '3593 Main Street' AND PostalCode = 'V5V 3N4' AND COUNTRY = 'Canada';
 UPDATE FoodLocation SET FoodLocationSummaryID = '38702090-77ff-4cfd-99e8-9f0d3b6fbef7' WHERE FoodLocationName = 'McDonald''s' AND Address = '470 Yonge Street' AND PostalCode = 'M4Y 1X5' AND COUNTRY = 'Canada';
 UPDATE FoodLocation SET FoodLocationSummaryID = 'cea54cdc-68fc-42c8-8e37-03ae151b458c' WHERE FoodLocationName = 'Café de Flore' AND Address = '172 Bd Saint-Germain' AND PostalCode = '75006' AND COUNTRY = 'France';
-UPDATE FoodLocation SET FoodLocationSummaryID = 'e2085150-c55c-4aea-a08f-b398c86eeb97' WHERE FoodLocationName = 'Miku Vancouver' AND Address = '200 Granville Street #70' AND PostalCode = 'V6C 1S4' AND COUNTRY = 'Canada';
+UPDATE FoodLocation SET FoodLocationSummaryID = 'e2085150-c55c-4aea-a08f-b398c86eeb97' WHERE FoodLocationName = 'Miku Vancouver' AND Address = '200 Granville Street 70' AND PostalCode = 'V6C 1S4' AND COUNTRY = 'Canada';
 
 
 
@@ -301,19 +301,19 @@ VALUES ('White Tuna Belly Fillet and Tomatoes', 20.00, 'snack', 1, 1, 0, 'Café 
 COMMIT;
 
 INSERT INTO Dish (DishName, Price, Type, isHalal, isGlutenFree, isVegetarian, FoodLocationName, Address, PostalCode, Country)
-VALUES ('Aburi Salmon Oshi', 16.00, 'sushi', 0, 1, 0, 'Miku Vancouver', '200 Granville Street #70', 'V6C 1S4', 'Canada');
+VALUES ('Aburi Salmon Oshi', 16.00, 'sushi', 0, 1, 0, 'Miku Vancouver', '200 Granville Street 70', 'V6C 1S4', 'Canada');
 
 INSERT INTO Dish (DishName, Price, Type, isHalal, isGlutenFree, isVegetarian, FoodLocationName, Address, PostalCode, Country)
-VALUES ('Minato Platter', 160.00, 'sushi', 0, 1, 0, 'Miku Vancouver', '200 Granville Street #70', 'V6C 1S4', 'Canada');
+VALUES ('Minato Platter', 160.00, 'sushi', 0, 1, 0, 'Miku Vancouver', '200 Granville Street 70', 'V6C 1S4', 'Canada');
 
 INSERT INTO Dish (DishName, Price, Type, isHalal, isGlutenFree, isVegetarian, FoodLocationName, Address, PostalCode, Country)
-VALUES ('Kyoto Saikyo Miso Sablefish', 48.00, 'sushi', 0, 1, 0, 'Miku Vancouver', '200 Granville Street #70', 'V6C 1S4', 'Canada');
+VALUES ('Kyoto Saikyo Miso Sablefish', 48.00, 'sushi', 0, 1, 0, 'Miku Vancouver', '200 Granville Street 70', 'V6C 1S4', 'Canada');
 
 INSERT INTO Dish (DishName, Price, Type, isHalal, isGlutenFree, isVegetarian, FoodLocationName, Address, PostalCode, Country)
-VALUES ('Wagyu Steak 5oz', 160.00, 'steak', 1, 1, 0, 'Miku Vancouver', '200 Granville Street #70', 'V6C 1S4', 'Canada');
+VALUES ('Wagyu Steak 5oz', 160.00, 'steak', 1, 1, 0, 'Miku Vancouver', '200 Granville Street 70', 'V6C 1S4', 'Canada');
 
 INSERT INTO Dish (DishName, Price, Type, isHalal, isGlutenFree, isVegetarian, FoodLocationName, Address, PostalCode, Country)
-VALUES ('Wagyu Steak 10oz', 320.00, 'steak', 1, 1, 0, 'Miku Vancouver', '200 Granville Street #70', 'V6C 1S4', 'Canada');
+VALUES ('Wagyu Steak 10oz', 320.00, 'steak', 1, 1, 0, 'Miku Vancouver', '200 Granville Street 70', 'V6C 1S4', 'Canada');
 
 COMMIT;
 
@@ -351,10 +351,10 @@ INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, Revi
 VALUES ('e70b45f1-5b25-4df7-82c3-b24bafedf2c1', 5, 5, 5, '2024-10-05 16:15:00', 'Café de Flore', '172 Bd Saint-Germain', '75006', 'France', 'b6751637-b434-419e-ae0d-1a0c7c405053');
 
 INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID)
-VALUES ('12b671b9-3826-46ba-a9d2-dc5a2f74ad64', 4, 4, 3, '2024-09-30 14:00:00', 'Miku Vancouver', '200 Granville Street #70', 'V6C 1S4', 'Canada', '88e5791d-0fd7-4721-b8f6-5aad4845f095');
+VALUES ('12b671b9-3826-46ba-a9d2-dc5a2f74ad64', 4, 4, 3, '2024-09-30 14:00:00', 'Miku Vancouver', '200 Granville Street 70', 'V6C 1S4', 'Canada', '88e5791d-0fd7-4721-b8f6-5aad4845f095');
 
 INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID)
-VALUES ('d43e0f79-e09f-4bc3-ad48-c5ecead2870a', 3, 4, 3, '2024-10-21 15:30:00', 'Miku Vancouver', '200 Granville Street #70', 'V6C 1S4', 'Canada', '4d7577fc-636e-40b1-ab1f-f3c12422c84a');
+VALUES ('d43e0f79-e09f-4bc3-ad48-c5ecead2870a', 3, 4, 3, '2024-10-21 15:30:00', 'Miku Vancouver', '200 Granville Street 70', 'V6C 1S4', 'Canada', '4d7577fc-636e-40b1-ab1f-f3c12422c84a');
 
 --
 INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID)
@@ -370,7 +370,7 @@ INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, Revi
 VALUES ('d0c54f1b-7db8-495e-9fb8-60f09a16c6de', 5, 5, 5, '2024-10-14 19:00:00', 'Café de Flore', '172 Bd Saint-Germain', '75006', 'France', '8141ad7b-e670-44ff-bc3b-d9ea6de3eacf');
 
 INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID)
-VALUES ('35f0cd78-941c-4d29-806b-00a41247b328', 4, 4, 3, '2024-09-30 14:30:00', 'Miku Vancouver', '200 Granville Street #70', 'V6C 1S4', 'Canada', 'af943d85-91e5-4089-b20f-8923d4949b2d');
+VALUES ('35f0cd78-941c-4d29-806b-00a41247b328', 4, 4, 3, '2024-09-30 14:30:00', 'Miku Vancouver', '200 Granville Street 70', 'V6C 1S4', 'Canada', 'af943d85-91e5-4089-b20f-8923d4949b2d');
 
 INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID)
 VALUES ('e20123dc-b70c-4fa8-b27b-604e3f2c7498', 3, 3, 4, '2024-10-20 10:15:00', 'Sushi Mura', '6485 Oak Street', 'V6M 2W7', 'Canada', '3c8b4731-3483-4a78-b63a-c5f72c8d51c2');
@@ -446,14 +446,14 @@ INSERT INTO ReviewsDish (ReviewID, DishName, DishRating, FOODLOCATIONNAME, ADDRE
 VALUES ('e70b45f1-5b25-4df7-82c3-b24bafedf2c1', 'Croque Monsieur', 5, 'Café de Flore', '172 Bd Saint-Germain', '75006', 'France');
 
 INSERT INTO ReviewsDish (ReviewID, DishName, DishRating, FOODLOCATIONNAME, ADDRESS, POSTALCODE, COUNTRY)
-VALUES ('12b671b9-3826-46ba-a9d2-dc5a2f74ad64', 'Aburi Salmon Oshi', 4, 'Miku Vancouver', '200 Granville Street #70', 'V6C 1S4', 'Canada');
+VALUES ('12b671b9-3826-46ba-a9d2-dc5a2f74ad64', 'Aburi Salmon Oshi', 4, 'Miku Vancouver', '200 Granville Street 70', 'V6C 1S4', 'Canada');
 
 INSERT INTO ReviewsDish (ReviewID, DishName, DishRating, FOODLOCATIONNAME, ADDRESS, POSTALCODE, COUNTRY)
-VALUES ('d43e0f79-e09f-4bc3-ad48-c5ecead2870a', 'Aburi Salmon Oshi', 4, 'Miku Vancouver', '200 Granville Street #70', 'V6C 1S4', 'Canada');
+VALUES ('d43e0f79-e09f-4bc3-ad48-c5ecead2870a', 'Aburi Salmon Oshi', 4, 'Miku Vancouver', '200 Granville Street 70', 'V6C 1S4', 'Canada');
 INSERT INTO ReviewsDish (ReviewID, DishName, DishRating, FOODLOCATIONNAME, ADDRESS, POSTALCODE, COUNTRY)
-VALUES ('d43e0f79-e09f-4bc3-ad48-c5ecead2870a', 'Minato Platter', 5, 'Miku Vancouver', '200 Granville Street #70', 'V6C 1S4', 'Canada');
+VALUES ('d43e0f79-e09f-4bc3-ad48-c5ecead2870a', 'Minato Platter', 5, 'Miku Vancouver', '200 Granville Street 70', 'V6C 1S4', 'Canada');
 INSERT INTO ReviewsDish (ReviewID, DishName, DishRating, FOODLOCATIONNAME, ADDRESS, POSTALCODE, COUNTRY)
-VALUES ('d43e0f79-e09f-4bc3-ad48-c5ecead2870a', 'Wagyu Steak 5oz', 3, 'Miku Vancouver', '200 Granville Street #70', 'V6C 1S4', 'Canada');
+VALUES ('d43e0f79-e09f-4bc3-ad48-c5ecead2870a', 'Wagyu Steak 5oz', 3, 'Miku Vancouver', '200 Granville Street 70', 'V6C 1S4', 'Canada');
 
 COMMIT;
 
