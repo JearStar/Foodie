@@ -231,6 +231,54 @@ UPDATE FoodLocation SET FoodLocationSummaryID = 'cea54cdc-68fc-42c8-8e37-03ae151
 UPDATE FoodLocation SET FoodLocationSummaryID = 'e2085150-c55c-4aea-a08f-b398c86eeb97' WHERE FoodLocationName = 'Miku Vancouver' AND Address = '200 Granville Street 70' AND PostalCode = 'V6C 1S4' AND COUNTRY = 'Canada';
 
 
+INSERT INTO FoodLocation(FoodLocationName, TotalScore, NumReviews, Address, City, PostalCode, Country, Genre, FoodLocationSummaryID) VALUES ('McDonald''s', 0, 1, '10 Dundas Street East', 'Toronto', 'M5B 2G9', 'Canada', 'American', NULL);
+INSERT INTO FoodLocation(FoodLocationName, TotalScore, NumReviews, Address, City, PostalCode, Country, Genre, FoodLocationSummaryID) VALUES ('McDonald''s', 0, 1, '250 Front Street West', 'Toronto', 'M5V 3G5', 'Canada', 'American', NULL);
+INSERT INTO FoodLocation(FoodLocationName, TotalScore, NumReviews, Address, City, PostalCode, Country, Genre, FoodLocationSummaryID) VALUES ('McDonald''s', 0, 1, '123 Queen Street West', 'Toronto', 'M5H 3M9', 'Canada', 'American', NULL);
+INSERT INTO FoodLocation(FoodLocationName, TotalScore, NumReviews, Address, City, PostalCode, Country, Genre, FoodLocationSummaryID) VALUES ('McDonald''s', 0, 1, '700 Bay Street', 'Toronto', 'M5G 1Z6', 'Canada', 'American', NULL);
+
+
+INSERT INTO FoodLocation(FoodLocationName, TotalScore, NumReviews, Address, City, PostalCode, Country, Genre, FoodLocationSummaryID) VALUES ('McDonald''s', 0, 1, '500 Robson Street', 'Vancouver', 'V6B 2B7', 'Canada', 'American', NULL);
+INSERT INTO FoodLocation(FoodLocationName, TotalScore, NumReviews, Address, City, PostalCode, Country, Genre, FoodLocationSummaryID) VALUES ('McDonald''s', 0, 1, '800 Granville Street', 'Vancouver', 'V6Z 1K3', 'Canada', 'American', NULL);
+INSERT INTO FoodLocation(FoodLocationName, TotalScore, NumReviews, Address, City, PostalCode, Country, Genre, FoodLocationSummaryID) VALUES ('McDonald''s', 0, 1, '1010 West Broadway', 'Vancouver', 'V6H 1E6', 'Canada', 'American', NULL);
+INSERT INTO FoodLocation(FoodLocationName, TotalScore, NumReviews, Address, City, PostalCode, Country, Genre, FoodLocationSummaryID) VALUES ('McDonald''s', 0, 1, '1615 Davie Street', 'Vancouver', 'V6G 1W1', 'Canada', 'American', NULL);
+
+INSERT INTO FoodLocationSummary (SummaryID, AverageRating, Description, FoodLocationName, Address, PostalCode, Country) VALUES ('ad7ac5ee-86ec-4705-9ec8-ac5797cd77ba', 3.0, 'A fast-food staple offering classic American burgers and fries.', 'McDonald''s', '10 Dundas Street East', 'M5B 2G9', 'Canada');
+INSERT INTO FoodLocationSummary (SummaryID, AverageRating, Description, FoodLocationName, Address, PostalCode, Country) VALUES ('5c518297-ab52-48c0-9184-039710f1cb73', 3.0, 'A fast-food staple offering classic American burgers and fries.', 'McDonald''s', '250 Front Street West', 'M5V 3G5', 'Canada');
+INSERT INTO FoodLocationSummary (SummaryID, AverageRating, Description, FoodLocationName, Address, PostalCode, Country) VALUES ('d6bb6b98-7ce7-477a-8720-b30c76e4691e', 3.0, 'A fast-food staple offering classic American burgers and fries.', 'McDonald''s', '123 Queen Street West', 'M5H 3M9', 'Canada');
+INSERT INTO FoodLocationSummary (SummaryID, AverageRating, Description, FoodLocationName, Address, PostalCode, Country) VALUES ('851e4249-0928-469a-90df-8cf78d17d5eb', 3.0, 'A fast-food staple offering classic American burgers and fries.', 'McDonald''s', '700 Bay Street', 'M5G 1Z6', 'Canada');
+
+INSERT INTO FoodLocationSummary (SummaryID, AverageRating, Description, FoodLocationName, Address, PostalCode, Country) VALUES ('6bfe58bb-5d0a-4a23-915c-7270c7072087', 3.0, 'A fast-food staple offering classic American burgers and fries.', 'McDonald''s', '500 Robson Street',    'V6B 2B7', 'Canada');
+INSERT INTO FoodLocationSummary (SummaryID, AverageRating, Description, FoodLocationName, Address, PostalCode, Country) VALUES ('a394d26b-b2d9-4978-b3b8-ef8032061ed0', 3.0, 'A fast-food staple offering classic American burgers and fries.', 'McDonald''s', '800 Granville Street', 'V6Z 1K3', 'Canada');
+INSERT INTO FoodLocationSummary (SummaryID, AverageRating, Description, FoodLocationName, Address, PostalCode, Country) VALUES ('e2e02310-85a3-44c5-b445-0f3843dbdfe1', 3.0, 'A fast-food staple offering classic American burgers and fries.', 'McDonald''s', '1010 West Broadway',   'V6H 1E6', 'Canada');
+INSERT INTO FoodLocationSummary (SummaryID, AverageRating, Description, FoodLocationName, Address, PostalCode, Country) VALUES ('27d0be50-bce1-420e-88d2-998d1c3d1112', 3.0, 'A fast-food staple offering classic American burgers and fries.', 'McDonald''s', '1615 Davie Street',    'V6G 1W1', 'Canada');
+
+UPDATE FoodLocation SET FoodLocationSummaryID = 'ad7ac5ee-86ec-4705-9ec8-ac5797cd77ba' WHERE FoodLocationName = 'McDonald''s' AND Address = '10 Dundas Street East' AND PostalCode = 'M5B 2G9' AND COUNTRY = 'Canada';
+UPDATE FoodLocation SET FoodLocationSummaryID = '5c518297-ab52-48c0-9184-039710f1cb73' WHERE FoodLocationName = 'McDonald''s' AND Address = '250 Front Street West' AND PostalCode = 'M5V 3G5' AND COUNTRY = 'Canada';
+UPDATE FoodLocation SET FoodLocationSummaryID = 'd6bb6b98-7ce7-477a-8720-b30c76e4691e' WHERE FoodLocationName = 'McDonald''s' AND Address = '123 Queen Street West' AND PostalCode = 'M5H 3M9' AND COUNTRY = 'Canada';
+UPDATE FoodLocation SET FoodLocationSummaryID = '851e4249-0928-469a-90df-8cf78d17d5eb' WHERE FoodLocationName = 'McDonald''s' AND Address = '700 Bay Street' AND PostalCode = 'M5G 1Z6' AND COUNTRY = 'Canada';
+
+UPDATE FoodLocation SET FoodLocationSummaryID = '6bfe58bb-5d0a-4a23-915c-7270c7072087' WHERE FoodLocationName = 'McDonald''s' AND Address = '500 Robson Street' AND PostalCode = 'V6B 2B7' AND COUNTRY = 'Canada';
+UPDATE FoodLocation SET FoodLocationSummaryID = 'a394d26b-b2d9-4978-b3b8-ef8032061ed0' WHERE FoodLocationName = 'McDonald''s' AND Address = '800 Granville Street' AND PostalCode = 'V6Z 1K3' AND COUNTRY = 'Canada';
+UPDATE FoodLocation SET FoodLocationSummaryID = 'e2e02310-85a3-44c5-b445-0f3843dbdfe1' WHERE FoodLocationName = 'McDonald''s' AND Address = '1010 West Broadway' AND PostalCode = 'V6H 1E6' AND COUNTRY = 'Canada';
+UPDATE FoodLocation SET FoodLocationSummaryID = '27d0be50-bce1-420e-88d2-998d1c3d1112' WHERE FoodLocationName = 'McDonald''s' AND Address = '1615 Davie Street' AND PostalCode = 'V6G 1W1' AND COUNTRY = 'Canada';
+
+INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID) VALUES ('b234168e-dfd6-4cb7-87b5-c713944c64a0', 3, 3, 2, '2024-09-25 10:00:00', 'McDonald''s', '10 Dundas Street East', 'M5B 2G9', 'Canada', '5aba12e6-a3b0-4d19-a078-6f9f41a81eec');
+INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID) VALUES ('471fbe79-ee46-4d49-9b13-4da06c7180e2', 3, 3, 2, '2024-09-25 10:00:00', 'McDonald''s', '250 Front Street West', 'M5V 3G5', 'Canada', '5aba12e6-a3b0-4d19-a078-6f9f41a81eec');
+INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID) VALUES ('745e3047-0384-4dac-97d8-e95ce5fa5e5d', 3, 3, 2, '2024-09-25 10:00:00', 'McDonald''s', '123 Queen Street West', 'M5H 3M9', 'Canada', '5aba12e6-a3b0-4d19-a078-6f9f41a81eec');
+INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID) VALUES ('70eeb82f-d051-41cd-a2ad-f4e56e12f46c', 3, 3, 2, '2024-09-25 10:00:00', 'McDonald''s', '700 Bay Street',        'M5G 1Z6', 'Canada', '5aba12e6-a3b0-4d19-a078-6f9f41a81eec');
+
+INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID) VALUES ('14dc92bd-882e-46da-b3d4-59d13e8e3d7b', 3, 3, 2, '2024-09-25 10:00:00', 'McDonald''s', '10 Dundas Street East', 'M5B 2G9', 'Canada', '92ad6d5e-b2ab-4e19-9099-bc6fb6f8c245');
+INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID) VALUES ('a6587eae-107c-4508-babf-b4fe4312797b', 3, 3, 2, '2024-09-25 10:00:00', 'McDonald''s', '250 Front Street West', 'M5V 3G5', 'Canada', '92ad6d5e-b2ab-4e19-9099-bc6fb6f8c245');
+INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID) VALUES ('751e61df-f561-49a7-87af-0145a228bd4c', 3, 3, 2, '2024-09-25 10:00:00', 'McDonald''s', '123 Queen Street West', 'M5H 3M9', 'Canada', '92ad6d5e-b2ab-4e19-9099-bc6fb6f8c245');
+INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID) VALUES ('3ab9c463-edc8-4813-9e46-15ac7abd433d', 3, 3, 2, '2024-09-25 10:00:00', 'McDonald''s', '700 Bay Street',        'M5G 1Z6', 'Canada', '92ad6d5e-b2ab-4e19-9099-bc6fb6f8c245');
+
+INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID) VALUES ('89eqb82f-d051-41cd-a2ad-f4e56e12f46c', 3, 3, 2, '2024-09-25 10:00:00', 'McDonald''s', '700 Bay Street',        'M5G 1Z6', 'Canada', '4d7577fc-636e-40b1-ab1f-f3c12422c84a');
+
+INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID) VALUES ('4584cf68-103b-48dc-8c94-000b8baeeb70', 3, 3, 2, '2024-09-25 10:00:00', 'McDonald''s', '500 Robson Street',    'V6B 2B7', 'Canada', '4d7577fc-636e-40b1-ab1f-f3c12422c84a');
+INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID) VALUES ('6da89bf0-47e1-4781-b07a-7c74fa534a31', 3, 3, 2, '2024-09-25 10:00:00', 'McDonald''s', '800 Granville Street', 'V6Z 1K3', 'Canada', '4d7577fc-636e-40b1-ab1f-f3c12422c84a');
+INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID) VALUES ('63451b7e-39d9-48f9-8d60-012ae7ee50f5', 3, 3, 2, '2024-09-25 10:00:00', 'McDonald''s', '1010 West Broadway',   'V6H 1E6', 'Canada', '4d7577fc-636e-40b1-ab1f-f3c12422c84a');
+INSERT INTO Review (ReviewID, OverallRating, ServiceRating, WaitTimeRating, ReviewTimestamp, FoodLocationName, Address, PostalCode, Country, UserID) VALUES ('2c254761-5e4e-4507-845f-da97006674a7', 3, 3, 2, '2024-09-25 10:00:00', 'McDonald''s', '1615 Davie Street',    'V6G 1W1', 'Canada', '4d7577fc-636e-40b1-ab1f-f3c12422c84a');
+
 
 INSERT INTO Dish (DishName, Price, Type, isHalal, isGlutenFree, isVegetarian, FoodLocationName, Address, PostalCode, Country)
 VALUES ('Spicy Tuna Roll', 12.99, 'sushi', 1, 0, 0, 'Sushi Mura', '6485 Oak Street', 'V6M 2W7', 'Canada');
