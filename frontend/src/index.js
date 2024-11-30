@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { UserProvider } from './contexts/UserContext';
-import FoodLocation from "./pages/FoodLocation";
+import FoodLocation from './pages/FoodLocation';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

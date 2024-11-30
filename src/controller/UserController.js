@@ -63,7 +63,6 @@ router.post('/change-password', async (req, res) => {
   }
 });
 
-
 router.post('/check-old-password', async (req, res) => {
   try {
     const result = await userService.authenticateUser(req.body.email, req.body.password);

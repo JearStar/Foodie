@@ -1,12 +1,11 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../contexts/UserContext';
-import {Link} from "react-router-dom";
-import review from "../components/Review";
-import Popular from "../components/Popular";
-import HighlyRated from "../components/HighlyRated";
+import { Link } from 'react-router-dom';
+import review from '../components/Review';
+import Popular from '../components/Popular';
+import HighlyRated from '../components/HighlyRated';
 
 import '../index.css';
-
 
 function Home() {
   const { user } = useContext(UserContext);
@@ -47,7 +46,7 @@ function Home() {
     } else {
       return reviewsConds + ') ';
     }
-  }
+  };
 
   const processRatingsConds = () => {
     let ratingsConds = 'AND ( ';
@@ -83,7 +82,7 @@ function Home() {
     } else {
       return ratingsConds + ') ';
     }
-  }
+  };
 
   const processCountryConds = () => {
     let countryConds = 'AND ( ';
@@ -119,7 +118,7 @@ function Home() {
     } else {
       return countryConds + ') ';
     }
-  }
+  };
 
   const constructQueryWhere = () => {
     let query = `(Lower(FoodLocationName) LIKE '%${search.toLowerCase()}%') `;
@@ -132,7 +131,7 @@ function Home() {
     query = query + reviewsConds + ratingsConds + countryConds;
 
     return query;
-  }
+  };
 
   // FYI, this returns the full FoodLocation and FoodLocationSummary for each search result.
   const sendSearch = async (e) => {
@@ -148,7 +147,7 @@ function Home() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ query: queryWhere}),
+        body: JSON.stringify({ query: queryWhere }),
       });
       let res = await response.json();
 
@@ -156,20 +155,20 @@ function Home() {
         setError(res.error);
         return null;
       }
-      const foodLocations = res["FoodLocations"];
-      if (typeof foodLocations === "object") {
+      const foodLocations = res['FoodLocations'];
+      if (typeof foodLocations === 'object') {
         setSearchLocs(foodLocations);
         let summariesArr = Array(foodLocations.length);
         let counter = 0;
         for (const result of foodLocations) {
           summariesArr[counter] = await getFLSummary(result);
-          counter ++;
+          counter++;
         }
         setSearchSummaries(summariesArr);
       } //hi
 
       if (foodLocations.length === 0) {
-        setMessage("No results found.");
+        setMessage('No results found.');
       } else {
         setMessage(`${foodLocations.length} result${foodLocations.length === 1 ? '' : 's'} found`);
       }
@@ -191,11 +190,12 @@ function Home() {
         flName: foodLocationObj[0],
         address: foodLocationObj[1],
         postalCode: foodLocationObj[2],
-        country: foodLocationObj[3]}),
+        country: foodLocationObj[3],
+      }),
     });
     let res = await response.json();
-    const summary = res["data"];
-    if (typeof summary === "object") {
+    const summary = res['data'];
+    if (typeof summary === 'object') {
       return summary[0];
     }
 
@@ -203,7 +203,7 @@ function Home() {
       setError(res.error);
       return null;
     }
-  }
+  };
 
   // To display a dynamic number of results, I figure something like this would work nice.
   const displayResults = () => {
@@ -213,146 +213,182 @@ function Home() {
     } else {
       for (const result of searchSummaries) {
         dispArray.push(
-            <div className="row mb-3">
-              <Link  to={`/location/${result[3]}/${result[6]}/${result[5]}/${result[4]}`} >
-                View {result[3]}, {result[4]}, {result[5]}, {result[6]}
-              </Link>
-              {result[2]}
-            </div>
+          <div className="row mb-3">
+            <Link to={`/location/${result[3]}/${result[6]}/${result[5]}/${result[4]}`}>
+              View {result[3]}, {result[4]}, {result[5]}, {result[6]}
+            </Link>
+            {result[2]}
+          </div>
         );
       }
     }
     return dispArray;
-  }
+  };
 
   const Checkbox = ({ label, value, onChange, text }) => {
     return (
-        <div className='row'>
-          <label>
-            <input type="checkbox" checked={value} onChange={onChange}/>
-            {label}
-          </label>
-           {text}
-        </div>
+      <div className="row">
+        <label>
+          <input type="checkbox" checked={value} onChange={onChange} />
+          {label}
+        </label>
+        {text}
+      </div>
     );
   };
 
   return (
-      <div>
-        <h1 className="text-light text-center mt-3">
-          Hi {user.firstName} {user.lastName}! What can I do for you today?
-        </h1>
-        <div className='container mt-4 d-flex justify-content-center'>
-          <form className='d-flex' style={{width: '40%'}} role='search' onSubmit={sendSearch}>
-            <input
-                className='form-control'
-                type='search'
-                placeholder='Search locations...'
-                aria-label='Search'
-                title='Enter a search term'
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-            />
-            <button className="button" type='submit' disabled={search.trim() === ''}>
-              Search
-            </button>
-          </form>
-        </div>
-        <button  className="button" disabled={search.trim() === ''} onClick={() => {
+    <div>
+      <h1 className="text-light text-center mt-3">
+        Hi {user.firstName} {user.lastName}! What can I do for you today?
+      </h1>
+      <div className="container mt-4 d-flex justify-content-center">
+        <form className="d-flex" style={{ width: '40%' }} role="search" onSubmit={sendSearch}>
+          <input
+            className="form-control"
+            type="search"
+            placeholder="Search locations..."
+            aria-label="Search"
+            title="Enter a search term"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <button className="button" type="submit" disabled={search.trim() === ''}>
+            Search
+          </button>
+        </form>
+      </div>
+      <button
+        className="button"
+        disabled={search.trim() === ''}
+        onClick={() => {
           setAdvancedFilters(!advancedFilters);
           setNumReviewsBoxes([false, false, false]);
           setRatingBoxes([false, false, false, false]);
           setCountryBoxes([false, false, false, false, '']);
-        }}>
-          {advancedFilters ? <div>
-            Hide advanced filters
-          </div> : <div>
-            Show advanced filters
-          </div>}
-        </button>
-        {advancedFilters ? <div className='row'>
-          <div className='col'>
+        }}
+      >
+        {advancedFilters ? <div>Hide advanced filters</div> : <div>Show advanced filters</div>}
+      </button>
+      {advancedFilters ? (
+        <div className="row">
+          <div className="col">
             <strong>Number of reviews:</strong>
-            <Checkbox text="5 or more" onChange={() => {
-              let reviewsBoxes = numReviewsBoxes;
-              reviewsBoxes[0] = !reviewsBoxes[0];
-              setNumReviewsBoxes(reviewsBoxes);
-            }}/>
-            <Checkbox text="2-4" onChange={() => {
-              let reviewsBoxes = numReviewsBoxes;
-              reviewsBoxes[1] = !reviewsBoxes[1];
-              setNumReviewsBoxes(reviewsBoxes);
-            }}/>
-            <Checkbox text="1 or less" onChange={() => {
-              let reviewsBoxes = numReviewsBoxes;
-              reviewsBoxes[2] = !reviewsBoxes[2];
-              setNumReviewsBoxes(reviewsBoxes);
-            }}/>
+            <Checkbox
+              text="5 or more"
+              onChange={() => {
+                let reviewsBoxes = numReviewsBoxes;
+                reviewsBoxes[0] = !reviewsBoxes[0];
+                setNumReviewsBoxes(reviewsBoxes);
+              }}
+            />
+            <Checkbox
+              text="2-4"
+              onChange={() => {
+                let reviewsBoxes = numReviewsBoxes;
+                reviewsBoxes[1] = !reviewsBoxes[1];
+                setNumReviewsBoxes(reviewsBoxes);
+              }}
+            />
+            <Checkbox
+              text="1 or less"
+              onChange={() => {
+                let reviewsBoxes = numReviewsBoxes;
+                reviewsBoxes[2] = !reviewsBoxes[2];
+                setNumReviewsBoxes(reviewsBoxes);
+              }}
+            />
           </div>
-          <div className='col'>
+          <div className="col">
             <strong>Country:</strong>
-            <Checkbox text="Canada" onChange={() => {
-              let cBoxes = countryBoxes;
-              cBoxes[0] = !cBoxes[0];
-              setCountryBoxes(cBoxes);
-            }}/>
-            <Checkbox text="France" onChange={() => {
-              let cBoxes = countryBoxes;
-              cBoxes[1] = !cBoxes[1];
-              setCountryBoxes(cBoxes);
-            }}/>
-            <Checkbox text="USA" onChange={() => {
-              let cBoxes = countryBoxes;
-              cBoxes[2] = !cBoxes[2];
-              setCountryBoxes(cBoxes);
-            }}/>
-            <div className='row mb-3'>
-              <Checkbox text="Other:" onChange={() => {
+            <Checkbox
+              text="Canada"
+              onChange={() => {
                 let cBoxes = countryBoxes;
-                cBoxes[3] = !cBoxes[3];
+                cBoxes[0] = !cBoxes[0];
                 setCountryBoxes(cBoxes);
-              }}/>
-              <input placeholder='Start entering a contry...'
-                     onChange={(e) => {
-                       let cBoxes = countryBoxes;
-                       cBoxes[4] = e.target.value.toLowerCase();
-                       setCountryBoxes(cBoxes);
-                     }}/>
+              }}
+            />
+            <Checkbox
+              text="France"
+              onChange={() => {
+                let cBoxes = countryBoxes;
+                cBoxes[1] = !cBoxes[1];
+                setCountryBoxes(cBoxes);
+              }}
+            />
+            <Checkbox
+              text="USA"
+              onChange={() => {
+                let cBoxes = countryBoxes;
+                cBoxes[2] = !cBoxes[2];
+                setCountryBoxes(cBoxes);
+              }}
+            />
+            <div className="row mb-3">
+              <Checkbox
+                text="Other:"
+                onChange={() => {
+                  let cBoxes = countryBoxes;
+                  cBoxes[3] = !cBoxes[3];
+                  setCountryBoxes(cBoxes);
+                }}
+              />
+              <input
+                placeholder="Start entering a contry..."
+                onChange={(e) => {
+                  let cBoxes = countryBoxes;
+                  cBoxes[4] = e.target.value.toLowerCase();
+                  setCountryBoxes(cBoxes);
+                }}
+              />
             </div>
           </div>
-          <div className='col'>
+          <div className="col">
             <strong>Average rating:</strong>
-            <Checkbox text=">4" onChange={() => {
-              let rBoxes = ratingBoxes;
-              rBoxes[0] = !rBoxes[0];
-              setRatingBoxes(rBoxes);
-            }}/>
-            <Checkbox text="3-4" onChange={() => {
-              let rBoxes = ratingBoxes;
-              rBoxes[1] = !rBoxes[1];
-              setRatingBoxes(rBoxes);
-            }}/>
-            <Checkbox text="2-3" onChange={() => {
-              let rBoxes = ratingBoxes;
-              rBoxes[2] = !rBoxes[2];
-              setRatingBoxes(rBoxes);
-            }}/>
-            <Checkbox text="<2" onChange={() => {
-              let rBoxes = ratingBoxes;
-              rBoxes[3] = !rBoxes[3];
-              setRatingBoxes(rBoxes);
-            }}/>
+            <Checkbox
+              text=">4"
+              onChange={() => {
+                let rBoxes = ratingBoxes;
+                rBoxes[0] = !rBoxes[0];
+                setRatingBoxes(rBoxes);
+              }}
+            />
+            <Checkbox
+              text="3-4"
+              onChange={() => {
+                let rBoxes = ratingBoxes;
+                rBoxes[1] = !rBoxes[1];
+                setRatingBoxes(rBoxes);
+              }}
+            />
+            <Checkbox
+              text="2-3"
+              onChange={() => {
+                let rBoxes = ratingBoxes;
+                rBoxes[2] = !rBoxes[2];
+                setRatingBoxes(rBoxes);
+              }}
+            />
+            <Checkbox
+              text="<2"
+              onChange={() => {
+                let rBoxes = ratingBoxes;
+                rBoxes[3] = !rBoxes[3];
+                setRatingBoxes(rBoxes);
+              }}
+            />
           </div>
-        </div> : ""}
-        <label className="form-label text-center text-light">
-          {message}
-        </label>
-        <div> {displayResults()} </div>
+        </div>
+      ) : (
+        ''
+      )}
+      <label className="form-label text-center text-light">{message}</label>
+      <div> {displayResults()} </div>
 
-        <Popular />
-        <HighlyRated />
-
-      </div>
+      <Popular />
+      <HighlyRated />
+    </div>
   );
 }
 

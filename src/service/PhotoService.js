@@ -16,14 +16,13 @@ async function insertPhoto(photo) {
     );
 
     return result.rowsAffected && result.rowsAffected > 0;
-  })
+  });
 }
 
-
 async function getUserAveragePhotoLikes(userID) {
-    return await withOracleDB(async (connection) => {
-        const result = await connection.execute(
-            `SELECT AVG(PhotoVoteCount) AS AvgVotesPerPhoto
+  return await withOracleDB(async (connection) => {
+    const result = await connection.execute(
+      `SELECT AVG(PhotoVoteCount) AS AvgVotesPerPhoto
              FROM (
                       SELECT COUNT(v.VoteID) AS PhotoVoteCount
                       FROM PHOTO p
@@ -32,22 +31,22 @@ async function getUserAveragePhotoLikes(userID) {
                       WHERE r.USERID = :userID
                       GROUP BY p.PHOTOID
                   )`,
-            {
-                userID: userID
-            },
-            { autoCommit: true }
-        );
-        if (!result || result.rows.length === 0) {
-            return 0;
-        }
-        return result.rows[0][0];
-    });
+      {
+        userID: userID,
+      },
+      { autoCommit: true }
+    );
+    if (!result || result.rows.length === 0) {
+      return 0;
+    }
+    return result.rows[0][0];
+  });
 }
 
-async function getPhotosFromUserOfFoodType(userID, type){
-    return await withOracleDB(async (connection) => {
-        const result = await connection.execute(
-            `SELECT DISTINCT
+async function getPhotosFromUserOfFoodType(userID, type) {
+  return await withOracleDB(async (connection) => {
+    const result = await connection.execute(
+      `SELECT DISTINCT
                  p.PHOTOID,
                  p.IMAGEURL,
                  p.DESCRIPTION,
@@ -83,36 +82,36 @@ async function getPhotosFromUserOfFoodType(userID, type){
                AND f.COUNTRY = d.COUNTRY
                AND r.USERID = :userID
                AND LOWER(d.TYPE) = :type`,
-            {
-                userID: userID,
-                type: type
-            },
-            { autoCommit: true }
-        );
+      {
+        userID: userID,
+        type: type,
+      },
+      { autoCommit: true }
+    );
 
-        return result.rows.map((row) => {
-            return {
-                photoID: row[0],
-                imageURL: row[1],
-                description: row[2],
-                photoTimestamp: row[3],
-                reviewID: row[4],
-                summaryID: row[5],
-                foodLocationName: row[6],
-                address: row[7],
-                postalCode: row[8],
-                country: row[9],
-                city: row[10],
-                photoLikes: row[11],
-            };
-        });
-    })
+    return result.rows.map((row) => {
+      return {
+        photoID: row[0],
+        imageURL: row[1],
+        description: row[2],
+        photoTimestamp: row[3],
+        reviewID: row[4],
+        summaryID: row[5],
+        foodLocationName: row[6],
+        address: row[7],
+        postalCode: row[8],
+        country: row[9],
+        city: row[10],
+        photoLikes: row[11],
+      };
+    });
+  });
 }
 
-async function getPhotosForReview(reviewID){
-    return await withOracleDB(async (connection) => {
-        const result = await connection.execute(
-            `SELECT DISTINCT
+async function getPhotosForReview(reviewID) {
+  return await withOracleDB(async (connection) => {
+    const result = await connection.execute(
+      `SELECT DISTINCT
                  p.PHOTOID,
                  p.IMAGEURL,
                  p.DESCRIPTION,
@@ -148,35 +147,35 @@ async function getPhotosForReview(reviewID){
                AND f.COUNTRY = d.COUNTRY
                AND r.REVIEWID = :reviewID
             `,
-            {
-                reviewID: reviewID
-            },
-            { autoCommit: true }
-        );
+      {
+        reviewID: reviewID,
+      },
+      { autoCommit: true }
+    );
 
-        return result.rows.map((row) => {
-            return {
-                photoID: row[0],
-                imageURL: row[1],
-                description: row[2],
-                photoTimestamp: row[3],
-                reviewID: row[4],
-                summaryID: row[5],
-                foodLocationName: row[6],
-                address: row[7],
-                postalCode: row[8],
-                country: row[9],
-                city: row[10],
-                photoLikes: row[11]
-            };
-        });
-    })
+    return result.rows.map((row) => {
+      return {
+        photoID: row[0],
+        imageURL: row[1],
+        description: row[2],
+        photoTimestamp: row[3],
+        reviewID: row[4],
+        summaryID: row[5],
+        foodLocationName: row[6],
+        address: row[7],
+        postalCode: row[8],
+        country: row[9],
+        city: row[10],
+        photoLikes: row[11],
+      };
+    });
+  });
 }
 
-async function getPhotosForSummary(summaryID){
-    return await withOracleDB(async (connection) => {
-        const result = await connection.execute(
-            `SELECT DISTINCT
+async function getPhotosForSummary(summaryID) {
+  return await withOracleDB(async (connection) => {
+    const result = await connection.execute(
+      `SELECT DISTINCT
                     p.PHOTOID,
                     p.IMAGEURL,
                     p.DESCRIPTION,
@@ -212,29 +211,29 @@ async function getPhotosForSummary(summaryID){
                   AND f.COUNTRY = d.COUNTRY
                   AND p.SUMMARYID = :summaryID
             `,
-            {
-                summaryID: summaryID
-            },
-            { autoCommit: true }
-        );
+      {
+        summaryID: summaryID,
+      },
+      { autoCommit: true }
+    );
 
-        return result.rows.map((row) => {
-            return {
-                photoID: row[0],
-                imageURL: row[1],
-                description: row[2],
-                photoTimestamp: row[3],
-                reviewID: row[4],
-                summaryID: row[5],
-                foodLocationName: row[6],
-                address: row[7],
-                postalCode: row[8],
-                country: row[9],
-                city: row[10],
-                photoLikes: row[11]
-            };
-        });
-    })
+    return result.rows.map((row) => {
+      return {
+        photoID: row[0],
+        imageURL: row[1],
+        description: row[2],
+        photoTimestamp: row[3],
+        reviewID: row[4],
+        summaryID: row[5],
+        foodLocationName: row[6],
+        address: row[7],
+        postalCode: row[8],
+        country: row[9],
+        city: row[10],
+        photoLikes: row[11],
+      };
+    });
+  });
 }
 
 //DELETE Photo
@@ -271,10 +270,10 @@ async function deletePhoto(
   });
 }
 module.exports = {
-    insertPhoto,
-    deletePhoto,
-    getPhotosFromUserOfFoodType,
-    getPhotosForReview,
-    getUserAveragePhotoLikes,
-    getPhotosForSummary
+  insertPhoto,
+  deletePhoto,
+  getPhotosFromUserOfFoodType,
+  getPhotosForReview,
+  getUserAveragePhotoLikes,
+  getPhotosForSummary,
 };

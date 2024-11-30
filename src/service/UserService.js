@@ -10,7 +10,7 @@ async function insertUser(user) {
         lastName: user.lastName,
         email: user.email,
         password: user.password,
-        numReviews: user.numReviews
+        numReviews: user.numReviews,
       },
       { autoCommit: true }
     );
@@ -21,11 +21,11 @@ async function insertUser(user) {
 async function deleteAccount(userID) {
   return await withOracleDB(async (connection) => {
     const result = await connection.execute(
-        `DELETE FROM APPUSER WHERE USERID=:userID`,
-        {
-          userID: userID,
-        },
-        { autoCommit: true }
+      `DELETE FROM APPUSER WHERE USERID=:userID`,
+      {
+        userID: userID,
+      },
+      { autoCommit: true }
     );
     return result.rowsAffected && result.rowsAffected > 0;
   });
@@ -129,17 +129,16 @@ async function authenticateUser(email, password) {
 async function updateReviewCount(userID, numReviews) {
   return await withOracleDB(async (connection) => {
     const result = await connection.execute(
-        `UPDATE APPUSER SET NUMREVIEWS=:numReviews WHERE USERID=:userID`,
-        {
-          userID: userID,
-          numReviews: numReviews
-        },
-        { autoCommit: true }
+      `UPDATE APPUSER SET NUMREVIEWS=:numReviews WHERE USERID=:userID`,
+      {
+        userID: userID,
+        numReviews: numReviews,
+      },
+      { autoCommit: true }
     );
     return result.rowsAffected && result.rowsAffected > 0;
   });
 }
-
 
 module.exports = {
   insertUser,

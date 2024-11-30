@@ -49,11 +49,11 @@ function Login({ handleLogin }) {
     <div className="app">
       <div
         className="container mt-5 d-flex justify-content-center align-items-center pb"
-        style={{ minHeight: '100vh' , transform: 'translateY(-10vh)'}}
+        style={{ minHeight: '100vh', transform: 'translateY(-10vh)' }}
       >
         <div className="col-12 col-md-6 col-lg-4">
           <div className="mainheader">
-          <h1 className="text-center mb-4 ">Login</h1>
+            <h1 className="text-center mb-4 ">Login</h1>
           </div>
           {error && <div className="alert alert-danger">{error}</div>}
           <form onSubmit={handleSubmit}>
@@ -84,7 +84,7 @@ function Login({ handleLogin }) {
               />
             </div>
             <div className="d-flex justify-content-center mb-3">
-              <button type="submit" className="button" style={{ width: '15vw' }} >
+              <button type="submit" className="button" style={{ width: '15vw' }}>
                 Login
               </button>
             </div>

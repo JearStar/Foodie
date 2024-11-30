@@ -70,7 +70,17 @@ class FoodLocation {
   set summaryID(value) {
     this._summaryID = value;
   }
-  constructor(foodLocationName, address, postalCode, country, totalScore, numReviews, city, genre, summaryID) {
+  constructor(
+    foodLocationName,
+    address,
+    postalCode,
+    country,
+    totalScore,
+    numReviews,
+    city,
+    genre,
+    summaryID
+  ) {
     this._foodLocationName = foodLocationName;
     this._address = address;
     this._postalCode = postalCode;

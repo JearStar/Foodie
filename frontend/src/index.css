@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 
 :root {
@@ -25,14 +24,12 @@ code {
   color: #ffffff !important;
 }
 
-
 .app {
   background-color: #f4dfd0;
 }
 
-
 .mainheader {
-  font-family: "Abril Fatface", serif;
+  font-family: 'Abril Fatface', serif;
   color: #f47356;
 }
 
@@ -48,7 +45,6 @@ code {
   justify-content: center; /* Centers text horizontally */
   align-items: center; /* Centers text vertically */
 }
-
 
 .button:hover {
   background-color: var(--dark-button-color);

@@ -6,7 +6,7 @@ const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("userData");
+    const storedUser = localStorage.getItem('userData');
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
@@ -14,9 +14,9 @@ const UserProvider = ({ children }) => {
 
   useEffect(() => {
     if (user) {
-      localStorage.setItem("userData", JSON.stringify(user));
+      localStorage.setItem('userData', JSON.stringify(user));
     } else {
-      localStorage.removeItem("userData");
+      localStorage.removeItem('userData');
     }
   }, [user]);
 

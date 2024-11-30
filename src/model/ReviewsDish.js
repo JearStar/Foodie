@@ -63,6 +63,5 @@ class ReviewsDish {
     this._postalCode = postalCode;
     this._country = country;
   }
-
 }
 module.exports = ReviewsDish;

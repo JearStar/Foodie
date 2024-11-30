@@ -32,9 +32,12 @@ async function updateCommentContent(commentID, newContent) {
 
 async function getCommentsFromUser(userID) {
   return await withOracleDB(async (connection) => {
-    const result = await connection.execute('SELECT c.COMMENTID, c.CONTENT, c.COMMENTTIMESTAMP, u.FIRSTNAME, u.LASTNAME, u.USERID FROM USERCOMMENT c JOIN APPUSER u ON c.USERID=u.USERID WHERE u.USERID=:userID ORDER BY c.COMMENTTIMESTAMP DESC', {
-      userID: userID
-    });
+    const result = await connection.execute(
+      'SELECT c.COMMENTID, c.CONTENT, c.COMMENTTIMESTAMP, u.FIRSTNAME, u.LASTNAME, u.USERID FROM USERCOMMENT c JOIN APPUSER u ON c.USERID=u.USERID WHERE u.USERID=:userID ORDER BY c.COMMENTTIMESTAMP DESC',
+      {
+        userID: userID,
+      }
+    );
     return result.rows.map((row) => {
       return {
         commentID: row[0],
@@ -42,7 +45,7 @@ async function getCommentsFromUser(userID) {
         commentTimestamp: row[2],
         firstName: row[3],
         lastName: row[4],
-        userID: row[5]
+        userID: row[5],
       };
     });
   });
@@ -51,10 +54,10 @@ async function getCommentsFromUser(userID) {
 async function getTopComment(reviewID) {
   return await withOracleDB(async (connection) => {
     const result = await connection.execute(
-        'SELECT c.COMMENTID, c.CONTENT, c.COMMENTTIMESTAMP, u.FIRSTNAME, u.LASTNAME, u.USERID FROM USERCOMMENT c JOIN APPUSER u ON c.USERID=u.USERID WHERE c.REVIEWID=:reviewID',
-        {
-          reviewID: reviewID
-        }
+      'SELECT c.COMMENTID, c.CONTENT, c.COMMENTTIMESTAMP, u.FIRSTNAME, u.LASTNAME, u.USERID FROM USERCOMMENT c JOIN APPUSER u ON c.USERID=u.USERID WHERE c.REVIEWID=:reviewID',
+      {
+        reviewID: reviewID,
+      }
     );
     if (result.rows.length === 0) {
       return null;
@@ -65,9 +68,9 @@ async function getTopComment(reviewID) {
       commentTimestamp: result.rows[0][2],
       firstName: result.rows[0][3],
       lastName: result.rows[0][4],
-      userID: result.rows[0][5]
+      userID: result.rows[0][5],
     };
-  })
+  });
 }
 
 async function getComment(commentID) {
@@ -80,22 +83,25 @@ async function getComment(commentID) {
       return null;
     }
 
-      return {
-        commentID: result.rows[0][0],
-        content: result.rows[0][1],
-        commentTimestamp: result.rows[0][2],
-        reviewID: result.rows[0][3],
-        parentCommentID: result.rows[0][4],
-        userID: result.rows[0][5]
-      };
+    return {
+      commentID: result.rows[0][0],
+      content: result.rows[0][1],
+      commentTimestamp: result.rows[0][2],
+      reviewID: result.rows[0][3],
+      parentCommentID: result.rows[0][4],
+      userID: result.rows[0][5],
+    };
   });
 }
 
 async function getReplies(commentID) {
   return await withOracleDB(async (connection) => {
-    const result = await connection.execute('SELECT c.COMMENTID, c.CONTENT, c.COMMENTTIMESTAMP, u.FIRSTNAME, u.LASTNAME, u.USERID FROM USERCOMMENT c JOIN APPUSER u ON c.USERID=u.USERID WHERE c.PARENTCOMMENTID=:parentCommentID ORDER BY c.COMMENTTIMESTAMP', {
-      parentCommentID: commentID
-    });
+    const result = await connection.execute(
+      'SELECT c.COMMENTID, c.CONTENT, c.COMMENTTIMESTAMP, u.FIRSTNAME, u.LASTNAME, u.USERID FROM USERCOMMENT c JOIN APPUSER u ON c.USERID=u.USERID WHERE c.PARENTCOMMENTID=:parentCommentID ORDER BY c.COMMENTTIMESTAMP',
+      {
+        parentCommentID: commentID,
+      }
+    );
     return result.rows.map((row) => {
       return {
         commentID: row[0],
@@ -103,19 +109,17 @@ async function getReplies(commentID) {
         commentTimestamp: row[2],
         firstName: row[3],
         lastName: row[4],
-        userID: row[5]
+        userID: row[5],
       };
     });
   });
 }
 
-
 async function getCommentReview(userID) {
   return await withOracleDB(async (connection) => {
-    const result = await connection.execute(
-        'SELECT * FROM USERCOMMENT WHERE USERID=:userID',
-        { userID: userID }
-    );
+    const result = await connection.execute('SELECT * FROM USERCOMMENT WHERE USERID=:userID', {
+      userID: userID,
+    });
     if (result.rows.length === 0) {
       return null;
     }
@@ -124,7 +128,7 @@ async function getCommentReview(userID) {
         commentLikes: row[1],
         commentContent: row[2],
         commentTimestamp: row[3],
-        reviewID: row[4]
+        reviewID: row[4],
       };
     });
   });
@@ -133,11 +137,11 @@ async function getCommentReview(userID) {
 async function deleteComment(commentID) {
   return await withOracleDB(async (connection) => {
     const result = await connection.execute(
-        `DELETE FROM USERCOMMENT WHERE COMMENTID=:commentID`,
-        {
-          commentID: commentID,
-        },
-        { autoCommit: true }
+      `DELETE FROM USERCOMMENT WHERE COMMENTID=:commentID`,
+      {
+        commentID: commentID,
+      },
+      { autoCommit: true }
     );
 
     return result.rowsAffected && result.rowsAffected > 0;

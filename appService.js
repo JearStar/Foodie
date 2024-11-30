@@ -145,7 +145,6 @@ async function makeNewAcc(user, pass) {
   });
 }
 
-
 module.exports = {
   testOracleConnection,
   makeNewAcc,

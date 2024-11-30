@@ -6,12 +6,11 @@ const userRouter = require('./src/controller/UserController');
 const foodLocationRouter = require('./src/controller/FoodLocationController');
 const reviewRouter = require('./src/controller/ReviewController');
 
-const foodLocationSummaryRouter =  require('./src/controller/FoodLocationSummaryController');
+const foodLocationSummaryRouter = require('./src/controller/FoodLocationSummaryController');
 const photoRouter = require('./src/controller/PhotoController');
 const locationRouter = require('./src/controller/FoodLocationController');
 const dishRouter = require('./src/controller/DishController');
-const commentRouter = require('./src/controller/CommentController')
-
+const commentRouter = require('./src/controller/CommentController');
 
 // ----------------------------------------------------------
 // API endpoints
